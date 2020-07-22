@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fraghment/header:: head"></th:block>
+    <!-- DataTables -->
+
+    <style>
+        .psub {
+            display: none;
+            margin-left: 20%
+        }
+
+        .wrap-custom-file {
+
+            background-size: cover;
+            background-position: center;
+            object-fit: cover;
+            max-width: 100%;
+        }
+
+        #b {
+            display: none;
+        }
+
+        .feedback_form {
+            text-align: center;
+        }
+    .heading-note {
+            color: #6f6f6f;
+            font-size: 14px;
+            text-align: center;
+            font-weight: 300;
+            margin-bottom: 60px;
+        }
+        .list-unstyled {
+            color: #6f6f6f;
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        .location {
+            font-size: 14px;
+            color: #6f6f6f;
+        }
+        #map {
+            height: 200px;
+        }
+        /* .wrap-custom-file:hover + label {
+            display: block;
+         }*/
+
+    </style>
+</head>
+<body>
+
+
+<header th:if="${#request.isUserInRole('USER')}" th:include="fraghment/user_header"></header>
+<header th:unless="${#request.isUserInRole('USER')}" th:include="fraghment/head"></header>
+<div class="contact main-grid-border">
+    <div class="container">
+        <h2 class="head text-center">Contact Us</h2>
+        <section id="hire">
+            <div class="row">
+                <div class="col-md-6">
+            <form id="filldetails">
+                <div class="field name-box">
+                    <input type="text" id="name" placeholder="Who Are You?"/>
+                    <label for="name">Name</label>
+                    <span class="ss-icon">check</span>
+                </div>
+
+                <div class="field email-box">
+                    <input type="text" id="email" placeholder="example@email.com"/>
+                    <label for="email">Email</label>
+                    <span class="ss-icon">check</span>
+                </div>
+
+                <div class="field ad-ID">
+                    <input type="text" id="email" placeholder="Ad ID"/>
+                    <label for="email">Ad ID</label>
+                    <span class="ss-icon">check</span>
+                </div>
+
+                <div class="field phonenum-box">
+                    <input type="text" id="email" placeholder="Phone Number"/>
+                    <label for="email">Phone</label>
+                    <span class="ss-icon">check</span>
+                </div>
+
+                <div class="field msg-box">
+                    <textarea id="msg" rows="4" placeholder="Your message goes here..."/></textarea>
+                    <label for="msg">Your Msg</label>
+                    <span class="ss-icon">check</span>
+                </div>
+
+
+            </form>
+            <div class="upload">
+               <!-- <h3 class="tlt">Add Attachment:</h3>
+                <form id="upload" method="post" action="upload.php" enctype="multipart/form-data">
+                    <div id="drop">
+                        <a>Choose file</a>
+                        <input type="file" name="upl" multiple />
+                    </div>
+
+                    <ul class="show">
+                        &lt;!&ndash; The file uploads will be shown here &ndash;&gt;
+                    </ul>
+                </form>-->
+                <div class="clear"></div>
+                <form class="submit">
+                    <input class="button" type="submit" value="Send" />
+                </form>
+                <!-- JavaScript Includes -->
+
+            </div>
+            </div>
+
+                <div class="col-md-6">
+                    <p class="heading-note">Do not hesitate to contact us</p>
+                    <ul class="list-unstyled">
+                        <li>P.O : 11/206</li>
+                        <li>Najma ,Doha, Qatar</li>
+                        <li>Telephone <a href="tel:0097433342920"> : 123433</a></li>
+                        <li> Fax : 1231232</li>
+                        <li>Email : info@suqqatar.com</li>
+                    </ul>
+                    <h3 class="location">Location</h3>
+                    <div id="map"> </div>
+                    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-BStQ4iLyw9FxwXRhxt6BJtlr-iG33wk&libraries=places"
+                            type="text/javascript"></script>
+                    <script>
+                        var map = new google.maps.Map(document.getElementById('map'), {
+                            center: {
+                                lat: 25.286106,
+                                lng: 51.534817
+                            },
+                            zoom: 15
+                        });
+                    </script>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+
+<th:block th:include="fraghment/footer"></th:block>
+
+<th:block th:include="fraghment/header :: footer"></th:block>
+<script th:src="@{js/jquery.knob.js}"></script>
+
+<!-- jQuery File Upload Dependencies -->
+<script th:src="@{js/jquery.ui.widget.js}"></script>
+<script th:src="@{js/jquery.fileupload.js}"></script>
+
+<!-- Our main JS file -->
+<script th:src="@{js/script.js}"></script>
+<script>
+    $('textarea').blur(function () {
+        $('#hire textarea').each(function () {
+            $this = $(this);
+            if (this.value != '') {
+                $this.addClass('focused');
+                $('textarea + label + span').css({ 'opacity': 1 });
+            } else {
+                $this.removeClass('focused');
+                $('textarea + label + span').css({ 'opacity': 0 });
+            }
+        });
+    });
+    $('#hire .field:first-child input').blur(function () {
+        $('#hire .field:first-child input').each(function () {
+            $this = $(this);
+            if (this.value != '') {
+                $this.addClass('focused');
+                $('.field:first-child input + label + span').css({ 'opacity': 1 });
+            } else {
+                $this.removeClass('focused');
+                $('.field:first-child input + label + span').css({ 'opacity': 0 });
+            }
+        });
+    });
+    $('#hire .field:nth-child(2) input').blur(function () {
+        $('#hire .field:nth-child(2) input').each(function () {
+            $this = $(this);
+            if (this.value != '') {
+                $this.addClass('focused');
+                $('.field:nth-child(2) input + label + span').css({ 'opacity': 1 });
+            } else {
+                $this.removeClass('focused');
+                $('.field:nth-child(2) input + label + span').css({ 'opacity': 0 });
+            }
+        });
+    });
+    $('#hire .field:nth-child(3) input').blur(function () {
+        $('#hire .field:nth-child(3) input').each(function () {
+            $this = $(this);
+            if (this.value != '') {
+                $this.addClass('focused');
+                $('.field:nth-child(3) input + label + span').css({ 'opacity': 1 });
+            } else {
+                $this.removeClass('focused');
+                $('.field:nth-child(3) input + label + span').css({ 'opacity': 0 });
+            }
+        });
+    });
+    $('#hire .field:nth-child(4) input').blur(function () {
+        $('#hire .field:nth-child(4) input').each(function () {
+            $this = $(this);
+            if (this.value != '') {
+                $this.addClass('focused');
+                $('.field:nth-child(4) input + label + span').css({ 'opacity': 1 });
+            } else {
+                $this.removeClass('focused');
+                $('.field:nth-child(4) input + label + span').css({ 'opacity': 0 });
+            }
+        });
+    });
+    //@ sourceURL=pen.js
+</script>
+<script>
+    if (document.location.search.match(/type=embed/gi)) {
+        window.parent.postMessage("resize", "*");
+    }
+</script>
+<script th:inline="javascript">
+    $(document).ready(function () {
+        var imageSlider = [[${imageSlider}]];
+        $('#sliderIndex').empty();
+        $('#listBox').empty();
+        for (var i = 0; i < imageSlider.length; i++) {
+            $('#listBox').append(
+                i == 0 ? $('<div>').addClass('item active').append(
+                    $('<a>').attr({href: imageSlider[i].postLink}).append(
+                        $('<img>').attr({src: '/images/sliderImage/' + imageSlider[i].id})
+                    )
+                ).append(
+                    $('<div>').addClass('carousel-caption caption').append(
+                        $('<a>').attr({href: '/user'}).text('Post Ads')
+                    )
+                ) : $('<div>').addClass('item').append(
+                    $('<a>').attr({href: imageSlider[i].postLink}).append(
+                        $('<img>').attr({src: '/images/sliderImage/' + imageSlider[i].id})
+                    )
+                ).append(
+                    $('<div>').addClass('carousel-caption caption').append(
+                        $('<a>').attr({href: '/user'}).text('Post Ads')
+                    )
+                )
+            );
+            $('#sliderIndex').append(
+                i == 0 ? '<li data-target="#carousel-example-generic" data-slide-to="' + i + '" class="active"></li>' : '<li data-target="#carousel-example-generic" data-slide-to="' + i + '"></li>'
+            )
+        }
+    });
+</script>
+<!--<script th:inline="javascript">
+    $(document).scroll(function () {
+        checkOffset();
+    });
+
+    function checkOffset() {
+        if ($('#qnimate').offset().top + $('#qnimate').height()
+            >= $('#footer').offset().top - 10)
+            $('#qnimate').css({
+                position: 'absolute',
+                bottom: 'auto'
+            });
+        /* $('#qnimate').css('bottom','none');*/
+        if ($(document).scrollTop() + window.innerHeight < $('#footer').offset().top)
+            $('#qnimate').css({
+                position: 'fixed',
+                bottom: '0px'
+
+            });
+    }
+
+    var flag = false;
+
+    $(function () {
+        $("#addclass").click(function () {
+
+            $.ajax({
+                url: '/user/checkAuthentication',
+                type: 'POST',
+                success: function (data) {
+
+                    if (data.id != null) {
+
+                        $('#qnimate').addClass('popup-box-on');
+                        findImage();
+
+                    } else {
+                        var pathname = window.location.pathname;
+                        window.location.replace('/user' + pathname);
+                    }
+                }
+            })
+        });
+
+        $("#removeClass").click(function () {
+            $('#qnimate').removeClass('popup-box-on');
+        });
+
+    })
+</script>-->
+
+<script>
+    $('#submitFeedback').on('click', function (e) {
+        var feedbackBody = $('#feedbackBody').val();
+        $.ajax({
+            url: '/feedback/save',
+            type: 'POST',
+            data: {feedbackBody: feedbackBody},
+            success: function (result) {
+                if(result == 'success'){
+                    alert("Your feedback has received successfully");
+                }
+            }
+        })
+
+        $('#feedbackBody').val('');
+
+    })
+
+</script>
+
+</body>
+</html>

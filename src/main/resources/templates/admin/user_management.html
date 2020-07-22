@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <th:block th:include="admin/fraghment/header_link:: head"></th:block>
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+    <div sec:authorize="isAuthenticated()">
+        <div sec:authorize="hasRole('ADMIN')">
+            <header th:include="admin/fraghment/admin_sidebar"></header>
+        </div>
+    </div>
+
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <header th:include="admin/fraghment/manager_topbar"></header>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Users</h1>
+                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                </div>
+
+
+                <div class="row">
+
+
+                    <div class="col-lg-12 mb-4">
+
+                        <!-- Illustrations -->
+                        <div class="card  shadow mb-4">
+                            <div class="card-header border-bottom-warning py-3">
+                                <h6 class="m-0 font-weight-bold text-primary text-center"
+                                    style=" display: inline-block">Users</h6>
+                                <a href="#" class="btn btn-primary btn-icon-split text-right" style="float: right;"
+                                   id="addUserButton">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-plus-circle"></i>
+                    </span>
+                                    <span class="text">Add Users</span>
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <!-- Begin Page Content -->
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped table-bordered" id="users"
+                                           width="100%" cellspacing="0">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>User Name</th>
+                                            <th>Role</th>
+                                            <th>Enabled</th>
+                                            <th>Created At</th>
+                                            <th>Updated At</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tfoot>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>User Name</th>
+                                            <th>Role</th>
+                                            <th>Enabled</th>
+                                            <th>Created At</th>
+                                            <th>Updated At</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </tfoot>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <th:block th:include="admin/fraghment/footer"></th:block>
+
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+
+<div class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="categoryModalLabel">Add User</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="checked">Select Role</label>
+                        <div class="form-control" id="checked">
+                            <input name="selector" id="adminChecked" type="checkbox" value="ADMIN"/>
+                            Admin
+                            <input name="selector" id="managerChecked" type="checkbox"
+                                   value="MANAGER"/> Manager
+                            <input name="selector" id="userChecked" type="checkbox" value="USER"/> User
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="userName">Enter User Name</label>
+                        <input type="text" class="form-control" id="userName" aria-describedby="emailHelp"
+                               placeholder="Enter Category" name="username" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Enter Password</label>
+                        <input type="password" class="form-control" id="password" aria-describedby="passwordHelp"
+                               placeholder="Enter Password" name="password" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirmPassword"
+                               aria-describedby="confirmPasswordHelp"
+                               name="confirmPassword" placeholder="Confirm Password" required/>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button id="add_user" type="button" class="btn btn-primary" data-dismiss="modal">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="e_checked">Select Role</label>
+                        <div class="form-control" id="e_checked">
+                            <input name="e_selector" id="e_adminChecked" type="checkbox"
+                                   value="ADMIN"/>
+                            Admin
+                            <input name="e_selector" id="e_managerChecked" type="checkbox"
+                                   value="MANAGER"/> Manager
+                            <input name="e_selector" id="e_userChecked" type="checkbox"
+                                   value="USER"/>
+                            User
+                        </div>
+                    </div>
+                    <input type="hidden" class="form-control" id="userId" aria-describedby="emailHelp"
+                           placeholder="Enter Category" name="userId" required>
+                    <div class="form-group">
+                        <label for="e_userName">Enter User Name</label>
+                        <input type="text" class="form-control" id="e_userName" aria-describedby="emailHelp"
+                               placeholder="Enter Category" name="username" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="e_password">Enter Password</label>
+                        <input type="password" class="form-control" id="e_password" aria-describedby="passwordHelp"
+                               placeholder="Enter Password" name="password"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="e_confirmPassword">Confirm Password</label>
+                        <input type="password" class="form-control" id="e_confirmPassword"
+                               aria-describedby="confirmPasswordHelp"
+                               name="confirmPassword" placeholder="Confirm Password"/>
+                    </div>
+
+                    <div class="form-group" id="activeDeactive">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button id="edit_user" type="button" class="btn btn-primary" data-dismiss="modal">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Message</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <h6 id="modalMessage"></h6>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:include="admin/fraghment/header_link :: footer"></th:block>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#addUserButton').on('click', function () {
+
+            let role = $('#createUserModal #selectRole');
+            role.empty();
+            role.append('<option selected="true" disabled>Choose Role</option>');
+            role.append('<option value="MANAGER">MANAGER</option>');
+            role.append('<option value="USER">USER</option>');
+
+            $('#createUserModal').modal('show');
+        });
+
+        $('#add_user').on('click', function (e) {
+
+            var role = "";
+            $("input[name='selector']:checked").each(function (i) {
+                if (i != 0) {
+                    role += ','
+                }
+                role += $(this).val();
+            });
+            var username = $("#userName").val();
+            var password = $("#password").val();
+            var confirmPassword = $("#confirmPassword").val();
+
+
+            if (role.length > 0 && username.length > 2 && password.length > 5 && confirmPassword.length > 5) {
+                if (password == confirmPassword) {
+                    $.ajax({
+                        url: '/admin/addUser',
+                        type: 'POST',
+                        data: {
+                            role: role,
+                            username: username,
+                            password: password,
+                            confirmPassword: confirmPassword
+                        },
+                        success: function (data) {
+                            usersTable.ajax.reload();
+                            $("#successModal #modalMessage").html(data.response);
+                            $('#successModal').modal('show');
+                        },
+                        error: function (response, textStatus, errorThrown) {
+                            $("#successModal #modalMessage").html(response.responseText);
+                            $('#successModal').modal('show');
+                        }
+                    })
+                } else {
+                    $("#successModal #modalMessage").html("Password Not matched");
+                    $('#successModal').modal('show');
+                }
+            } else {
+                $("#successModal #modalMessage").html("User name or password length not ok.");
+                $('#successModal').modal('show');
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#edit_user').on('click', function (e) {
+
+            var userId = $("#userId").val();
+            /*var role = $("#e_selectRole").val();*/
+            var role = "";
+            $("input[name='e_selector']:checked").each(function (i) {
+                if (i != 0) {
+                    role += ','
+                }
+                role += $(this).val();
+            });
+            var username = $("#e_userName").val();
+            var password = $("#e_password").val();
+            var confirmPassword = $("#e_confirmPassword").val();
+            var active = $("input[name='active']:checked").val();
+
+            if (userId > -1 && role.length > 3 && username.length > 2 && active > -1) {
+                if (password == confirmPassword) {
+                    $.ajax({
+                        url: '/admin/editUser',
+                        type: 'POST',
+                        data: {
+                            userId: userId,
+                            role: role,
+                            username: username,
+                            password: password,
+                            confirmPassword: confirmPassword,
+                            active: active
+                        },
+                        success: function (data) {
+                            usersTable.ajax.reload();
+                            $("#successModal #modalMessage").html(data.response);
+                            $('#successModal').modal('show');
+                        },
+                        error: function (response, textStatus, errorThrown) {
+                            $("#successModal #modalMessage").html(response.responseText);
+                            $('#successModal').modal('show');
+                        }
+                    })
+                } else {
+                    $("#successModal #modalMessage").html("Password Not matched");
+                    $('#successModal').modal('show');
+                }
+            } else {
+                $("#successModal #modalMessage").html("User name length not ok.");
+                $('#successModal').modal('show');
+            }
+        });
+
+        window.editUserFunction = function (userId) {
+            if (userId > -1) {
+                $.ajax({
+                    method: "GET",
+                    url: "/admin/getUserById/" + userId,
+                    dataType: "json"
+                })
+                    .done(function (data) {
+                        let role1 = $('#e_adminChecked');
+                        let role2 = $('#e_managerChecked');
+                        let role3 = $('#e_userChecked');
+                        role1.prop('checked', false);
+                        role2.prop('checked', false);
+                        role3.prop('checked', false);
+                        for (var i = 0; i < data.roles.length; i++) {
+                            /*role.append($('<option selected="true"></option>').attr('value', data.roles[i].role).text(data.roles[i].role));*/
+                            if ('ADMIN' == data.roles[i].role) {
+                                role1.prop('checked', true);
+                            }
+                            if ('MANAGER' == data.roles[i].role) {
+                                role2.prop('checked', true);
+                            }
+                            if ('USER' == data.roles[i].role) {
+                                role3.prop('checked', true);
+                            }
+
+                        }
+                        /* role.append('<option value="MANAGER">MANAGER</option>');
+                         role.append('<option value="USER">USER</option>');*/
+                        $("#editModal #userId").val(data.id);
+                        $("#editModal #e_userName").val(data.email);
+                        $('#editModal #activeDeactive').empty();
+                        $('#editModal #activeDeactive').append(
+                            /*function (i) {
+                                return*/ data.active > 0 ? '<input type="radio" name="active" value="1"  checked/>Active <input type="radio" name="active" value="0"/>Deactivate' :
+                                '<input type="radio" name="active" value="0"  checked />Deactivate <input type="radio" name="active" value="1" />Active'
+                            // }
+                        );
+
+                        $('#editModal').modal('show');
+                    })
+            } else {
+                $("#successModal #modalMessage").html("Category not exist");
+                $('#successModal').modal('show');
+            }
+        }
+    });
+</script>
+
+</body>
+
+</html>

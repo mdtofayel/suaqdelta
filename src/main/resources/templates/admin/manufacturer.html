@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <th:block th:include="admin/fraghment/header_link:: head"></th:block>
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <div sec:authorize="isAuthenticated()">
+        <div sec:authorize="hasRole('ADMIN')">
+            <header th:include="admin/fraghment/admin_sidebar"></header>
+        </div>
+        <div sec:authorize="hasRole('MANAGER') && !hasRole('ADMIN')">
+            <header th:include="admin/fraghment/manager_sidebar"></header>
+        </div>
+    </div>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <header th:include="admin/fraghment/manager_topbar"></header>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Manufacturer</h1>
+                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                </div>
+
+
+                <div class="row">
+
+
+                    <div class="col-lg-12 mb-4">
+
+                        <!-- Illustrations -->
+                        <div class="card  shadow mb-4">
+                            <div class="card-header border-bottom-warning py-3">
+                                <h6 class="m-0 font-weight-bold text-primary text-center"
+                                    style=" display: inline-block">Manufacturer</h6>
+                                <a href="#" id="addNewPostType" class="btn btn-primary btn-icon-split text-right"
+                                   style="float: right;" data-toggle="modal" data-target="#addManufacturerModal">
+                                    <span class="icon text-white-50">
+                                      <i class="fas fa-plus-circle"></i>
+                                    </span>
+                                    <span class="text">Add Manufacturer</span>
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <!-- Begin Page Content -->
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped table-bordered" id="manufacturerList"
+                                           width="100%" cellspacing="0">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Manufacturer</th>
+                                            <th>Create At</th>
+                                            <th>Update At</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tfoot>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Manufacturer</th>
+                                            <th>Create At</th>
+                                            <th>Update At</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </tfoot>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+
+        <th:block th:include="admin/fraghment/footer"></th:block>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+
+<div class="modal fade" id="addManufacturerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="subcategoryModalLabel">Add Manufacturer</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="#" method="post">
+
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="newManufacturer">Enter New Manufacturer Name</label>
+                        <input type="text" class="form-control" id="newManufacturer" aria-describedby="emailHelp"
+                               placeholder="Enter Subcategory" name="category" required>
+                        <small id="newSubcategoryHelp" class="form-text text-muted">Enter the New Manufacturer Here.
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label for="newManufacturerImage">Select an logo</label>
+                        <input type="file" class="" id="newManufacturerImage" aria-describedby="emailHelp"
+                               name="newManufacturerImage"/>
+                        <div style="text-align: center" id="newManufacturerImageView"><img src=""/></div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button type="button" id="save_manufacturer" class="btn btn-primary" data-dismiss="modal">Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Manufacturer</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="#" method="post">
+
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="e_manufacturer">Edit manufacturer</label>
+                        <input type="hidden" id="manufacturerId" name="manufacturerId"/>
+                        <input type="text" class="form-control" id="e_manufacturer" aria-describedby="emailHelp"
+                               placeholder="Enter Manufacturer Name" name="subcategory" required>
+                        <small id="emailHelp" class="form-text text-muted">Edit Manufacturer Here.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editManufacturerImage">Select an Image</label>
+                        <input type="file" class="" id="editManufacturerImage" aria-describedby="emailHelp"
+                               name="editCategoryImage"/>
+                        <div style="text-align: center" id="edit_manufacturerImageView"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="e_submit" data-dismiss="modal">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Message</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <h6 id="modalMessage"></h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:include="admin/fraghment/header_link :: footer"></th:block>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#save_manufacturer').on('click', function (e) {
+            var formData = new FormData();
+            formData.append("name", $("#newManufacturer").val());
+            formData.append("manufacturerImage", $("#newManufacturerImage")[0].files[0]);
+            console.log($('#newManufacturer').val());
+            if (formData.get("name").length > 1) {
+                $.ajax({
+                    url: '/manager/saveManufacturer',
+                    type: 'POST',
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    success: function (data) {
+                        categoryTable.ajax.reload();
+                        $("#successModal #modalMessage").html(data.response);
+                        $('#successModal').modal('show');
+                    },
+                    error: function (response, textStatus, errorThrown) {
+                        $("#successModal #modalMessage").html(response.responseText);
+                        $('#successModal').modal('show');
+                    }
+                })
+            } else {
+                $("#successModal #modalMessage").html("Manufacturer name must be contain at least 2 character.");
+                $('#successModal').modal('show');
+            }
+        });
+
+        $(document).ready(function () {
+            $('#e_submit').on('click', function (e) {
+                var formData = new FormData();
+                formData.append("id", $("#manufacturerId").val())
+                formData.append("name", $("#e_manufacturer").val());
+                formData.append("manufacturerImage", $("#editManufacturerImage")[0].files[0]);
+                console.log($("#manufacturerId").val() + " " + $("#e_manufacturer").val());
+                if (formData.get("name").length > 1) {
+                    $.ajax({
+                        url: "/manager/editSaveManufacturer",
+                        type: 'POST',
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        enctype: 'multipart/form-data',
+                        processData: false,
+                        success: function (data) {
+                            manufacturerTable.ajax.reload();
+                            $("#successModal #modalMessage").html(data.response);
+                            $('#successModal').modal('show');
+                        },
+                        error: function (response, textStatus, errorThrown) {
+                            $("#successModal #modalMessage").html(response.responseText);
+                            $('#successModal').modal('show');
+                        }
+                    })
+                } else {
+                    $("#successModal #modalMessage").html("Category length must be at least 2");
+                    $('#successModal').modal('show');
+                }
+            });
+
+            window.editManufacturerFunction = function (catId) {
+
+                if (catId > -1) {
+                    $.ajax({
+                        method: "GET",
+                        url: "/manager/editManufacturer/" + catId,
+                        dataType: "json"
+                    })
+                        .done(function (data) {
+
+                            $("#editModal #manufacturerId").val(data.id);
+
+                            $("#editModal #e_manufacturer").val(data.name);
+                            /*$('#editModal #editManufacturerImage').empty();
+                            $('#editModal #editManufacturerImage').val("/images/manufacturer/" + data.id + ".png");*/
+                            $('#editModal #editManufacturerImage').empty();
+                            $('#editModal #edit_manufacturerImageView').empty();
+                            $('#editModal #edit_manufacturerImageView').append(
+                                $('<img>').attr({
+                                    src: "/images/manufacturerImage/" + data.id,
+                                    style: "width: 150px; height: 150px; padding-top: 2%"
+                                })
+                            );
+
+                            $('#editModal').modal('show');
+                        })
+                } else {
+                    $("#successModal #modalMessage").html("Category not exist");
+                    $('#successModal').modal('show');
+                }
+            }
+        });
+    });
+</script>
+
+<script>
+    function readURL1(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#newManufacturerImageView').empty();
+                $('#newManufacturerImageView').append(
+                    $('<img>').attr({
+                        src: e.target.result,
+                        style: "width: 150px; height: 150px; padding-top: 2%"
+                    })
+                );
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#newManufacturerImage").change(function () {
+        readURL1(this);
+    });
+</script>
+
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#edit_manufacturerImageView').empty();
+                $('#edit_manufacturerImageView').append(
+                    $('<img>').attr({
+                        src: e.target.result,
+                        style: "width: 150px; height: 150px; padding-top: 2%"
+                    })
+                );
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#editManufacturerImage").change(function () {
+        readURL(this);
+    });
+
+
+    function readURLViewImageBeforeEdit(input) {
+        var id = $('#manufacturerId').val();
+
+        $('#edit_manufacturerImageView').empty();
+        $('#edit_manufacturerImageView').append(
+            $('<img>').attr({
+                src: "/images/manufacturer/" + id + ".png",
+                style: "width: 150px; height: 150px; padding-top: 2%"
+            })
+        );
+
+    }
+
+    $("#edit_manufacturerImageView").on('load', function () {
+        readURLViewImageBeforeEdit(this);
+    });
+</script>
+
+</body>
+</html>

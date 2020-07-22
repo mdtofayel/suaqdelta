@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fraghment/header:: head"></th:block>
+    <!-- DataTables -->
+
+    <style>
+        .psub {
+            display: none;
+            margin-left: 20%
+        }
+
+        .wrap-custom-file {
+
+            background-size: cover;
+            background-position: center;
+            object-fit: cover;
+            max-width: 100%;
+        }
+
+        #b {
+            display: none;
+        }
+
+        /* .wrap-custom-file:hover + label {
+            display: block;
+         }*/
+        #container .grid li {
+
+            height: 375px;
+            width: 29%;
+        }
+        @media (max-width: 800px){
+            #container .grid li {
+                height: 271px;
+                width: 29%;
+
+                /*   width: 29%;*/
+            }
+            #container .grid li .list-right .date {
+                font-size: small;
+            }
+            #container .grid li p {
+                font-size: small;
+            }
+
+        }
+        @media (max-width: 480px){
+            #container .grid li {
+                width: 46%;
+                height: 255px;
+            }
+            #container .grid li .list-right .date {
+                font-size: 10px;
+            }
+            #container .grid li p {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+<header th:if="${#request.isUserInRole('USER')}" th:include="fraghment/user_header"></header>
+<header th:unless="${#request.isUserInRole('USER')}" th:include="fraghment/head"></header>
+
+
+<div class="container">
+    <div class="row">
+        <div class=" col-md-12 well col-lg-12">
+            <div class=" profile">
+                <div class="col-sm-12 marg">
+                    <div class="col-xs-12 col-sm-2 text-center">
+                        <figure class="fig_profile">
+                            <img th:src="@{'/images/profileImage/'+${users.id}}" class=" img-responsive" onError="this.src='/images/user_default.png';"  alt="">
+                        </figure>
+                    </div>
+                 <!--   <img  class="thumbnail-image" src="./app/assets/images/{{image.ID}}.jpg"
+                           alt="..." />-->
+                    <div class="col-xs-12 col-sm-4">
+                        <h2 th:text="${users.profile.firstName}">Abcd</h2>
+                        <p th:text="${users.email}"><strong>Email: </strong>asd@g.com </p>
+                        <p th:text="${users.profile.contactNumber}"><strong>Mobile: </strong>123456 </p>
+                        <p th:text="${users.profile.address}"><strong>Location: </strong>Najma </p>
+                        <button class="btn btn-success " id="addclass"><span class="fas fa-location-arrow"></span>Send
+                            Message
+                        </button>
+                        <!--  <p><strong>Skills: </strong>
+                              <span class="tags">html5</span>
+                              <span class="tags">css3</span>
+                              <span class="tags">jquery</span>
+                              <span class="tags">bootstrap3</span>
+                          </p>-->
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="left">
+                            <!--   <h2><strong> 20,7K </strong></h2> -->
+                            <!--  <p><small></small></p>-->
+
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 divider text-center marg">
+
+
+                    </div>
+                    <div class="col-xs-12 col-md-12 col-lg-12 ">
+                        <div id="container">
+                            <div class="view-controls-list" id="viewcontrols">
+                                <label>view :</label>
+                                <a class="gridview active"><i class="glyphicon glyphicon-th"></i></a>
+                                <a class="listview "><i class="glyphicon glyphicon-th-list"></i></a>
+                            </div>
+                            <div class="sort">
+                                <div class="sort-by">
+                                    <label>Sort By : </label>
+                                    <select id="size">
+                                        <option value="1">1</option>
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="20" selected>20</option>
+                                        <option value="50">50</option>
+                                        <option value="20">100</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <ul class="grid" id="postListByUserProfile">
+                                <a href="single.html">
+                                    <li>
+                                        <img src="images/m1.jpg" title="" alt=""/>
+                                        <section class="list-left">
+                                            <h5 class="title">There are many variations of passages of Lorem Ipsum</h5>
+                                            <span class="adprice">290</span>
+                                            <p class="catpath">Mobile Phones » Brand</p>
+                                        </section>
+                                        <section class="list-right">
+                                            <span class="date">Today, 17:55</span>
+                                            <span class="cityname">City name</span>
+                                            <p class="view_count">
+                                                <i class="far fa-comment" style="color: rgb(146,41,41);"></i>
+                                                <span class="count" style="padding-right: 5px;">5</span>
+                                                <i class="fas fa-eye" style="color: rgb(9,113,178);"></i>
+                                                <span class="view" style="padding-right: 5px;">5</span>
+                                                <i class="far fa-thumps-up" style="color: rgb(43,109,103);"></i>
+                                                <span class="count" style="padding-right: 5px;">5</span>
+                                            </p>
+                                        </section>
+                                        <div class="clearfix"></div>
+                                    </li>
+                                </a>
+                                <div class="clearfix"></div>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <ul class="pagination pagination-sm" id="pagination"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="popup-box chat-popup" id="qnimate" th:if="${#request.userPrincipal}">
+    <input th:value="${#request.userPrincipal.name}" id="getUserForImage" hidden="hidden">
+
+    <div class="popup-head">
+        <div id="profileImageForChatBox" class="popup-head-left pull-left"></div>
+        <div class="popup-head-right pull-right">
+
+
+            <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button"><i
+                    class="fas fa-window-close"></i></button>
+        </div>
+    </div>
+    <div id="chat" class="chat_box_wrapper chat_box_small chat_box_active"
+         style="opacity: 1; display: block; transform: translateX(0px);">
+        <div class="chat_box touchscroll chat_box_colors_a" id="shoeChatOfTwoChatOwner"></div>
+    </div>
+    <div class="popup-messages-footer">
+
+        <textarea id="status_message" placeholder="Type a message..." rows="10" cols="40" name="message"></textarea>
+        <button class="bg_none pull-right" id="sendMesseages"><i class="fas fa-location-arrow"></i></button>
+    </div>
+
+</div>
+
+<input id="userId" type="hidden" th:value="${users.id}">
+
+<th:block th:include="fraghment/footer"></th:block>
+
+<th:block th:include="fraghment/header :: footer"></th:block>
+<link th:href="@{/css/simplePagination.css}" rel="stylesheet"/>
+<script type="text/javascript" th:src="@{/js/jquery.simplePagination.js}"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var elem = $('#container ul');
+        $('#viewcontrols a').on('click', function (e) {
+            if ($(this).hasClass('gridview')) {
+                elem.fadeOut(1000, function () {
+                    $('#container ul').removeClass('list').addClass('grid');
+                    $('#viewcontrols').removeClass('view-controls-list').addClass('view-controls-grid');
+                    $('#viewcontrols .gridview').addClass('active');
+                    $('#viewcontrols .listview').removeClass('active');
+                    elem.fadeIn(1000);
+                });
+            } else if ($(this).hasClass('listview')) {
+                elem.fadeOut(1000, function () {
+                    $('#container ul').removeClass('grid').addClass('list');
+                    $('#viewcontrols').removeClass('view-controls-grid').addClass('view-controls-list');
+                    $('#viewcontrols .gridview').removeClass('active');
+                    $('#viewcontrols .listview').addClass('active');
+                    elem.fadeIn(1000);
+                });
+            }
+        });
+    });
+</script>
+
+<script>
+    document.getElementById('a').onmouseover = function () {
+        document.getElementById('b').style.display = 'block';
+    }
+    document.getElementById('a').onmouseout = function () {
+        document.getElementById('b').style.display = 'none';
+    }
+
+</script>
+<script>
+    $('input[type="file"]').each(function () {
+        // Refs
+        var $file = $(this),
+            $label = $file.next('label'),
+            $labelText = $label.find('span'),
+            labelDefault = $labelText.text();
+
+        // When a new file is selected
+        $file.on('change', function (event) {
+            var fileName = $file.val().split('\\').pop(),
+                tmppath = URL.createObjectURL(event.target.files[0]);
+            //Check successfully selection
+            if (fileName) {
+                $label
+                /*.addClass('file-ok')
+                .css('background-image', 'url(' + tmppath + ')');*/
+                /* $labelText.text(fileName);*/
+                $('.psub').css('display', 'block');
+                $('.wrap-custom-file').addClass('file-ok')
+                    .css('background-image', 'url(' + tmppath + ')');
+            } else {
+                $label.removeClass('file-ok');
+                $labelText.text(labelDefault);
+            }
+        });
+
+        // End loop of file input elements
+    });
+</script>
+
+
+<script th:inline="javascript">
+    $(document).scroll(function () {
+        checkOffset();
+    });
+
+    function checkOffset() {
+        if ($('#qnimate').offset().top + $('#qnimate').height()
+            >= $('#footer').offset().top - 10)
+            $('#qnimate').css({
+                position: 'absolute',
+                bottom: 'auto'
+            });
+        /* $('#qnimate').css('bottom','none');*/
+        if ($(document).scrollTop() + window.innerHeight < $('#footer').offset().top)
+            $('#qnimate').css({
+                position: 'fixed',
+                bottom: '0px'
+
+            });
+    }
+
+    var flag = false;
+
+    $(function () {
+        $("#addclass").click(function () {
+
+            $.ajax({
+                url: '/user/checkAuthentication',
+                type: 'POST',
+                success: function (data) {
+                    if (data.id != null) {
+
+                        $('#qnimate').addClass('popup-box-on');
+                        findImage();
+
+                    } else {
+                        var pathname = window.location.pathname;
+                        window.location.replace('/user' + pathname);
+                    }
+                }
+            })
+        });
+
+        $("#removeClass").click(function () {
+            $('#qnimate').removeClass('popup-box-on');
+        });
+
+    })
+</script>
+
+<script th:inline="javascript">
+
+    findImage = function () {
+
+        var name = $('#getUserForImage').val();
+
+        $.ajax({
+            url: '/user/getuserForImage',
+            type: 'POST',
+            data: {name: name},
+            success: function (data) {
+
+                $('#sendFrom').val(data.user.id);
+
+                $('#profileImageForChatBox').empty();
+
+                $('#profileImageForChatBox').append(
+                    $('<a>').attr({href: '/user/profile'}).append($('<img>').attr({src: '/images/profileImage/' + [[${users.id}]]}))
+                ).append(
+                    $('<a>').attr({href: '/user/profile'}).append($('<span>').addClass('name').text('' + [[${users.profile.firstName}]])
+                    )
+                )
+            }
+
+        });
+
+        listMessagesK();
+
+    };
+
+</script>
+
+<script th:inline="javascript">
+    var flag24 = false;
+    listMessagesK = function () {
+
+        var postId = $('#getUserid').val();
+        var prevDate = '';
+        flag23 = false;
+
+        if (flag24 != true) {
+            flag24 = true;
+            console.log(postId);
+            $.ajax({
+
+                url:'/user/messagesBox/listMessage',
+                type: 'POST',
+                data: {postId: postId},
+                success: function (data) {
+
+                    $('#checkMessagesReload').text(0);
+                    if (data.length > 0) {
+                        console.log(postId);
+                        $.each(data, function (key, entry) {
+
+                            var postOwner = [[${users.id}]];
+console.log('hai');
+                            if (new Date(entry.time).toLocaleDateString() != prevDate || flag23 == false) {
+                                $('<p>').text(new Date(entry.time).toLocaleDateString());
+                            }
+
+                            if (entry.sendFrom.id === postOwner) {
+                                $('#shoeChatOfTwoChatOwner').append(
+                                    $('<div>').addClass('chat_message_wrapper').append(
+                                        $('<div>').addClass('chat_user_avatar').append(
+                                            $('<a>').attr({href: '/user/profile/' + entry.sendFrom.id}).append(
+                                                $('<img>').addClass('md-user-image img_left').attr({src: '/images/profileImage/' + entry.sendFrom.id})
+                                            )
+                                        ).append(
+                                            $('<ul>').addClass('chat_message').append(
+                                                $('<li>').append(
+                                                    $('<p>').text(entry.message).append(
+                                                        $('<span>').addClass('chat_message_time').text(new Date(entry.time).toLocaleDateString()).append(
+                                                            $('<span>').addClass('chat_message_time').text(new Date(entry.time).toLocaleTimeString())
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            } else {
+                                $('#shoeChatOfTwoChatOwner').append(
+                                    $('<div>').addClass('chat_message_wrapper chat_message_right').append(
+                                        $('<div>').addClass('chat_user_avatar').append(
+                                            $('<a>').attr({href: '/userprofile/' + entry.sendFrom.id}).append(
+                                                $('<img>').addClass('md-user-image img_right').attr({src: '/images/profileImage/' + entry.sendFrom.id})
+                                            )
+                                        ).append(
+                                            $('<ul>').addClass('chat_message').append(
+                                                $('<li>').append(
+                                                    $('<p>').text(entry.message).append(
+                                                        $('<span>').addClass('chat_message_time').text(new Date(entry.time).toLocaleTimeString()).append(
+                                                            $('<span>').addClass('chat_message_time').text(new Date(entry.time).toLocaleTimeString())
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            }
+                            scroller();
+                        });
+                    }
+
+                }
+
+            });
+
+        }
+    }
+</script>
+<script th:inline="javascript">
+    $(document).ready(function () {
+        $('#sendMesseages').on('click', function () {
+            var messageBody = $("#status_message").val();
+            $('#status_message').empty();
+            var receiverId = [[${users.id}]];
+            if (messageBody != '') {
+                $.ajax({
+                    type: "POST",
+                    url: "/user/chat/save",
+                    data: {message: messageBody, sendTo: receiverId},
+                    dataType: 'json',
+                    success: function (result) {
+                        $('#status_message').val('');
+                        if (result.length > 0) {
+                            $.each(result, function (key, entry) {
+
+                                var postOwner = [[${users.id}]];
+
+                                if (entry.sendFrom.id === postOwner) {
+                                    $('#shoeChatOfTwoChatOwner').append(
+                                        $('<div>').addClass('chat_message_wrapper').append(
+                                            $('<div>').addClass('chat_user_avatar').append(
+                                                $('<a>').attr({href: '/user/profile/' + entry.sendFrom.id}).append(
+                                                    $('<img>').addClass('md-user-image img_left').attr({src: '/images/profileImage/' + entry.sendFrom.id})
+                                                )
+                                            ).append(
+                                                $('<ul>').addClass('chat_message').append(
+                                                    $('<li>').append(
+                                                        $('<p>').text(entry.message).append(
+                                                            $('<span>').addClass('chat_message_time').text(new Date(entry.time).toLocaleDateString()).append(
+                                                                $('<span>').addClass('chat_message_time').text(new Date(entry.time).toLocaleTimeString())
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                } else {
+                                    $('#shoeChatOfTwoChatOwner').append(
+                                        $('<div>').addClass('chat_message_wrapper chat_message_right').append(
+                                            $('<div>').addClass('chat_user_avatar').append(
+                                                $('<a>').attr({href: '/user/profile/' + entry.sendFrom.id}).append(
+                                                    $('<img>').addClass('md-user-image img_right').attr({src: '/images/profileImage/' + entry.sendFrom.id})
+                                                )
+                                            ).append(
+                                                $('<ul>').addClass('chat_message').append(
+                                                    $('<li>').append(
+                                                        $('<p>').text(entry.message).append(
+                                                            $('<span>').addClass('chat_message_time').text(new Date(entry.time).toLocaleTimeString()).append(
+                                                                $('<span>').addClass('chat_message_time').text(new Date(entry.time).toLocaleTimeString())
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                }
+
+                            });
+                        }
+                        scroller();
+                    },
+                    error: function (e) {
+                    }
+                })
+
+
+                    .done(function (msg) {
+
+                    });
+            }
+        })
+
+
+    });
+
+    function scroller() {
+        var objDiv = document.getElementById("chat");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    }
+</script>
+
+<script th:inline="javascript">
+    $(document).ready(function () {
+        var userId = [[${users.id}]];
+        var page = 0;
+        var size = 20;
+        loadPost(userId, page, size);
+    });
+</script>
+
+<script>
+    loadPost = function (userId, page, size) {
+        $.ajax({
+            method: "POST",
+            url: '/postByUser',
+            data: {
+                userId: userId,
+                page: page,
+                size: size
+            }
+        })
+            .done(function (data) {
+                renderData(data);
+                /*$('#pagination').empty();*/
+                $(function () {
+                    $('#pagination').pagination({
+                        items: data.totalElements,
+                        itemsOnPage: size,
+                        cssStyle: 'light-theme',
+                        onPageClick: function () {
+                            page = $('#pagination').pagination('getCurrentPage') - 1;
+                            loadPage(userId, page, size);
+                        }
+                    });
+                });
+            });
+    };
+</script>
+
+<script>
+    $('#size').on('change',
+        function () {
+            var size = $('#size').val();
+            var userId = [[${users.id}]];
+            var page = 0;
+            loadPost(userId, page, size);
+        });
+</script>
+
+<script>
+    loadPage = function (userId, page, size) {
+        $.ajax({
+            method: "POST",
+            url: '/postByUser',
+            data: {
+                userId: userId,
+                page: page,
+                size: size
+            }
+        })
+            .done(function (data) {
+                renderData(data);
+            });
+    };
+</script>
+<script>
+    renderData = function (data) {
+        $("#postListByUserProfile").empty();
+        $.each(data.content, function (key, entry) {
+            if (entry.promotedAds == true) {
+
+                $('#postListByUserProfile').append(
+                    $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.id}).append(
+                        $('<li>').append(
+                            $('<span>').addClass('fas fa-bookmark premiumad_img')
+                        ).append(
+                            $('<span>').addClass('price_view').text(entry.price + " QR")
+                        ).append(
+                            $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                        ).append(
+                            $('<section>').addClass('list-left').append(
+                                $('<h5>').addClass('title').text(entry.title)
+                            )
+                        ).append(
+                            $('<section>').addClass('list-right').append(
+                                $('<span>').addClass('cityname').text(entry.address)
+                            ).append(
+                                $('<p>').addClass('date').text(new Date(entry.postCreateTime).toLocaleDateString())
+                            ).append(
+                                $('<p>').addClass('view_count').append(
+                                    $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                                ).append(
+                                    $('<span>').addClass('count').css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getComment/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('.count').empty();
+                                                $('.count').text(data);
+                                            }
+                                        })
+                                    })
+                                ).append(
+                                    $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                                ).append(
+                                    $('<span>').addClass('view').css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getView/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+
+                                                $('.view').text(data);
+                                            }
+                                        })
+                                    })
+                                ).append(
+                                    $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                                ).append(
+                                    $('<span>').addClass('like').css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getLike/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+
+                                                $('.like').text(data);
+                                            }
+                                        })
+                                    })
+                                )
+                            )
+                        ).append(
+                            $('<div>').addClass('clearfix')
+                        )
+                    )
+                );
+            }
+            else if (entry.postStatus == true) {
+                $('#postListByUserProfile').append(
+                    $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.id}).append(
+                        $('<li>').append(
+                            $('<span>').addClass(' sold_item').text('SOLD')
+                        ).append(
+                            $('<span>').addClass('price_view').text(entry.price + " QR")
+                        ).append(
+                            $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                        ).append(
+                            $('<section>').addClass('list-left').append(
+                                $('<h5>').addClass('title').text(entry.title)
+                            )
+                        ).append(
+                            $('<section>').addClass('list-right').append(
+                                $('<span>').addClass('cityname').text(entry.address)
+                            ).append(
+                                $('<p>').addClass('date').text(new Date(entry.postCreateTime).toLocaleDateString())
+                            ).append(
+                                $('<p>').addClass('view_count').append(
+                                    $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                                ).append(
+                                    $('<span>').addClass('count').css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getComment/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('.count').empty();
+                                                $('.count').text(data);
+                                            }
+                                        })
+                                    })
+                                ).append(
+                                    $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                                ).append(
+                                    $('<span>').addClass('view').css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getView/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+
+                                                $('.view').text(data);
+                                            }
+                                        })
+                                    })
+                                ).append(
+                                    $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                                ).append(
+                                    $('<span>').addClass('like').css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getLike/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+
+                                                $('.like').text(data);
+                                            }
+                                        })
+                                    })
+                                )
+                            )
+                        ).append(
+                            $('<div>').addClass('clearfix')
+                        )
+                    )
+                );
+            }
+            else {
+                $('#postListByUserProfile').append(
+                    $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.id}).append(
+                        $('<li>').append(
+                            $('<span>').addClass('price_view').text(entry.price + " QR")
+                        ).append(
+                            $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                        ).append(
+                            $('<section>').addClass('list-left').append(
+                                $('<h5>').addClass('title').text(entry.title)
+                            )
+                        ).append(
+                            $('<section>').addClass('list-right').append(
+                                $('<span>').addClass('cityname').text(entry.address)
+                            ).append(
+                                $('<p>').addClass('date').text(new Date(entry.postCreateTime).toLocaleDateString())
+                            ).append(
+                                $('<p>').addClass('view_count').append(
+                                    $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                                ).append(
+                                    $('<span>').addClass('count').css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getComment/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('.count').empty();
+                                                $('.count').text(data);
+                                            }
+                                        })
+                                    })
+                                ).append(
+                                    $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                                ).append(
+                                    $('<span>').addClass('view').css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getView/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+
+                                                $('.view').text(data);
+                                            }
+                                        })
+                                    })
+                                ).append(
+                                    $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                                ).append(
+                                    $('<span>').addClass('like').css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getLike/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+
+                                                $('.like').text(data);
+                                            }
+                                        })
+                                    })
+                                )
+                            )
+                        ).append(
+                            $('<div>').addClass('clearfix')
+                        )
+                    )
+                );
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
+

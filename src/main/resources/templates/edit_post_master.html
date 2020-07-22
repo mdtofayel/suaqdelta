@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fraghment/header:: head"></th:block>
+    <!-- DataTables -->
+    <link th:href="@{/css/product.css}" rel="stylesheet" type="text/css" media="all"/>
+    <link rel="stylesheet" th:href="@{/plugin/build/css/intlTelInput.css}">
+    <link rel="stylesheet" th:href="@{/plugin/build/css/demo.css}">
+    <style>
+        #lap, #general, #animal, #property, #mobile, #villa, #seek, #vehicle, #hire, #asd {
+            display: none;
+        }
+
+        .btn-group > .btn:first-child {
+            border: 1px solid #8a1538;
+        }
+
+        .submit-ad {
+            min-height: 85%;
+        }
+    </style>
+
+</head>
+<body>
+
+<header th:if="${#request.isUserInRole('USER')}" th:include="fraghment/user_header"></header>
+<header th:unless="${#request.isUserInRole('USER')}" th:include="fraghment/head"></header>
+
+<div class="submit-ad main-grid-border">
+    <div class="container">
+        <h2 class="head">Edit an Ad</h2>
+        <div class="post-ad-form">
+            <input type="hidden" id="editPostId" th:value="*{post.id}">
+            <input type="hidden" id="editPostStatus" th:value="*{post.postStatus.sold}">
+            <form enctype="multipart/form-data" method="POST">
+                <div class="row" id="main_section">
+                    <div class="col-sm-4" id="avm">
+                        <label class="vma">Choose type<span>*</span></label>
+                        <select id="aserv" class="" name="addtype"></select>
+                    </div>
+                    <div class="col-sm-4" id="abvm">
+                        <label class="vms">Choose Category<span>*</span></label>
+                        <select id="cserv" class="" name="adtypse"></select>
+                    </div>
+                    <div class="col-sm-4" id="acvm">
+                        <label class="vmd">Choose Subcategory<span>*</span></label>
+                        <select id="serv" class="" name="adtypea"></select>
+                    </div>
+
+                </div>
+                <div id="fragmentDiv">
+                    <div id="lap" th:include="fraghment/post-lap"></div>
+                    <div id="general" th:include="fraghment/post-general"></div>
+                    <div id="animal" th:include="fraghment/post-animal"></div>
+                    <div id="villa" th:include="fraghment/post-villa"></div>
+                    <div id="mobile" th:include="fraghment/post-mobile"></div>
+                    <div id="property" th:include="fraghment/post-property"></div>
+                    <div id="seek" th:include="fraghment/post-seek"></div>
+                    <div id="vehicle" th:include="fraghment/post-vehicle"></div>
+                    <div id="hire" th:include="fraghment/post-hire"></div>
+                </div>
+                <div id="asd">
+                    <div class="upload-ad-photos">
+                        <div class="clearfix"></div>
+                        <input type="hidden" name="subcategory" class="phone" placeholder="Enter Price"
+                               th:field="*{post.subCategory.id}" id="subcategory"/>
+                        <label>Ad Title <span>*</span></label>
+                        <input type="text" name="title" class="phone" placeholder="Enter Title"
+                               th:field="*{post.title}"
+                               id="postTitle">
+                        <div class="clearfix"></div>
+                        <label>Ad Description <span>*</span></label>
+                        <textarea class="mess" name="discription" placeholder="Write few lines about your product"
+                                  th:field="*{post.description}" id="postDiscription"></textarea>
+                    </div>
+                    <div class="col-sm-6" id="lm">
+                        <label class="sm">Price<span>*</span></label>
+                        <input type="text" name="price" class="phone" placeholder="Enter Price" th:field="*{post.price}"
+                               id="postPrice"></div>
+
+                    <div class="clearfix"></div>
+
+                    <div class="upload-ad-photos">
+                        <label>Photos for your ad :</label>
+                        <div class="photos-upload-view">
+                            <!--<form  action="index.html">-->
+
+                            <input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000"
+                                   multiple="multiple"/>
+
+                            <div>
+                                <input type="file" th:field="*{post.photos}" id="fileselect" name="imageSelect[]"
+                                       multiple="multiple"/>
+                                <div id="filedrag">or drop files here</div>
+                            </div>
+
+                            <div id="submitbutton">
+                                <button type="submit">Upload Files</button>
+                            </div>
+
+                            <!--		</form>-->
+
+                            <div id="messages">
+                                <p>Status Messages</p>
+                            </div>
+
+                        </div>
+                        <label>Videos for your ad :</label>
+                        <div class="photos-upload-view">
+                            <input type="hidden" id="" name="MAX_FILE_SIZE" value="300000000000000"
+                                   multiple="multiple"/>
+                            <div>
+                                <input th:field="*{post.videos}" type="file" id="videoSelect" name="videoSelect[]"
+                                       multiple="multiple"/>
+                                <div id="videoDrag">or drop files here</div>
+                            </div>
+                            <div id="VideoMessages">
+                                <p>Status Messages</p>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <script th:src="@{/js/filedragImage.js}"></script>
+                        <script th:src="@{/js/filedragVideos.js}"></script>
+
+                    </div>
+                    <div class="personal-details">
+
+                        <!--<label>Your Name <span>*</span></label>
+                        <input type="text" class="name" name="name" placeholder="" th:field="*{post.na}">-->
+                        <div class="clearfix"></div>
+                        <label>Your Mobile No <span></span></label>
+                        <input type="text" class="phone" name="phone" placeholder="" th:field="*{post.contactNumber}"
+                               id="postContactNumber">
+                        <div class="clearfix"></div>
+                        <label>Your Email Address<span></span></label>
+                        <input type="text" class="email" name="email" placeholder="" th:field="*{post.postedBy.email}"
+                               id="postEmail">
+                        <div class="clearfix"></div>
+                        <label>Your Location <span>*</span></label>
+                        <input type="text" class="form-control" id="mapsearch" name="locid" th:field="*{post.address}"
+                               disabled="disabled">
+                        <input type="text" class="form-control" id="maplong" name="lolong" th:field="*{post.longitude}">
+                        <input type="text" class="form-control" id="maplat" name="lolat" th:field="*{post.latitude}">
+                        <div id="map">
+                        </div>
+
+                        <div class="clearfix"></div>
+
+
+                        <p class="post-terms">By clicking <strong>post Button</strong> you accept our <a
+                                href="terms.html" target="_blank">Terms of Use </a> and <a href="privacy.html"
+                                                                                           target="_blank">Privacy
+                            Policy</a></p>
+                        <button type="button" class="anythingSubmitButtonClass" id="submitButtonGeneric">Post</button>
+                        <button type="button" class="anythingSubmitButtonClass" id="submitButtonHire">Post</button>
+                        <button type="button" class="anythingSubmitButtonClass" id="submitButtonJobSeeker">Post</button>
+                        <button type="button" class="anythingSubmitButtonClass" id="submitButtonLaptop">Post</button>
+                        <button type="button" class="anythingSubmitButtonClass" id="submitButtonPetAnimal">Post</button>
+                        <button type="button" class="anythingSubmitButtonClass" id="submitButtonProperties">Post
+                        </button>
+                        <button type="button" class="anythingSubmitButtonClass" id="submitButtonSmartPhones">Post
+                        </button>
+                        <button type="button" class="anythingSubmitButtonClass" id="submitButtonVehicles">Post</button>
+                        <button type="button" class="anythingSubmitButtonClass" id="submitButtonVilla">Post</button>
+                        <div class="clearfix"></div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Message</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <h6 id="modalMessage"></h6>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:include="fraghment/footer"></th:block>
+
+
+<th:block th:include="fraghment/header :: footer"></th:block>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-BStQ4iLyw9FxwXRhxt6BJtlr-iG33wk&libraries=places"
+        type="text/javascript"></script>
+<script th:src="@{/plugin/build/js/intlTelInput.js}"></script>
+<script>
+    var input = document.querySelector("#postContactNumber");
+    window.intlTelInput(input, {
+        utilsScript: "plugin/build/js/utils.js"
+    });
+</script>
+
+<script>
+    document.getElementById('video').onmouseover = function () {
+        document.getElementById('b').style.display = 'block';
+    }
+    document.getElementById('video').onmouseout = function () {
+        document.getElementById('b').style.display = 'none';
+    }
+</script>
+<script>
+    $('input[type="file"]').each(function () {
+        // Refs
+        var $file = $(this),
+            $label = $file.next('label'),
+            $labelText = $label.find('span'),
+            labelDefault = $labelText.text();
+
+        // When a new file is selected
+        $file.on('change', function (event) {
+            var fileName = $file.val().split('\\').pop(),
+                tmppath = URL.createObjectURL(event.target.files[0]);
+            //Check successfully selection
+            if (fileName) {
+                $label
+                    .addClass('file-ok')
+                    .css('background-image', 'url(' + tmppath + ')');
+                /*$labelText.text(fileName);*/
+                $labelText.text(labelDefault);
+            } else {
+                $label.removeClass('file-ok');
+                $labelText.text(labelDefault);
+            }
+        });
+
+// End loop of file input elements
+    });
+</script>
+<script>
+    $(document).on("change", ".file_multi_video", function (evt) {
+        var $source = $('#video_here');
+        $source[0].src = URL.createObjectURL(this.files[0]);
+        $source.parent()[0].load();
+    });
+
+</script>
+<script th:src="@{/js/checkNullField.js}"></script>
+
+
+<script>
+    var map = new google.maps.Map(document.getElementById('map'), {
+        center: {
+            lat: 25.286106,
+            lng: 51.534817
+        },
+        zoom: 15
+    });
+    var marker = new google.maps.Marker({
+        position: {
+            lat: 25.286106,
+            lng: 51.534817
+        },
+        map: map,
+
+        draggable: true
+    });
+    var searchBox = new google.maps.places.SearchBox(document.getElementById('mapsearch'));
+    google.maps.event.addListener(searchBox, 'places_changed', function () {
+        var places = searchBox.getPlaces();
+        var bounds = new google.maps.LatLngBounds();
+        var i, place;
+
+        for (i = 0; place = places[i]; i++) {
+            bounds.extend(place.geometry.location);
+            marker.setPosition(place.geometry.location);
+
+        }
+
+        map.fitBounds(bounds);
+        map.setZoom(15);
+
+    });
+    var geocoder = new google.maps.Geocoder();
+
+    google.maps.event.addListener(marker, 'dragend', function () {
+
+        geocoder.geocode({'latLng': marker.getPosition()}, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (results[0]) {
+
+                    $('#maplat').val(marker.getPosition().lat());
+                    $('#maplong').val(marker.getPosition().lng());
+                    $('#mapsearch').val(results[0].formatted_address);
+                    infowindow.setContent(results[0].formatted_address);
+                    google.maps.event.trigger(map, 'resize');
+                    infowindow.open(map, marker);
+                }
+            }
+        });
+    });
+
+</script>
+
+<script>
+    $(document).ready(function () {
+
+        $('#asd').css("display", "none");
+        $('#general').css("display", "none");
+        $('#hire').css("display", "none");
+        $('#seek').css("display", "none");
+        $('#lap').css("display", "none");
+        $('#animal').css("display", "none");
+        $('#property').css("display", "none");
+        $('#mobile').css("display", "none");
+        $('#vehicle').css("display", "none");
+        $('#villa').css("display", "none");
+
+        $('#submitButtonGeneric').css("display", "none");
+        $('#submitButtonHire').css("display", "none");
+        $('#submitButtonJobSeeker').css("display", "none");
+        $('#submitButtonLaptop').css("display", "none");
+        $('#submitButtonPetAnimal').css("display", "none");
+        $('#submitButtonProperties').css("display", "none");
+        $('#submitButtonSmartPhones').css("display", "none");
+        $('#submitButtonVehicles').css("display", "none");
+        $('#submitButtonVilla').css("display", "none");
+
+        loadPostType();
+    });
+    $('#aserv').on('change', function () {
+        $('#asd').css("display", "none");
+        $('#general').css("display", "none");
+        $('#hire').css("display", "none");
+        $('#seek').css("display", "none");
+        $('#lap').css("display", "none");
+        $('#animal').css("display", "none");
+        $('#property').css("display", "none");
+        $('#mobile').css("display", "none");
+        $('#vehicle').css("display", "none");
+        $('#villa').css("display", "none");
+
+        $('#submitButtonGeneric').css("display", "none");
+        $('#submitButtonHire').css("display", "none");
+        $('#submitButtonJobSeeker').css("display", "none");
+        $('#submitButtonLaptop').css("display", "none");
+        $('#submitButtonPetAnimal').css("display", "none");
+        $('#submitButtonProperties').css("display", "none");
+        $('#submitButtonSmartPhones').css("display", "none");
+        $('#submitButtonVehicles').css("display", "none");
+        $('#submitButtonVilla').css("display", "none");
+
+        let category = $('#cserv');
+        category.empty();
+        let subCategory = $('#serv');
+        subCategory.empty();
+        loadCategoryToEdit($('#aserv').val(), false);
+    });
+
+</script>
+
+<script th:inline="javascript">
+    loadPostType = function () {
+        var postTypeId;
+        let adsType = $('#aserv');
+        adsType.empty();
+        const adsTypeUrl = '/userPost/postTypeList';
+        $.getJSON(adsTypeUrl, function (data) {
+            $.each(data, function (key, entry) {
+                if (entry.id == [[${post.subCategory.category.postType.id}]]) {
+                    adsType.append($('<option selected></option>').attr('value', entry.id).text(entry.name));
+                    postTypeId = entry.id;
+                } else {
+                    adsType.append($('<option></option>').attr('value', entry.id).text(entry.name));
+                }
+            });
+            loadCategoryToEdit(postTypeId, true);
+        });
+    }
+</script>
+
+
+<script>
+    loadCategoryToEdit = function (postTypeId, forEdit) {
+        var categoryId;
+        let category = $('#cserv');
+        category.empty();
+        category.append('<option selected="true" disabled>Choose Category</option>');
+        const categoryUrl = '/userPost/categoryListByPostType/' + postTypeId;
+        $.getJSON(categoryUrl, function (data) {
+            $.each(data, function (key, entry) {
+                if (entry.id == [[${post.subCategory.category.id}]] && forEdit) {
+                    category.append($('<option selected></option>').attr('value', entry.id).text(entry.name));
+                    categoryId = entry.id;
+                } else {
+                    category.append($('<option></option>').attr('value', entry.id).text(entry.name));
+                }
+            });
+            if (forEdit) {
+                loadSubcategoryToEdit(categoryId, true);
+            }
+        });
+    };
+
+    $('#cserv').on('change', function () {
+        $('#asd').css("display", "none");
+        $('#general').css("display", "none");
+        $('#hire').css("display", "none");
+        $('#seek').css("display", "none");
+        $('#lap').css("display", "none");
+        $('#animal').css("display", "none");
+        $('#property').css("display", "none");
+        $('#mobile').css("display", "none");
+        $('#vehicle').css("display", "none");
+        $('#villa').css("display", "none");
+
+        $('#submitButtonGeneric').css("display", "none");
+        $('#submitButtonHire').css("display", "none");
+        $('#submitButtonJobSeeker').css("display", "none");
+        $('#submitButtonLaptop').css("display", "none");
+        $('#submitButtonPetAnimal').css("display", "none");
+        $('#submitButtonProperties').css("display", "none");
+        $('#submitButtonSmartPhones').css("display", "none");
+        $('#submitButtonVehicles').css("display", "none");
+        $('#submitButtonVilla').css("display", "none");
+
+        let subCategory = $('#serv');
+        subCategory.empty();
+        loadSubcategoryToEdit($('#cserv').val(), false);
+    });
+
+</script>
+<script>
+    loadSubcategoryToEdit = function (categoryId, forEdit) {
+        let subCategory = $('#serv');
+        subCategory.empty();
+        subCategory.append('<option selected="true" disabled>Choose Subcategory</option>');
+        const subCategoryUrl = '/userPost/subCategoryListByCategory/' + categoryId;
+        $.getJSON(subCategoryUrl, function (data) {
+            $.each(data, function (key, entry) {
+                if (entry.id == [[${post.subCategory.id}]] && forEdit) {
+                    subCategory.append($('<option selected></option>').attr('value', entry.id).text(entry.name));
+                } else {
+                    subCategory.append($('<option></option>').attr('value', entry.id).text(entry.name));
+                }
+            });
+            if (forEdit) {
+                loadModel();
+            }
+        });
+    };
+
+    $('#serv').on('change', function () {
+        loadModel();
+    });
+
+    $('#modelManu, #vehicleManufacturer').on('change', function () {
+        $('#vehiclesModel, #modelModel').empty();
+
+        var manufacturerName = $('#' + this.id).val();
+
+        $.ajax({
+            type: "POST",
+            url: "/getManufacturerModelList",
+            data: {
+                manufacturerName: manufacturerName
+            },
+            success: function (data) {
+                let manufacturerModelSetFor = $('#vehiclesModel, #modelModel');
+                manufacturerModelSetFor.empty();
+                manufacturerModelSetFor.append('<option selected="true" disabled>Choose Model</option>');
+                manufacturerModelSetFor.prop("selectedIndex", 0);
+
+                $.each(data, function (key, entry) {
+                    manufacturerModelSetFor.append($('<option></option>').attr('value', entry.name).text(entry.name));
+                });
+
+                manufacturerModelSetFor.selectpicker('refresh');
+            }
+        })
+    });
+
+    loadModel = function () {
+
+        $('#vehiclesModel, #modelModel').empty();
+        $('#vehiclesModel, #modelModel').selectpicker('refresh');
+
+        $.ajax({
+            type: "POST",
+            url: "/getManufacturerList",
+            data: {
+                subcategoryId: $('#serv').val()
+            },
+            success: function (data) {
+                let manufacturerToBeSetFor = $('#genericManufacturerName, #laptopManfacturer, #modelManu, #vehicleManufacturer').empty();
+                manufacturerToBeSetFor.empty();
+                manufacturerToBeSetFor.append('<option selected="true" disabled>Choose Manufacturer</option>');
+                manufacturerToBeSetFor.prop("selectedIndex", 0);
+
+                $.each(data, function (key, entry) {
+                    manufacturerToBeSetFor.append($('<option></option>').attr({
+                        value: entry.name,
+                        'data-content': '<img src=/images/manufacturerImage/' + entry.id + ' style = "width: 20px">' + ' ' + entry.name
+                    }));
+                });
+
+                manufacturerToBeSetFor.selectpicker('refresh');
+            }
+        });
+
+        $('#asd').css("display", "none");
+        $('#general').css("display", "none");
+        $('#hire').css("display", "none");
+        $('#seek').css("display", "none");
+        $('#lap').css("display", "none");
+        $('#animal').css("display", "none");
+        $('#property').css("display", "none");
+        $('#mobile').css("display", "none");
+        $('#vehicle').css("display", "none");
+        $('#villa').css("display", "none");
+
+
+        $('#submitButtonGeneric').css("display", "none");
+        $('#submitButtonHire').css("display", "none");
+        $('#submitButtonJobSeeker').css("display", "none");
+        $('#submitButtonLaptop').css("display", "none");
+        $('#submitButtonPetAnimal').css("display", "none");
+        $('#submitButtonVilla').css("display", "none");
+        $('#submitButtonSmartPhones').css("display", "none");
+        $('#submitButtonVehicles').css("display", "none");
+        $('#submitButtonProperties').css("display", "none");
+
+        var subCategoryId = ($('#serv').val());
+        $('#subcategory').val(subCategoryId);
+        const categoryUrl = '/userPost/getModel/' + subCategoryId;
+        $.getJSON(categoryUrl, function (data) {
+            if (data) {
+                if (data.postModelClass == "Generic") {
+                    /*$('#fragmentDiv').empty();
+                    $('#fragmentDiv').append("<div id=\"general\" th:include=\"fraghment/post-general\"></div>");*/
+                    $('#asd').css("display", "block");
+                    $('#general').css("display", "block");
+                    $('#submitButtonGeneric').css("display", "block");
+                } else if (data.postModelClass == "Hire") {
+                    /*$('#fragmentDiv').empty();
+                    $('#fragmentDiv').append("<div id=\"hire\" th:include=\"fraghment/post-hire\"></div>");*/
+                    $('#asd').css("display", "block");
+                    $('#hire').css("display", "block");
+                    $('#submitButtonHire').css("display", "block");
+                } else if (data.postModelClass == "JobSeeker") {
+                    /*$('#fragmentDiv').empty();
+                    $('#fragmentDiv').append("<div id=\"seek\" th:include=\"fraghment/post-seek\"></div>");*/
+                    $('#asd').css("display", "block");
+                    $('#seek').css("display", "block");
+                    $('#submitButtonJobSeeker').css("display", "block");
+                } else if (data.postModelClass == "Laptop") {
+                    /*$('#fragmentDiv').empty();
+                    $('#fragmentDiv').append("<div id=\"lap\" th:include=\"fraghment/post-lap\"></div>");*/
+                    $('#asd').css("display", "block");
+                    $('#lap').css("display", "block");
+                    $('#submitButtonLaptop').css("display", "block");
+                } else if (data.postModelClass == "PetAnimal") {
+                    /*$('#fragmentDiv').empty();
+                    $('#fragmentDiv').append("<div id=\"animal\" th:include=\"fraghment/post-animal\"></div>");*/
+                    $('#asd').css("display", "block");
+                    $('#animal').css("display", "block");
+                    $('#submitButtonPetAnimal').css("display", "block");
+                } else if (data.postModelClass == "Properties") {
+                    /*$('#fragmentDiv').empty();
+                    $('#fragmentDiv').append("<div id=\"property\" th:include=\"fraghment/post-property\"></div>");*/
+                    $('#asd').css("display", "block");
+                    $('#property').css("display", "block");
+                    $('#submitButtonProperties').css("display", "block");
+                } else if (data.postModelClass == "SmartPhones") {
+                    /*$('#fragmentDiv').empty();
+                    $('#fragmentDiv').append("<div id=\"mobile\" th:include=\"fraghment/post-mobile\"></div>");*/
+                    $('#asd').css("display", "block");
+                    $('#mobile').css("display", "block");
+                    $('#submitButtonSmartPhones').css("display", "block");
+                } else if (data.postModelClass == "Vehicles") {
+                    /*$('#fragmentDiv').empty();
+                    $('#fragmentDiv').append("<div id=\"vehicle\" th:include=\"fraghment/post-vehicle\"></div>");*/
+                    $('#asd').css("display", "block");
+                    $('#vehicle').css("display", "block");
+                    $('#submitButtonVehicles').css("display", "block");
+                } else if (data.postModelClass == "Villa") {
+                    /*$('#fragmentDiv').empty();
+                    $('#fragmentDiv').append("<div id=\"land\" th:include=\"fraghment/post-land\"></div>");*/
+                    $('#asd').css("display", "block");
+                    $('#villa').css("display", "block");
+                    $('#submitButtonVilla').css("display", "block");
+                } else {
+                    alert("No Model found for this type");
+                }
+            }
+        });
+    }
+
+</script>
+<script>
+    function acceptFunctionForBlock(id) {
+
+    }
+</script>
+
+
+</body>
+</html>

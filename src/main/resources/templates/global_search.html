@@ -1,0 +1,2330 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fraghment/header:: head"></th:block>
+    <!-- DataTables -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/jquery-ui1.css}">
+    <style>
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        input[type="checkbox"] + label {
+            display: block;
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 20px;
+            font: 14px/20px 'Open Sans', Arial, sans-serif;
+            color: #000;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        input[type="checkbox"] + label:last-child {
+            margin-bottom: 0;
+        }
+
+        input[type="checkbox"] + label:before {
+            content: '';
+            display: block;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #6cc0e5;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: .6;
+            -webkit-transition: all .12s, border-color .08s;
+            transition: all .12s, border-color .08s;
+        }
+
+        input[type="checkbox"]:checked + label:before {
+            width: 10px;
+            top: -5px;
+            left: 5px;
+            border-radius: 0;
+            opacity: 1;
+            border: 1px solid green;
+            border-top-color: transparent;
+            border-left-color: transparent;
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+
+        #lap, #animal, #general, #hire, #mobile, #property, #seek, #vehicle, #villa {
+            display: none;
+        }
+    </style>
+
+</head>
+<body>
+
+
+<header th:if="${#request.isUserInRole('USER')}" th:include="fraghment/user_header"></header>
+<header th:unless="${#request.isUserInRole('USER')}" th:include="fraghment/head"></header>
+<!-- Products -->
+<input id="searchString" type="hidden" th:value="${searchString}"/>
+<div class="total-ads main-grid-border">
+    <div class="container">
+        <ol class="breadcrumb" style="margin-bottom: 5px;">
+            <li><a href="index.html">Home</a></li>
+            <li class="active">All Ads</li>
+        </ol>
+        <div class="ads-grid">
+            <div class="side-bar col-md-3">
+                <div class="search-hotel">
+                    <h3 class="sear-head">Name Contains</h3>
+                    <!-- <form href="#">
+                         <input id="title" type="text" value="Product name..." onfocus="this.value = '';"
+                                onblur="if (this.value == '') {this.value = 'Product name...';}" required="">
+                         <input  type="submit" value=" " id="titleSearchButton">
+                     </form>-->
+
+                    <input id="title" type="text" onfocus="" placeholder="Product name..."
+                           onblur="" required="">
+                    <input type="button" value=" " id="titleSearchButton">
+
+                </div>
+
+
+                <div class="brand-select" id="typeAddId">
+                    <h3 class="sear-head">Type</h3>
+                    <select id="selectType" class="selectpicker" data-live-search="true"></select>
+                </div>
+
+
+                <div class="brand-select" id="categoryAddId">
+                    <h3 class="sear-head">Category</h3>
+                    <select id="selectCategory" class="selectpicker" data-live-search="true"></select>
+                </div>
+
+
+                <div class="brand-select">
+                    <h3 class="sear-head">Subcategory</h3>
+                    <select id="selectSubCategory" class="selectpicker" data-live-search="true"></select>
+                </div>
+
+
+                <div class="range">
+                    <h3 class="sear-head">Price Range</h3>
+                    <ul class="dropdown-menu6">
+                        <li>
+                            <div id="slider-range"></div>
+                            <input type="text" id="amount" style="border: 0; color: #ffffff; font-weight: normal;"/>
+                            <input type="hidden" id="amountFrom">
+                            <input type="hidden" id="amountTo">
+                        </li>
+                    </ul>
+                    <!---->
+
+                </div>
+                <div id="fragmentDiv">
+                    <div id="lap" th:include="fraghment/lap-filter"></div>
+                    <div id="general" th:include="fraghment/general-filter"></div>
+                    <div id="animal" th:include="fraghment/animal-filter"></div>
+                    <div id="property" th:include="fraghment/property-filter"></div>
+                    <div id="mobile" th:include="fraghment/mobile-filter"></div>
+                    <div id="villa" th:include="fraghment/villa-filter"></div>
+                    <div id="seek" th:include="fraghment/seek-filter"></div>
+                    <div id="vehicle" th:include="fraghment/vehicle-filter"></div>
+                    <div id="hire" th:include="fraghment/hire-filter"></div>
+                </div>
+
+
+                <div class="range search_button">
+                    <button class="btn btn-block serach" id="advancedSearchButton">Search</button>
+                    <!---->
+
+                </div>
+                <div class="featured-ads">
+                    <h2 class="sear-head fer">Featured Ads</h2>
+                    <div class="featured-ad">
+                        <a href="single.html">
+                            <div class="featured-ad-left">
+                                <img th:src="@{../images/f1.jpg}" title="ad image" alt=""/>
+                            </div>
+                            <div class="featured-ad-right">
+                                <h4>Lorem Ipsum is simply dummy text of the printing industry</h4>
+                                <p> 450</p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </a>
+                    </div>
+                    <div class="featured-ad">
+                        <a href="single.html">
+                            <div class="featured-ad-left">
+                                <img th:src="@{../images/f2.jpg}" title="ad image" alt=""/>
+                            </div>
+                            <div class="featured-ad-right">
+                                <h4>Lorem Ipsum is simply dummy text of the printing industry</h4>
+                                <p> 380</p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </a>
+                    </div>
+                    <div class="featured-ad">
+                        <a href="single.html">
+                            <div class="featured-ad-left">
+                                <img th:src="@{../images/f3.jpg}" title="ad image" alt=""/>
+                            </div>
+                            <div class="featured-ad-right">
+                                <h4>Lorem Ipsum is simply dummy text of the printing industry</h4>
+                                <p> 560</p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="ads-display col-md-9">
+                <div class="wrapper">
+                    <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+                        <ul id="myTab" class="nav nav-tabs nav-tabs-responsive" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home"
+                                   aria-expanded="true">
+                                    <span class="text">All Ads</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div id="myTabContent" class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
+                                <div>
+                                    <div id="container">
+                                        <div class="view-controls-list" id="viewcontrols">
+                                            <label>view :</label>
+                                            <a class="gridview active"><i class="glyphicon glyphicon-th"></i></a>
+                                            <a class="listview "><i class="glyphicon glyphicon-th-list"></i></a>
+                                        </div>
+                                        <div class="sort">
+                                            <div class="sort-by">
+                                                <input type="hidden" id="advanceSearchFlag">
+                                                <label>Sort By : </label>
+                                                <select id="size">
+                                                    <option value="1">1</option>
+                                                    <option value="5">5</option>
+                                                    <option value="10">10</option>
+                                                    <option value="20" selected>20</option>
+                                                    <option value="50">50</option>
+                                                    <option value="20">100</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <ul class="grid" id="postList"></ul>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <ul class="pagination pagination-sm" id="pagination"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <input type="hidden" id="filterFor"/>
+</div>
+<!-- // Products -->
+<!--footer section start-->
+
+<th:block th:include="fraghment/footer"></th:block>
+
+<th:block th:include="fraghment/header :: footer"></th:block>
+<script type="text/javascript" th:src="@{/js/jquery-ui.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.simplePagination.js}"></script>
+<link th:href="@{/css/simplePagination.css}" rel="stylesheet"/>
+<script type='text/javascript'>//<![CDATA[
+$(window).load(function () {
+    $("#slider-range").slider({
+        range: true,
+        min: 0,
+        max: 1000000,
+        values: [50, 521634],
+        slide: function (event, ui) {
+            $("#amount").val(ui.values[0] + "QR" + " - " + ui.values[1] + "QR");
+            $('#amountFrom').val(ui.values[0]);
+            $('#amountTo').val(ui.values[1]);
+        }
+    });
+    $("#amount").val($("#slider-range").slider("values", 0) + "QR" + " - " + $("#slider-range").slider("values", 1) + "QR");
+});//]]>
+</script>
+
+<script th:src="@{/js/tabs.js}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var elem = $('#container ul');
+        $('#viewcontrols a').on('click', function (e) {
+            if ($(this).hasClass('gridview')) {
+                elem.fadeOut(1000, function () {
+                    $('#container ul').removeClass('list').addClass('grid');
+                    $('#viewcontrols').removeClass('view-controls-list').addClass('view-controls-grid');
+                    $('#viewcontrols .gridview').addClass('active');
+                    $('#viewcontrols .listview').removeClass('active');
+                    elem.fadeIn(1000);
+                });
+            } else if ($(this).hasClass('listview')) {
+                elem.fadeOut(1000, function () {
+                    $('#container ul').removeClass('grid').addClass('list');
+                    $('#viewcontrols').removeClass('view-controls-grid').addClass('view-controls-list');
+                    $('#viewcontrols .gridview').removeClass('active');
+                    $('#viewcontrols .listview').addClass('active');
+                    elem.fadeIn(1000);
+                });
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        let selectType = $('#selectType');
+        selectType.empty();
+        selectType.append('<option selected="true" disabled>Choose Type</option>');
+        selectType.prop("selectedIndex", 0);
+        const selectTypeUrl = '/typeList';
+        $.getJSON(selectTypeUrl, function (data) {
+            $.each(data, function (key, entry) {
+                selectType.append($('<option></option>').attr('value', entry.id).attr('data-tokens', entry.name).text(entry.name));
+            });
+            selectType.selectpicker('refresh');
+        });
+        $('#selectCategory').empty();
+        $('#selectSubCategory').empty();
+    });
+
+    $('#selectType').on('change', function () {
+        $('#lap, #animal, #general, #hire, #mobile, #property, #seek, #vehicle, #villa').css('display', 'none');
+        $('#selectCategory').empty();
+        $('#selectSubCategory').empty();
+        loadCategory();
+    })
+</script>
+
+<script>
+    loadCategory = function () {
+        let category = $('#selectCategory');
+        var postType = $('#selectType').val();
+        category.empty();
+        category.append('<option selected="true" disabled>Choose Category</option>');
+        category.prop("selectedIndex", 0);
+        const categoryUrl = '/categoryListByPostType/' + postType;
+        $.getJSON(categoryUrl, function (data) {
+            $.each(data, function (key, entry) {
+                category.append($('<option></option>').attr('value', entry.id).attr('data-tokens', entry.name).text(entry.name));
+            });
+            category.selectpicker('refresh');
+        });
+        $('#selectSubCategory').empty();
+    };
+
+    $('#selectCategory').on('change', function () {
+        $('#lap, #animal, #general, #hire, #mobile, #property, #seek, #vehicle, #villa').css('display', 'none');
+        $('#selectSubCategory').empty();
+        loadSubCategory();
+    })
+</script>
+
+<script>
+    loadSubCategory = function () {
+        let selectSubCategory = $('#selectSubCategory');
+        var categoryId = $('#selectCategory').val();
+        selectSubCategory.empty();
+        selectSubCategory.append('<option selected="true" disabled>Choose Subcategory</option>');
+        selectSubCategory.prop("selectedIndex", 0);
+        const selectSubCategoryUrl = '/subcategoryListByCategory/' + categoryId;
+        $.getJSON(selectSubCategoryUrl, function (data) {
+            $.each(data, function (key, entry) {
+                selectSubCategory.append($('<option></option>').attr('value', entry.id).attr('data-tokens', entry.name).text(entry.name));
+            });
+            selectSubCategory.selectpicker('refresh');
+        });
+
+    };
+</script>
+
+
+<script>
+    var subcategory = $('#selectSubCategory');
+    subcategory.on('change', function () {
+        $.ajax({
+            type: 'POST',
+            url: '/getPostModel',
+            data: {
+                subcategoryId: subcategory.val()
+            },
+            success: function (data) {
+                $('#lap, #animal, #general, #hire, #mobile, #property, #seek, #vehicle, #villa').css('display', 'none');
+
+                switch (data.modelName) {
+                    case 'Laptop':
+                        $('#lap').css('display', 'block');
+                        $('#filterFor').val('Laptop');
+                        break;
+
+                    case 'PetAnimal':
+                        $('#animal').css('display', 'block');
+                        $('#filterFor').val('PetAnimal');
+                        break;
+
+                    case 'Generic':
+                        $('#general').css('display', 'block');
+                        $('#filterFor').val('Generic');
+                        break;
+
+                    case 'Hire':
+                        $('#hire').css('display', 'block');
+                        $('#filterFor').val('Hire');
+                        break;
+
+                    case 'SmartPhones':
+                        $('#mobile').css('display', 'block');
+                        $('#filterFor').val('SmartPhones');
+                        break;
+
+                    case 'Properties':
+                        $('#property').css('display', 'block');
+                        $('#filterFor').val('Properties');
+                        break;
+
+                    case 'JobSeeker':
+                        $('#seek').css('display', 'block');
+                        $('#filterFor').val('JobSeeker');
+                        break;
+
+                    case 'Vehicles':
+                        $('#vehicle').css('display', 'block');
+                        $('#filterFor').val('Vehicles');
+                        break;
+
+                    case 'Villa':
+                        $('#villa').css('display', 'block');
+                        $('#filterFor').val('Villa');
+                        break;
+
+                    default:
+                        $('#lap, #animal, #general, #hire, #mobile, #property, #seek, #vehicle, #villa').css('display', 'none');
+
+                }
+
+            }
+        });
+
+        $('#modelForVehicle, #modelForMobile').empty();
+        $('#modelForVehicle, #modelForMobile').selectpicker('refresh');
+
+        $.ajax({
+            type: "POST",
+            url: "/getManufacturerList",
+            data: {
+                subcategoryId: subcategory.val()
+            },
+            success: function (data) {
+                let manufacturerToBeSetFor = $('#manufacturerForGeneric, #manufacturerForLaptop, #manufacturerForMobile, #manufacturerForVehicle').empty();
+                manufacturerToBeSetFor.empty();
+                manufacturerToBeSetFor.append('<option selected="true" disabled>Choose Manufacturer</option>');
+                manufacturerToBeSetFor.append('<option value="All">All</option>');
+                manufacturerToBeSetFor.prop("selectedIndex", 0);
+
+                $.each(data, function (key, entry) {
+                    manufacturerToBeSetFor.append($('<option></option>').attr({
+                        value: entry.name,
+                        'data-content': '<img src=/images/manufacturerImage/' + entry.id + ' style = "width: 20px">' + ' ' + entry.name
+                    }));
+                });
+
+                manufacturerToBeSetFor.selectpicker('refresh');
+            }
+        })
+
+    });
+
+    $('#manufacturerForMobile, #manufacturerForVehicle').on('change', function () {
+        $('#modelForVehicle, #modelForMobile').empty();
+
+        var manufacturerName = $('#' + this.id).val();
+
+        $.ajax({
+            type: "POST",
+            url: "/getManufacturerModelList",
+            data: {
+                manufacturerName: manufacturerName
+            },
+            success: function (data) {
+                let manufacturerModelSetFor = $('#modelForVehicle, #modelForMobile');
+                manufacturerModelSetFor.empty();
+                manufacturerModelSetFor.append('<option selected="true" disabled>Choose Model</option>');
+                manufacturerModelSetFor.append('<option value="All">All</option>');
+                manufacturerModelSetFor.prop("selectedIndex", 0);
+
+                $.each(data, function (key, entry) {
+                    manufacturerModelSetFor.append($('<option></option>').attr('value', entry.name).text(entry.name));
+                });
+
+                manufacturerModelSetFor.selectpicker('refresh');
+            }
+        })
+    });
+</script>
+
+<script>
+    $('#titleSearchButton').on('click', function () {
+        /*var title = $('#title').val();
+        var size = $('#size').val();
+        $('#searchString').val(title);
+        var page = 0;
+        loadPost($('#searchString').val(), page, size);*/
+
+        dynamicAdvancedSearch();
+        $('#advanceSearchFlag').val(true);
+
+    });
+</script>
+<script>
+    $('#advancedSearchButton').on('click', function () {
+        /*advancedSearch($('#selectType').val(), $('#selectCategory').val(), $('#selectSubCategory').val(), $('#amountFrom').val(), $('#amountTo').val(), 0, $('#size').val());
+        $('#advanceSearchFlag').val(true);*/
+
+        dynamicAdvancedSearch();
+        $('#advanceSearchFlag').val(true);
+    })
+</script>
+
+
+<script>
+    dynamicAdvancedSearch = function () {
+        if ($('#selectSubCategory').val()) {
+            var searchModel = $('#filterFor').val();
+
+            switch (searchModel) {
+                case 'Laptop':
+                    advancedSearchForLaptop($('#selectSubCategory').val(), $('#title').val(), $('#manufacturerForLaptop').val(), $('#locationForLaptop').val(), $('#conditionForLaptop').val(), $('#amountFrom').val(), $('#amountTo').val(), $('#ramForLaptop').val(), $('#processorForLaptop').val(), $('#storageForLaptop').val(), $('#displayForLaptop').val(), 0, $('#size').val());
+                    break;
+
+                case 'PetAnimal':
+                    advancedSearchForAnimal($('#title').val(), $('#addressForAnimal').val(), $('#amountFrom').val(), $('#amountTo').val(), $('#ageForAnimal').val(), $('#quantityForAnimal').val(), $('#colorForAnimal').val(), 0, $('#size').val());
+                    break;
+
+                case 'Generic':
+                    advancedSearchForGeneral($('#title').val(), $('#manufacturerForGeneric').val(), $('#locationForGeneric').val(), $('#conditionForGeneric').val(), $('#amountFrom').val(), $('#amountTo').val(), 0, $('#size').val());
+                    break;
+
+                case 'Hire':
+                    advancedSearchForHire($('#selectSubCategory').val(), $('#title').val(), $('#positionForHire').val(), $('#locationForHire').val(), $('#amountFrom').val(), $('#amountTo').val(), $('#hireTypeForHire').val(), $('#jobLevelForHire').val(), $('#hireLnagaugeForHire').val(), 0, $('#size').val());
+                    break;
+
+                case 'SmartPhones':
+                    advancedSearchForMobile($('#selectSubCategory').val(), $('#title').val(), $('#manufacturerForMobile').val(), $('#locationForMobile').val(), $('#conditionForMobile').val(), $('#fontCameraForMobile').val(), $('#backCameraForMobile').val(), $('#amountFrom').val(), $('#amountTo').val(), $('#ramForMobile').val(), $('#processorForMobile').val(), $('#storageForMobile').val(), $('#modelForMobile').val(), $('#colorForMobile').val(), $('#smartPhoneDisplayForMobile').val(), 0, $('#size').val());
+                    break;
+
+                case 'Properties':
+                    advancedSearchForProperty($('#selectSubCategory').val(), $('#title').val(), $('#locationForProperty').val(), $('#amountFrom').val(), $('#amountTo').val(), 0, $('#size').val());
+                    break;
+
+                case 'JobSeeker':
+                    advancedSearchForJobSeeker($('#selectSubCategory').val(), $('#title').val(), $('#positionForJobSeeker').val(), $('#locationForJobSeeker').val(), $('#amountFrom').val(), $('#amountTo').val(), $('#roleForJobSeeker').val(), $('#seekerLanguageForJobSeeker').val(), 0, $('#size').val());
+                    break;
+
+                case 'Vehicles':
+                    advancedSearchForVehicle($('#selectSubCategory').val(), $('#title').val(), $('#manufacturerForVehicle').val(), $('#locationForVehicle').val(), $('#conditionForVehicle').val(), $('#numberOfDoorsForVehicle').val(), $('#fuelTypeForVehicle').val(), $('#amountFrom').val(), $('#amountTo').val(), $('#modelForVehicle').val(), $('#yearForVehicle').val(), $('#colorForVehicle').val(), 0, $('#size').val());
+                    break;
+
+                case 'Villa':
+                    advancedSearchForVilla($('#selectSubCategory').val(), $('#title').val(), $('#locationForVilla').val(), $('#numberOfRoomsForVilla').val(), $('#numberOfBathRoomsForVilla').val(), $('#amountFrom').val(), $('#amountTo').val(), $('#villaDepositForVilla').val(), 0, $('#size').val());
+                    break;
+
+                default:
+                    advancedSearch($('#title').val(), $('#selectSubCategory').val(), $('#amountFrom').val(), $('#amountTo').val(), 0, size);
+
+            }
+
+        } else {
+            advancedSearch($('#selectType').val(), $('#selectCategory').val(), $('#selectSubCategory').val(), $('#amountFrom').val(), $('#amountTo').val(), 0, $('#size').val());
+            $('#advanceSearchFlag').val(true);
+        }
+    }
+</script>
+
+<script>
+    advancedSearch = function (typeId, categoryId, subcategoryId, amountFrom, amountTo, page, size) {
+        var amount = false;
+        if (amountFrom && amountTo) {
+            amount = true;
+        }
+
+        var searchData;
+
+        if (typeId && !categoryId && !amount) {
+            searchData = {typeId: typeId, page: page, size: size}
+        }
+
+        if (typeId && !categoryId && amount) {
+            searchData = {
+                typeId: typeId, priceFrom: amountFrom,
+                priceTo: amountTo, page: page, size: size
+            }
+        }
+
+        if (categoryId && !subcategoryId && !amount) {
+            searchData = {categoryId: categoryId, page: page, size: size}
+        }
+
+        if (categoryId && !subcategoryId && amount) {
+            searchData = {
+                categoryId: categoryId, priceFrom: amountFrom,
+                priceTo: amountTo, page: page, size: size
+            }
+        }
+
+        if (subcategoryId && !amount) {
+            searchData = {subcategoryId: subcategoryId, page: page, size: size}
+        }
+
+        if (subcategoryId && amount) {
+            searchData = {
+                subcategoryId: subcategoryId,
+                priceFrom: amountFrom,
+                priceTo: amountTo,
+                page: page,
+                size: size
+            }
+        }
+
+        if (!typeId && !categoryId && !subcategoryId && amount) {
+            searchData = {
+                priceFrom: amountFrom,
+                priceTo: amountTo, page: page, size: size
+            }
+        }
+
+        if (searchData) {
+            $.ajax({
+                method: "POST",
+                url: "/search/allAdsByGlobalSearchByFilter",
+                data: searchData
+            })
+                .done(function (data) {
+                    renderData(data);
+                    $('#advanceSearchFlag').val(true);
+                    $(function () {
+                        $('#pagination').pagination({
+                            items: data.totalElements,
+                            itemsOnPage: size,
+                            cssStyle: 'light-theme',
+                            onPageClick: function () {
+                                page = $('#pagination').pagination('getCurrentPage') - 1;
+                                loadAdvancedSearchPage($('#selectType').val(), $('#selectCategory').val(), $('#selectSubCategory').val(), $('#amountFrom').val(), $('#amountTo').val(), page, $('#size').val());
+                            }
+                        });
+                    });
+                });
+        }
+    }
+</script>
+
+<script>
+    loadAdvancedSearchPage = function (typeId, categoryId, subcategoryId, amountFrom, amountTo, page, size) {
+        var amount = false;
+        if (amountFrom && amountTo) {
+            amount = true;
+        }
+
+        var searchData;
+
+        if (typeId && !categoryId && !amount) {
+            searchData = {typeId: typeId, page: page, size: size}
+        }
+
+        if (typeId && !categoryId && amount) {
+            searchData = {
+                typeId: typeId, priceFrom: amountFrom,
+                priceTo: amountTo, page: page, size: size
+            }
+        }
+
+        if (categoryId && !subcategoryId && !amount) {
+            searchData = {categoryId: categoryId, page: page, size: size}
+        }
+
+        if (categoryId && !subcategoryId && amount) {
+            searchData = {
+                categoryId: categoryId, priceFrom: amountFrom,
+                priceTo: amountTo, page: page, size: size
+            }
+        }
+
+        if (subcategoryId && !amount) {
+            searchData = {subcategoryId: subcategoryId, page: page, size: size}
+        }
+
+        if (subcategoryId && amount) {
+            searchData = {
+                subcategoryId: subcategoryId,
+                priceFrom: amountFrom,
+                priceTo: amountTo,
+                page: page,
+                size: size
+            }
+        }
+
+        if (!typeId && !categoryId && !subcategoryId && amount) {
+            searchData = {
+                priceFrom: amountFrom,
+                priceTo: amountTo, page: page, size: size
+            }
+        }
+
+        if (searchData) {
+            $.ajax({
+                method: "POST",
+                url: "/search/allAdsByGlobalSearchByFilter",
+                data: searchData
+            })
+                .done(function (data) {
+                    renderData(data);
+                });
+        }
+    }
+</script>
+
+<script>
+    $(document).ready(
+        function () {
+            var size = $('#size').val();
+            var elem = $('#container ul');
+            var searchString = $('#searchString').val();
+            var page = 0;
+            loadPost(searchString, page, size);
+        });
+</script>
+<script>
+    $('#size').on('change',
+        function () {
+            if ($('#advanceSearchFlag').val()) {
+                advancedSearch($('#selectType').val(), $('#selectCategory').val(), $('#selectSubCategory').val(), $('#amountFrom').val(), $('#amountTo').val(), 0, $('#size').val());
+            } else {
+                var size = $('#size').val();
+                var elem = $('#container ul');
+                var searchString = $('#searchString').val();
+                var page = 0;
+                loadPost(searchString, page, size);
+            }
+
+        });
+</script>
+<script>
+    loadPost = function (searchString, page, size) {
+        $.ajax({
+            method: "POST",
+            url: "/searchAllPost",
+            data: {title: searchString, page: page, size: size}
+        })
+            .done(function (data) {
+                renderData(data);
+                /*$('#pagination').empty();*/
+                $(function () {
+                    $('#pagination').pagination({
+                        items: data.totalElements,
+                        itemsOnPage: size,
+                        cssStyle: 'light-theme',
+                        onPageClick: function () {
+                            page = $('#pagination').pagination('getCurrentPage') - 1;
+                            loadPage(searchString, page, size);
+                        }
+                    });
+                });
+            });
+    };
+</script>
+
+<script>
+    loadPage = function (searchString, page, size) {
+        $.ajax({
+            method: "POST",
+            url: "/searchAllPost",
+            data: {title: searchString, page: page, size: size}
+        })
+            .done(function (data) {
+                renderData(data);
+            });
+    };
+</script>
+<script>
+    renderData = function (data) {
+        $("#postList").empty();
+        $.each(data.content, function (key, entry) {
+            if (entry.promotedAds == true) {
+
+                $('#postList').append(
+                    $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.id}).append(
+                        $('<li>').append(
+                            $('<span>').addClass('fas fa-bookmark premiumad_img')
+                        ).append(
+                            $('<span>').addClass('price_view').text(entry.price + " QR")
+                        ).append(
+                            $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                        ).append(
+                            $('<section>').addClass('list-left').append(
+                                $('<h5>').addClass('title').text(entry.title)
+                            )
+                        ).append(
+                            $('<section>').addClass('list-right').append(
+                                $('<span>').addClass('cityname').text(entry.address)
+                            ).append(
+                                $('<p>').addClass('date').text(new Date(entry.postCreateTime).toLocaleDateString())
+                            ).append(
+                                $('<p>').addClass('view_count').append(
+                                    $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                                ).append(
+                                    $('<span>').addClass('count').attr({id: 'comments_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getComment/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('#comments_count' + entry.id).text(data);
+                                            }
+                                        })
+                                    })
+                                ).append(
+                                    $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                                ).append(
+                                    $('<span>').addClass('view').attr({id: 'view_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getView/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('#view_count' + entry.id).text(data);
+                                            }
+                                        })
+                                    })
+                                ).append(
+                                    $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                                ).append(
+                                    $('<span>').addClass('like').attr({id: 'like_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getLike/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('#like_count' + entry.id).text(data);
+                                            }
+                                        })
+                                    })
+                                )
+                            )
+                        ).append(
+                            $('<div>').addClass('clearfix')
+                        )
+                    )
+                );
+            }
+            else if (entry.postStatus == true) {
+                $('#postList').append(
+                    $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.id}).append(
+                        $('<li>').append(
+                            $('<span>').addClass(' sold_item').text('SOLD')
+                        ).append(
+                            $('<span>').addClass('price_view').text(entry.price + " QR")
+                        ).append(
+                            $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                        ).append(
+                            $('<section>').addClass('list-left').append(
+                                $('<h5>').addClass('title').text(entry.title)
+                            )
+                        ).append(
+                            $('<section>').addClass('list-right').append(
+                                $('<span>').addClass('cityname').text(entry.address)
+                            ).append(
+                                $('<p>').addClass('date').text(new Date(entry.postCreateTime).toLocaleDateString())
+                            ).append(
+                                $('<p>').addClass('view_count').append(
+                                    $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                                ).append(
+                                    $('<span>').addClass('count').attr({id: 'comments_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getComment/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('#comments_count' + entry.id).text(data);
+                                            }
+                                        })
+                                    })
+                                ).append(
+                                    $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                                ).append(
+                                    $('<span>').addClass('view').attr({id: 'view_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getView/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('#view_count' + entry.id).text(data);
+                                            }
+                                        })
+                                    })
+                                ).append(
+                                    $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                                ).append(
+                                    $('<span>').addClass('like').attr({id: 'like_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getLike/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('#like_count' + entry.id).text(data);
+                                            }
+                                        })
+                                    })
+                                )
+                            )
+                        ).append(
+                            $('<div>').addClass('clearfix')
+                        )
+                    )
+                );
+            } else {
+                $('#postList').append(
+                    $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.id}).append(
+                        $('<li>').append(
+                            $('<span>').addClass('price_view').text(entry.price + " QR")
+                        ).append(
+                            $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                        ).append(
+                            $('<section>').addClass('list-left').append(
+                                $('<h5>').addClass('title').text(entry.title)
+                            )
+                        ).append(
+                            $('<section>').addClass('list-right').append(
+                                $('<span>').addClass('cityname').text(entry.address)
+                            ).append(
+                                $('<p>').addClass('date').text(new Date(entry.postCreateTime).toLocaleDateString())
+                            ).append(
+                                $('<p>').addClass('view_count').append(
+                                    $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                                ).append(
+                                    $('<span>').addClass('count').attr({id: 'comments_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getComment/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('#comments_count' + entry.id).text(data);
+                                            }
+                                        })
+                                    })
+                                ).append(
+                                    $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                                ).append(
+                                    $('<span>').addClass('view').attr({id: 'view_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getView/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('#view_count' + entry.id).text(data);
+                                            }
+                                        })
+                                    })
+                                ).append(
+                                    $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                                ).append(
+                                    $('<span>').addClass('like').attr({id: 'like_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getLike/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('#like_count' + entry.id).text(data);
+                                            }
+                                        })
+                                    })
+                                )
+                            )
+                        ).append(
+                            $('<div>').addClass('clearfix')
+                        )
+                    )
+                );
+            }
+        });
+    }
+</script>
+
+<!-------Advanced Search for Animal----------->
+
+<script>
+    advancedSearchForAnimal = function (title, address, amountFrom, amountTo, age, quantity, color, page, size) {
+
+        var searchData = {subCategoryId: $('#selectSubCategory').val(), page: page, size: size};
+
+        if (title) {
+            searchData['title'] = title;
+        }
+        if (address) {
+            if (address != 'All') searchData['address'] = address;
+        }
+        if (amountFrom && amountTo) {
+            searchData['priceFrom'] = amountFrom;
+            searchData['priceTo'] = amountTo;
+        }
+        if (age) {
+            var toAge = "";
+            searchData['ageFrom'] = age[0];
+            if (age.length > 3) {
+                for (var i = 2; i < age.length; i++) {
+                    toAge = toAge.concat(age[i]);
+                }
+            } else {
+                toAge = toAge.concat(age[2]);
+            }
+            searchData['ageTo'] = toAge;
+        }
+        if (quantity) {
+            var toQuantity = "";
+            searchData['quantityFrom'] = quantity[0];
+            if (quantity.length > 3) {
+                for (var j = 2; j < quantity.length; j++) {
+                    toQuantity = toQuantity.concat(quantity[j]);
+                }
+            } else {
+                toQuantity = toQuantity.concat(quantity[2]);
+            }
+            searchData['quantityTo'] = toQuantity;
+        }
+
+        if ($('#box_All_ForAnimal:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Male', 'Female', 'Others']);
+        } else if ($('#box_Both_ForAnimal:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Male', 'Female']);
+        } else if ($('#box_Male_ForAnimal:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Male']);
+        } else if ($('#box_Female_ForAnimal:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Female']);
+        } else if ($('#box_Others_ForAnimal:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Others']);
+        }
+
+        if (color) {
+            if (color != 'Any') searchData['color'] = color;
+        }
+        if (searchData) {
+            $.ajax({
+                method: "POST",
+                url: "/search/searchAllPostByAnimal",
+                data: searchData
+            })
+                .done(function (data) {
+                    renderData(data);
+                    $('#advanceSearchFlag').val(true);
+                    $(function () {
+                        $('#pagination').pagination({
+                            items: data.totalElements,
+                            itemsOnPage: size,
+                            cssStyle: 'light-theme',
+                            onPageClick: function () {
+                                page = $('#pagination').pagination('getCurrentPage') - 1;
+                                loadAdvancedSearchPageForAnimal(title, address, amountFrom, amountTo, age, quantity, color, page, size);
+                                $('#advanceSearchFlag').val(true);
+                            }
+                        });
+                    });
+                });
+        }
+    }
+</script>
+
+<script>
+    loadAdvancedSearchPageForAnimal = function (title, address, amountFrom, amountTo, age, quantity, color, page, size) {
+
+        var searchData = {subCategoryId: $('#selectSubCategory').val(), page: page, size: size};
+
+        if (title) {
+            searchData['title'] = title;
+        }
+        if (address) {
+            if (address != 'All') searchData['address'] = address;
+        }
+        if (amountFrom && amountTo) {
+            searchData['priceFrom'] = amountFrom;
+            searchData['priceTo'] = amountTo;
+        }
+        if (age) {
+            var toAge = "";
+            searchData['ageFrom'] = age[0];
+            if (age.length > 3) {
+                for (var i = 2; i < age.length; i++) {
+                    toAge = toAge.concat(age[i]);
+                }
+            } else {
+                toAge = toAge.concat(age[2]);
+            }
+            searchData['ageTo'] = toAge;
+        }
+        if (quantity) {
+            var toQuantity = "";
+            searchData['quantityFrom'] = quantity[0];
+            if (quantity.length > 3) {
+                for (var j = 2; j < quantity.length; j++) {
+                    toQuantity = toQuantity.concat(quantity[j]);
+                }
+            } else {
+                toQuantity = toQuantity.concat(quantity[2]);
+            }
+            searchData['quantityTo'] = toQuantity;
+        }
+
+        if ($('#box_All_ForAnimal:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Male', 'Female', 'Others']);
+        } else if ($('#box_Both_ForAnimal:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Male', 'Female']);
+        } else if ($('#box_Male_ForAnimal:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Male']);
+        } else if ($('#box_Female_ForAnimal:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Female']);
+        } else if ($('#box_Others_ForAnimal:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Others']);
+        }
+
+        if (color) {
+            if (color != 'Any') searchData['color'] = color;
+        }
+
+        if (searchData) {
+            $.ajax({
+                method: "POST",
+                url: "/search/searchAllPostByAnimal",
+                data: searchData
+            })
+                .done(function (data) {
+                    renderData(data);
+                });
+        }
+    }
+</script>
+
+<!-------Advanced Search for Animal----------->
+
+<!-------Advanced Search for general----------->
+
+<script>
+    advancedSearchForGeneral = function (title, manufacturer, address, condition, amountFrom, amountTo, page, size) {
+        var searchData = {subCategoryId: $('#selectSubCategory').val(), page: page, size: size};
+
+        if (title) {
+            searchData['title'] = title;
+        }
+        if (manufacturer) {
+            if (manufacturer != 'All') searchData['brandName'] = manufacturer;
+        }
+        if (address) {
+            if (address != 'All') searchData['address'] = address;
+        }
+        if (condition) {
+            if (condition != 'All') searchData['condition'] = condition;
+        }
+
+        if (amountFrom && amountTo) {
+            searchData['priceFrom'] = amountFrom;
+            searchData['priceTo'] = amountTo;
+        }
+
+        if (searchData) {
+            $.ajax({
+                method: "POST",
+                url: "/search/searchAllPostByGeneral",
+                data: searchData
+            })
+                .done(function (data) {
+                    renderData(data);
+                    $('#advanceSearchFlag').val(true);
+                    $(function () {
+                        $('#pagination').pagination({
+                            items: data.totalElements,
+                            itemsOnPage: size,
+                            cssStyle: 'light-theme',
+                            onPageClick: function () {
+                                page = $('#pagination').pagination('getCurrentPage') - 1;
+                                loadAdvancedSearchPageForGeneral(title, manufacturer, address, condition, amountFrom, amountTo, page, size);
+                                $('#advanceSearchFlag').val(true);
+                            }
+                        });
+                    });
+                });
+        }
+    }
+</script>
+
+
+<script>
+    loadAdvancedSearchPageForGeneral = function (title, manufacturer, address, condition, amountFrom, amountTo, page, size) {
+        var searchData = {subCategoryId: $('#selectSubCategory').val(), page: page, size: size};
+
+        if (title) {
+            searchData['title'] = title;
+        }
+        if (manufacturer) {
+            if (manufacturer != 'All') searchData['brandName'] = manufacturer;
+        }
+        if (address) {
+            if (address != 'All') searchData['address'] = address;
+        }
+        if (condition) {
+            if (condition != 'All') searchData['condition'] = condition;
+        }
+
+        if (amountFrom && amountTo) {
+            searchData['priceFrom'] = amountFrom;
+            searchData['priceTo'] = amountTo;
+        }
+
+        if (searchData) {
+            $.ajax({
+                method: "POST",
+                url: "/search/searchAllPostByGeneral",
+                data: searchData
+            })
+                .done(function (data) {
+                    renderData(data);
+                });
+        }
+    }
+</script>
+
+<!-------Advanced Search for general----------->
+
+<!-------Advanced Search for hire----------->
+
+
+<script>
+    advancedSearchForHire = function (subcategoryId, title, position, address, amountFrom, amountTo, type, jobLevel, language, page, size) {
+        var searchData = {subCategoryId: $('#selectSubCategory').val(), page: page, size: size};
+
+        if (title) {
+            searchData['title'] = title;
+        }
+
+        if (position) {
+            if (position != 'All') searchData['position'] = position;
+        }
+
+        if (address) {
+            if (address != 'All') searchData['address'] = address;
+        }
+
+        if (amountFrom && amountTo) {
+            searchData['priceFrom'] = amountFrom;
+            searchData['priceTo'] = amountTo;
+        }
+
+        if (type) {
+            if (type != 'All') searchData['type'] = type;
+        }
+
+        if (jobLevel) {
+            if (jobLevel != 'All') searchData['joblevel'] = jobLevel;
+        }
+
+        if (language) {
+            if (language != 'All') searchData['language'] = language;
+        }
+
+        if ($('#box_all_job_ForHire_ForHire:checked').val()) {
+        } else if ($('#box_fulltime_job_ForHire:checked').val()) {
+            searchData['employmentType'] = $('#box_fulltime_job_ForHire').val();
+        } else if ($('#box_parttime_job_ForHire:checked').val()) {
+            searchData['employmentType'] = $('#box_parttime_job_ForHire').val();
+        } else if ($('#box_onetime_job_ForHire:checked').val()) {
+            searchData['employmentType'] = $('#box_onetime_job_ForHire').val();
+        }
+
+
+        if ($('#box_experience_all_ForHire:checked').val()) {
+        } else if ($('#box_experience_0_2_ForHire:checked').val()) {
+            searchData['experiences'] = $('#box_experience_0_2_ForHire:checked').val();
+        } else if ($('#box_experience_3_4_ForHire:checked').val()) {
+            searchData['experiences'] = $('#box_experience_3_4_ForHire:checked').val();
+        } else if ($('#box_experience_5_6_ForHire:checked').val()) {
+            searchData['experiences'] = $('#box_experience_5_6_ForHire:checked').val()
+        } else if ($('#box_experience_7_more_ForHire:checked').val()) {
+            searchData['experiences'] = $('#box_experience_7_more_ForHire:checked').val()
+        }
+
+
+        if ($('#box_All_ForHire:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Male', 'Female', 'Others']);
+        } else if ($('#box_Both_ForHire:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Male', 'Female']);
+        } else if ($('#box_Male_ForHire:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Male']);
+        } else if ($('#box_Female_ForHire:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Female']);
+        } else if ($('#box_Others_ForHire:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Others']);
+        }
+
+
+        if ($('#box_nationality_All_ForHire:checked').val()) {
+        } else if ($('#box_nationality_in_country_ForHire:checked').val()) {
+            searchData['nationality'] = $('#box_nationality_in_country_ForHire:checked').val();
+        } else if ($('#box_nationality_out_country_ForHire:checked').val()) {
+            searchData['nationality'] = $('#box_nationality_out_country_ForHire:checked').val();
+        }
+
+        if (searchData) {
+            $.ajax({
+                method: "POST",
+                url: "/search/searchAllPostByHire",
+                data: searchData
+            })
+                .done(function (data) {
+                    renderData(data);
+                    $('#advanceSearchFlag').val(true);
+                    $(function () {
+                        $('#pagination').pagination({
+                            items: data.totalElements,
+                            itemsOnPage: size,
+                            cssStyle: 'light-theme',
+                            onPageClick: function () {
+                                page = $('#pagination').pagination('getCurrentPage') - 1;
+                                loadAdvancedSearchPageForHire(subcategoryId, title, position, address, amountFrom, amountTo, type, jobLevel, language, page, size);
+                                $('#advanceSearchFlag').val(true);
+                            }
+                        });
+                    });
+                });
+        }
+    }
+</script>
+
+
+<script>
+    loadAdvancedSearchPageForHire = function (subcategoryId, title, position, address, amountFrom, amountTo, type, jobLevel, language, page, size) {
+        var searchData = {subCategoryId: $('#selectSubCategory').val(), page: page, size: size};
+
+        if (title) {
+            searchData['title'] = title;
+        }
+
+        if (position) {
+            if (position != 'All') searchData['position'] = position;
+        }
+
+        if (address) {
+            if (address != 'All') searchData['address'] = address;
+        }
+
+        if (amountFrom && amountTo) {
+            searchData['priceFrom'] = amountFrom;
+            searchData['priceTo'] = amountTo;
+        }
+
+        if (type) {
+            if (type != 'All') searchData['type'] = type;
+        }
+
+        if (jobLevel) {
+            if (jobLevel != 'All') searchData['joblevel'] = jobLevel;
+        }
+
+        if (language) {
+            if (language != 'All') searchData['language'] = language;
+        }
+
+        if ($('#box_all_job_ForHire_ForHire:checked').val()) {
+        } else if ($('#box_fulltime_job_ForHire:checked').val()) {
+            searchData['employmentType'] = $('#box_fulltime_job_ForHire').val();
+        } else if ($('#box_parttime_job_ForHire:checked').val()) {
+            searchData['employmentType'] = $('#box_parttime_job_ForHire').val();
+        } else if ($('#box_onetime_job_ForHire:checked').val()) {
+            searchData['employmentType'] = $('#box_onetime_job_ForHire').val();
+        }
+
+
+        if ($('#box_experience_all_ForHire:checked').val()) {
+        } else if ($('#box_experience_0_2_ForHire:checked').val()) {
+            searchData['experiences'] = $('#box_experience_0_2_ForHire:checked').val();
+        } else if ($('#box_experience_3_4_ForHire:checked').val()) {
+            searchData['experiences'] = $('#box_experience_3_4_ForHire:checked').val();
+        } else if ($('#box_experience_5_6_ForHire:checked').val()) {
+            searchData['experiences'] = $('#box_experience_5_6_ForHire:checked').val()
+        } else if ($('#box_experience_7_more_ForHire:checked').val()) {
+            searchData['experiences'] = $('#box_experience_7_more_ForHire:checked').val()
+        }
+
+
+        if ($('#box_All_ForHire:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Male', 'Female', 'Others']);
+        } else if ($('#box_Both_ForHire:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Male', 'Female']);
+        } else if ($('#box_Male_ForHire:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Male']);
+        } else if ($('#box_Female_ForHire:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Female']);
+        } else if ($('#box_Others_ForHire:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Others']);
+        }
+
+
+        if ($('#box_nationality_All_ForHire:checked').val()) {
+        } else if ($('#box_nationality_in_country_ForHire:checked').val()) {
+            searchData['nationality'] = $('#box_nationality_in_country_ForHire:checked').val();
+        } else if ($('#box_nationality_out_country_ForHire:checked').val()) {
+            searchData['nationality'] = $('#box_nationality_out_country_ForHire:checked').val();
+        }
+
+        if (searchData) {
+            $.ajax({
+                method: "POST",
+                url: "/search/searchAllPostByHire",
+                data: searchData
+            })
+                .done(function (data) {
+                    renderData(data);
+                });
+        }
+    }
+</script>
+
+<!-------Advanced Search for hire----------->
+
+
+<!-------Advanced Search for laptop----------->
+
+<script>
+    advancedSearchForLaptop = function (subcategoryId, title, manufacturer, address, condition, amountFrom, amountTo, ram, processor, storage, display, page, size) {
+
+        var searchData = {subCategoryId: $('#selectSubCategory').val(), page: page, size: size};
+
+        if (title) {
+            searchData['title'] = title;
+        }
+        if (manufacturer) {
+            if (manufacturer != 'All') searchData['brandName'] = manufacturer;
+        }
+        if (address) {
+            if (address != 'All') searchData['address'] = address;
+        }
+        if (condition) {
+            if (condition != 'All') searchData['condition'] = condition;
+        }
+
+        if (amountFrom && amountTo) {
+            searchData['priceFrom'] = amountFrom;
+            searchData['priceTo'] = amountTo;
+        }
+
+        if (ram) {
+            if (ram != 'All') searchData['ram'] = ram;
+        }
+
+        if (processor) {
+            if (processor != 'All') searchData['processor'] = processor;
+        }
+
+        if (storage) {
+            if (storage != 'All') searchData['storage'] = storage;
+        }
+
+        if (display) {
+            if (display != 'All') searchData['display'] = display
+        }
+
+        if (searchData) {
+            $.ajax({
+                method: "POST",
+                url: "/search/searchAllPostByLaptopModel",
+                data: searchData
+            })
+                .done(function (data) {
+                    renderData(data);
+                    $('#advanceSearchFlag').val(true);
+                    $(function () {
+                        $('#pagination').pagination({
+                            items: data.totalElements,
+                            itemsOnPage: size,
+                            cssStyle: 'light-theme',
+                            onPageClick: function () {
+                                page = $('#pagination').pagination('getCurrentPage') - 1;
+                                loadAdvancedSearchPageForLaptop(subcategoryId, title, manufacturer, address, condition, amountFrom, amountTo, ram, processor, storage, display, page, size);
+                                $('#advanceSearchFlag').val(true);
+                            }
+                        });
+                    });
+                });
+        }
+    }
+</script>
+
+<script>
+    loadAdvancedSearchPageForLaptop = function (subcategoryId, title, manufacturer, address, condition, amountFrom, amountTo, ram, processor, storage, display, page, size) {
+        var searchData = {subCategoryId: $('#selectSubCategory').val(), page: page, size: size};
+
+        if (title) {
+            searchData['title'] = title;
+        }
+        if (manufacturer) {
+            if (manufacturer != 'All') searchData['brandName'] = manufacturer;
+        }
+        if (address) {
+            if (address != 'All') searchData['address'] = address;
+        }
+        if (condition) {
+            if (condition != 'All') searchData['condition'] = condition;
+        }
+
+        if (amountFrom && amountTo) {
+            searchData['priceFrom'] = amountFrom;
+            searchData['priceTo'] = amountTo;
+        }
+
+        if (ram) {
+            if (ram != 'All') searchData['ram'] = ram;
+        }
+
+        if (processor) {
+            if (processor != 'All') searchData['processor'] = processor;
+        }
+
+        if (storage) {
+            if (storage != 'All') searchData['storage'] = storage;
+        }
+
+        if (display) {
+            if (display != 'All') searchData['display'] = display
+        }
+
+        if (searchData) {
+            $.ajax({
+                method: "POST",
+                url: "/search/searchAllPostByLaptopModel",
+                data: searchData
+            })
+                .done(function (data) {
+                    renderData(data);
+                });
+        }
+    }
+</script>
+
+<!-------Advanced Search for laptop----------->
+
+
+<!-------Advanced Search for Mobile----------->
+
+<script>
+    advancedSearchForMobile = function (subcategoryId, title, manufacturer, address, condition, fontCamera, backCamera, amountFrom, amountTo, ram, processor, storage, model, color, display, page, size) {
+        var searchData = {subCategoryId: $('#selectSubCategory').val(), page: page, size: size};
+
+        if (title) {
+            searchData['title'] = title;
+        }
+
+        if (manufacturer) {
+            if (manufacturer != 'All') searchData['manufacturer'] = manufacturer;
+        }
+
+        if (address) {
+            if (address != 'All') searchData['address'] = address;
+        }
+
+        if (condition) {
+            if (condition != 'All') searchData['condition'] = condition;
+        }
+
+        if (fontCamera) {
+            if (fontCamera != 'All') searchData['frontCamera'] = fontCamera;
+        }
+
+        if (backCamera) {
+            if (backCamera != 'All') searchData['backCamera'] = backCamera;
+        }
+
+        if (amountFrom && amountTo) {
+            searchData['priceFrom'] = amountFrom;
+            searchData['priceTo'] = amountTo;
+        }
+
+        if (ram) {
+            if (ram != 'All') {
+                var toRam = "";
+                searchData['ramFrom'] = ram[0];
+                if (ram.length > 3) {
+                    for (var i = 2; i < ram.length; i++) {
+                        toRam = toRam.concat(ram[i]);
+                    }
+                } else {
+                    toRam = toRam.concat(ram[2]);
+                }
+                searchData['ramTo'] = toRam;
+            }
+        }
+
+        if (processor) {
+            if (processor != 'All') searchData['processor'] = processor;
+        }
+
+        if (storage) {
+            if (storage != 'All') searchData['storage'] = storage;
+        }
+
+        if (model) {
+            if (model != 'All') searchData['model'] = model;
+        }
+
+        if (color) {
+            if (color != 'All') searchData['color'] = color;
+        }
+
+        if ($('#box_simType_all_ForMobile:checked').val()) {
+        } else if ($('#box_simType_single_ForMobile:checked').val()) {
+            searchData['simType'] = $('#box_simType_single_ForMobile').val();
+        } else if ($('#box_simType_dual_ForMobile:checked').val()) {
+            searchData['simType'] = $('#box_simType_dual_ForMobile').val();
+        }
+
+
+        if ($('#box_networkType_all_ForMobile:checked').val()) {
+        } else if ($('#box_networkType_2g_ForMobile:checked').val()) {
+            searchData['networkType'] = $('#box_networkType_2g_ForMobile:checked').val();
+        } else if ($('#box_networkType_3g_ForMobile:checked').val()) {
+            searchData['networkType'] = $('#box_networkType_3g_ForMobile:checked').val();
+        } else if ($('#box_networkType_4g_ForMobile:checked').val()) {
+            searchData['networkType'] = $('#box_networkType_4g_ForMobile:checked').val()
+        } else if ($('#box_networkType_5g_ForMobile:checked').val()) {
+            searchData['networkType'] = $('#box_networkType_5g_ForMobile:checked').val()
+        }
+
+        if (display) {
+            if (display != 'All') searchData['display'] = display;
+        }
+
+        if (searchData) {
+            $.ajax({
+                method: "POST",
+                url: "/search/searchAllPostByMobile",
+                data: searchData
+            })
+                .done(function (data) {
+                    renderData(data);
+                    $('#advanceSearchFlag').val(true);
+                    $(function () {
+                        $('#pagination').pagination({
+                            items: data.totalElements,
+                            itemsOnPage: size,
+                            cssStyle: 'light-theme',
+                            onPageClick: function () {
+                                page = $('#pagination').pagination('getCurrentPage') - 1;
+                                loadAdvancedSearchPageForMobile(subcategoryId, title, manufacturer, address, condition, fontCamera, backCamera, amountFrom, amountTo, ram, processor, storage, model, color, display, page, size);
+                                $('#advanceSearchFlag').val(true);
+                            }
+                        });
+                    });
+                });
+        }
+    }
+</script>
+
+<script>
+    loadAdvancedSearchPageForMobile = function (subcategoryId, title, manufacturer, address, condition, fontCamera, backCamera, amountFrom, amountTo, ram, processor, storage, model, color, display, page, size) {
+        var searchData = {subCategoryId: $('#selectSubCategory').val(), page: page, size: size};
+
+        if (title) {
+            searchData['title'] = title;
+        }
+
+        if (manufacturer) {
+            if (manufacturer != 'All') searchData['manufacturer'] = manufacturer;
+        }
+
+        if (address) {
+            if (address != 'All') searchData['address'] = address;
+        }
+
+        if (condition) {
+            if (condition != 'All') searchData['condition'] = condition;
+        }
+
+        if (fontCamera) {
+            if (fontCamera != 'All') searchData['frontCamera'] = fontCamera;
+        }
+
+        if (backCamera) {
+            if (backCamera != 'All') searchData['backCamera'] = backCamera;
+        }
+
+        if (amountFrom && amountTo) {
+            searchData['priceFrom'] = amountFrom;
+            searchData['priceTo'] = amountTo;
+        }
+
+        if (ram) {
+            if (ram != 'All') {
+                var toRam = "";
+                searchData['ramFrom'] = ram[0];
+                if (ram.length > 3) {
+                    for (var i = 2; i < ram.length; i++) {
+                        toRam = toRam.concat(ram[i]);
+                    }
+                } else {
+                    toRam = toRam.concat(ram[2]);
+                }
+                searchData['ramTo'] = toRam;
+            }
+        }
+
+        if (processor) {
+            if (processor != 'All') searchData['processor'] = processor;
+        }
+
+        if (storage) {
+            if (storage != 'All') searchData['storage'] = storage;
+        }
+
+        if (model) {
+            if (model != 'All') searchData['model'] = model;
+        }
+
+        if (color) {
+            if (color != 'All') searchData['color'] = color;
+        }
+
+        if ($('#box_simType_all_ForMobile:checked').val()) {
+        } else if ($('#box_simType_single_ForMobile:checked').val()) {
+            searchData['simType'] = $('#box_simType_single_ForMobile').val();
+        } else if ($('#box_simType_dual_ForMobile:checked').val()) {
+            searchData['simType'] = $('#box_simType_dual_ForMobile').val();
+        }
+
+
+        if ($('#box_networkType_all_ForMobile:checked').val()) {
+        } else if ($('#box_networkType_2g_ForMobile:checked').val()) {
+            searchData['networkType'] = $('#box_networkType_2g_ForMobile:checked').val();
+        } else if ($('#box_networkType_3g_ForMobile:checked').val()) {
+            searchData['networkType'] = $('#box_networkType_3g_ForMobile:checked').val();
+        } else if ($('#box_networkType_4g_ForMobile:checked').val()) {
+            searchData['networkType'] = $('#box_networkType_4g_ForMobile:checked').val()
+        } else if ($('#box_networkType_5g_ForMobile:checked').val()) {
+            searchData['networkType'] = $('#box_networkType_5g_ForMobile:checked').val()
+        }
+
+        if (display) {
+            if (display != 'All') searchData['display'] = display;
+        }
+
+        if (searchData) {
+            $.ajax({
+                method: "POST",
+                url: "/search/searchAllPostByMobile",
+                data: searchData
+            })
+                .done(function (data) {
+                    renderData(data);
+                });
+        }
+    }
+</script>
+
+<!-------Advanced Search for Mobile----------->
+
+<!-------Advanced Search for Property----------->
+
+<script>
+    advancedSearchForProperty = function (subcategoryId, title, address, amountFrom, amountTo, page, size) {
+        var searchData = {subCategoryId: $('#selectSubCategory').val(), page: page, size: size};
+
+        if (title) {
+            searchData['title'] = title;
+        }
+
+        if (address) {
+            if (address != 'All') searchData['address'] = address;
+        }
+
+
+        if (amountFrom && amountTo) {
+            searchData['priceFrom'] = amountFrom;
+            searchData['priceTo'] = amountTo;
+        }
+
+        if (searchData) {
+            $.ajax({
+                method: "POST",
+                url: "/search/searchAllPostByProperty",
+                data: searchData
+            })
+                .done(function (data) {
+                    renderData(data);
+                    $('#advanceSearchFlag').val(true);
+                    $(function () {
+                        $('#pagination').pagination({
+                            items: data.totalElements,
+                            itemsOnPage: size,
+                            cssStyle: 'light-theme',
+                            onPageClick: function () {
+                                page = $('#pagination').pagination('getCurrentPage') - 1;
+                                loadAdvancedSearchPageForProperty(subcategoryId, title, address, amountFrom, amountTo, page, size);
+                                $('#advanceSearchFlag').val(true);
+                            }
+                        });
+                    });
+                });
+        }
+    }
+</script>
+
+
+<script>
+    loadAdvancedSearchPageForProperty = function (subcategoryId, title, address, amountFrom, amountTo, page, size) {
+        var searchData = {subCategoryId: $('#selectSubCategory').val(), page: page, size: size};
+
+        if (title) {
+            searchData['title'] = title;
+        }
+
+        if (address) {
+            if (address != 'All') searchData['address'] = address;
+        }
+
+
+        if (amountFrom && amountTo) {
+            searchData['priceFrom'] = amountFrom;
+            searchData['priceTo'] = amountTo;
+        }
+
+        if (searchData) {
+            $.ajax({
+                method: "POST",
+                url: "/search/searchAllPostByProperty",
+                data: searchData
+            })
+                .done(function (data) {
+                    renderData(data);
+                });
+        }
+    }
+</script>
+
+
+<!-------Advanced Search for Property----------->
+
+<!-------Advanced Search for JobSeeker----------->
+
+<script>
+    advancedSearchForJobSeeker = function (subcategoryId, title, position, address, amountFrom, amountTo, type, language, page, size) {
+        var searchData = {subCategoryId: $('#selectSubCategory').val(), page: page, size: size};
+
+        if (title) {
+            searchData['title'] = title;
+        }
+
+        if (position) {
+            if (position != 'All') searchData['position'] = position;
+        }
+
+        if (address) {
+            if (address != 'All') searchData['address'] = address;
+        }
+
+        if (amountFrom && amountTo) {
+            searchData['priceFrom'] = amountFrom;
+            searchData['priceTo'] = amountTo;
+        }
+
+        if (type) {
+            if (type != 'All') searchData['type'] = type;
+        }
+
+        if (language) {
+            if (language != 'All') searchData['language'] = language;
+        }
+
+        if ($('#box_all_job_ForJobSeeker:checked').val()) {
+        } else if ($('#box_fulltime_job_ForJobSeeker:checked').val()) {
+            searchData['employmentType'] = $('#box_fulltime_job_ForJobSeeker').val();
+        } else if ($('#box_parttime_job_ForJobSeeker:checked').val()) {
+            searchData['employmentType'] = $('#box_parttime_job_ForJobSeeker').val();
+        } else if ($('#box_onetime_job_ForJobSeeker:checked').val()) {
+            searchData['employmentType'] = $('#box_onetime_job_ForJobSeeker').val();
+        }
+
+
+        if ($('#box_experience_all_ForJobSeeker:checked').val()) {
+        } else if ($('#box_experience_0_2_ForJobSeeker:checked').val()) {
+            searchData['experiences'] = $('#box_experience_0_2_ForJobSeeker:checked').val();
+        } else if ($('#box_experience_3_4_ForJobSeeker:checked').val()) {
+            searchData['experiences'] = $('#box_experience_3_4_ForJobSeeker:checked').val();
+        } else if ($('#box_experience_5_6_ForJobSeeker:checked').val()) {
+            searchData['experiences'] = $('#box_experience_5_6_ForJobSeeker:checked').val()
+        } else if ($('#box_experience_7_more_ForJobSeeker:checked').val()) {
+            searchData['experiences'] = $('#box_experience_7_more_ForJobSeeker:checked').val()
+        }
+
+
+        if ($('#box_All_ForJobSeeker:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Male', 'Female', 'Others']);
+        } else if ($('#box_Both_ForJobSeeker:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Male', 'Female']);
+        } else if ($('#box_Male_ForJobSeeker:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Male']);
+        } else if ($('#box_Female_ForJobSeeker:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Female']);
+        } else if ($('#box_Others_ForJobSeeker:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Others']);
+        }
+
+
+        if ($('#box_nationality_All_ForJobSeeker:checked').val()) {
+        } else if ($('#box_nationality_in_country_ForJobSeeker:checked').val()) {
+            searchData['nationality'] = $('#box_nationality_in_country_ForJobSeeker:checked').val();
+        } else if ($('#box_nationality_out_country_ForJobSeeker:checked').val()) {
+            searchData['nationality'] = $('#box_nationality_out_country_ForJobSeeker:checked').val();
+        } else if ($('#box_nationality_out_any_ForJobSeeker:checked').val()) {
+            searchData['nationality'] = $('#box_nationality_out_any_ForJobSeeker:checked').val();
+        }
+
+        if (searchData) {
+            $.ajax({
+                method: "POST",
+                url: "/search/searchAllPostByJobSeeker",
+                data: searchData
+            })
+                .done(function (data) {
+                    renderData(data);
+                    $('#advanceSearchFlag').val(true);
+                    $(function () {
+                        $('#pagination').pagination({
+                            items: data.totalElements,
+                            itemsOnPage: size,
+                            cssStyle: 'light-theme',
+                            onPageClick: function () {
+                                page = $('#pagination').pagination('getCurrentPage') - 1;
+                                loadAdvancedSearchPageForJobSeeker(subcategoryId, title, position, address, amountFrom, amountTo, type, language, page, size);
+                                $('#advanceSearchFlag').val(true);
+                            }
+                        });
+                    });
+                });
+        }
+    }
+</script>
+
+
+<script>
+    loadAdvancedSearchPageForJobSeeker = function (subcategoryId, title, position, address, amountFrom, amountTo, type, language, page, size) {
+        var searchData = {subCategoryId: $('#selectSubCategory').val(), page: page, size: size};
+
+        if (title) {
+            searchData['title'] = title;
+        }
+
+        if (position) {
+            if (position != 'All') searchData['position'] = position;
+        }
+
+        if (address) {
+            if (address != 'All') searchData['address'] = address;
+        }
+
+        if (amountFrom && amountTo) {
+            searchData['priceFrom'] = amountFrom;
+            searchData['priceTo'] = amountTo;
+        }
+
+        if (type) {
+            if (type != 'All') searchData['type'] = type;
+        }
+
+        if (language) {
+            if (language != 'All') searchData['language'] = language;
+        }
+
+        if ($('#box_all_job_ForJobSeeker:checked').val()) {
+        } else if ($('#box_fulltime_job_ForJobSeeker:checked').val()) {
+            searchData['employmentType'] = $('#box_fulltime_job_ForJobSeeker').val();
+        } else if ($('#box_parttime_job_ForJobSeeker:checked').val()) {
+            searchData['employmentType'] = $('#box_parttime_job_ForJobSeeker').val();
+        } else if ($('#box_onetime_job_ForJobSeeker:checked').val()) {
+            searchData['employmentType'] = $('#box_onetime_job_ForJobSeeker').val();
+        }
+
+
+        if ($('#box_experience_all_ForJobSeeker:checked').val()) {
+        } else if ($('#box_experience_0_2_ForJobSeeker:checked').val()) {
+            searchData['experiences'] = $('#box_experience_0_2_ForJobSeeker:checked').val();
+        } else if ($('#box_experience_3_4_ForJobSeeker:checked').val()) {
+            searchData['experiences'] = $('#box_experience_3_4_ForJobSeeker:checked').val();
+        } else if ($('#box_experience_5_6_ForJobSeeker:checked').val()) {
+            searchData['experiences'] = $('#box_experience_5_6_ForJobSeeker:checked').val()
+        } else if ($('#box_experience_7_more_ForJobSeeker:checked').val()) {
+            searchData['experiences'] = $('#box_experience_7_more_ForJobSeeker:checked').val()
+        }
+
+
+        if ($('#box_All_ForJobSeeker:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Male', 'Female', 'Others']);
+        } else if ($('#box_Both_ForJobSeeker:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Male', 'Female']);
+        } else if ($('#box_Male_ForJobSeeker:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Male']);
+        } else if ($('#box_Female_ForJobSeeker:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Female']);
+        } else if ($('#box_Others_ForJobSeeker:checked').val()) {
+            searchData['gender'] = JSON.stringify(['Others']);
+        }
+
+
+        if ($('#box_nationality_All_ForJobSeeker:checked').val()) {
+        } else if ($('#box_nationality_in_country_ForJobSeeker:checked').val()) {
+            searchData['nationality'] = $('#box_nationality_in_country_ForJobSeeker:checked').val();
+        } else if ($('#box_nationality_out_country_ForJobSeeker:checked').val()) {
+            searchData['nationality'] = $('#box_nationality_out_country_ForJobSeeker:checked').val();
+        } else if ($('#box_nationality_out_any_ForJobSeeker:checked').val()) {
+            searchData['nationality'] = $('#box_nationality_out_any_ForJobSeeker:checked').val();
+        }
+
+        if (searchData) {
+            $.ajax({
+                method: "POST",
+                url: "/search/searchAllPostByJobSeeker",
+                data: searchData
+            })
+                .done(function (data) {
+                    renderData(data);
+                });
+        }
+    }
+</script>
+
+<!-------Advanced Search for JobSeeker----------->
+
+<!-------Advanced Search for Vehicle----------->
+
+<script>
+    advancedSearchForVehicle = function (subcategoryId, title, manufacturer, address, condition, numberOfDoors, fuelType, amountFrom, amountTo, model, year, color, page, size) {
+        var searchData = {subCategoryId: $('#selectSubCategory').val(), page: page, size: size};
+
+        if (title) {
+            searchData['title'] = title;
+        }
+
+        if (manufacturer) {
+            if (manufacturer != 'All') searchData['manufacturer'] = manufacturer;
+        }
+
+        if (address) {
+            if (address != 'All') searchData['address'] = address;
+        }
+
+        if (condition) {
+            if (condition != 'All') searchData['condition'] = condition;
+        }
+
+        if (numberOfDoors) {
+            if (numberOfDoors != 'All') searchData['numberOfDoor'] = numberOfDoors;
+        }
+
+        if (fuelType) {
+            if (fuelType != 'All') searchData['fuelType'] = fuelType;
+        }
+
+        if (amountFrom && amountTo) {
+            searchData['priceFrom'] = amountFrom;
+            searchData['priceTo'] = amountTo;
+        }
+
+        if (model) {
+            if (model != 'All') searchData['model'] = model;
+        }
+
+        if (year) {
+            if (year != 'All') searchData['manufacturYear'] = year;
+        }
+
+        if (color) {
+            if (color != 'All') searchData['color'] = color;
+        }
+
+
+        if ($('#box_transmission_All_ForVehicle:checked').val()) {
+        } else if ($('#box_transmission_AUTOMATIC_ForVehicle:checked').val()) {
+            searchData['transmission'] = $('#box_transmission_AUTOMATIC_ForVehicle:checked').val();
+        } else if ($('#box_transmission_MANUAL_ForVehicle:checked').val()) {
+            searchData['transmission'] = $('#box_transmission_MANUAL_ForVehicle:checked').val();
+        } else if ($('#box_transmission_OTHER_ForVehicle:checked').val()) {
+            searchData['transmission'] = $('#box_transmission_OTHER_ForVehicle:checked').val()
+        }
+
+        if (searchData) {
+            $.ajax({
+                method: "POST",
+                url: "/search/searchAllPostByVehicle",
+                data: searchData
+            })
+                .done(function (data) {
+                    renderData(data);
+                    $('#advanceSearchFlag').val(true);
+                    $(function () {
+                        $('#pagination').pagination({
+                            items: data.totalElements,
+                            itemsOnPage: size,
+                            cssStyle: 'light-theme',
+                            onPageClick: function () {
+                                page = $('#pagination').pagination('getCurrentPage') - 1;
+                                loadAdvancedSearchPageForVehicle(subcategoryId, title, manufacturer, address, condition, numberOfDoors, fuelType, amountFrom, amountTo, model, year, color, page, size);
+                                $('#advanceSearchFlag').val(true);
+                            }
+                        });
+                    });
+                });
+        }
+    }
+</script>
+
+
+<script>
+    loadAdvancedSearchPageForVehicle = function (subcategoryId, title, manufacturer, address, condition, numberOfDoors, fuelType, amountFrom, amountTo, model, year, color, page, size) {
+        var searchData = {subCategoryId: $('#selectSubCategory').val(), page: page, size: size};
+
+        if (title) {
+            searchData['title'] = title;
+        }
+
+        if (manufacturer) {
+            if (manufacturer != 'All') searchData['manufacturer'] = manufacturer;
+        }
+
+        if (address) {
+            if (address != 'All') searchData['address'] = address;
+        }
+
+        if (condition) {
+            if (condition != 'All') searchData['condition'] = condition;
+        }
+
+        if (numberOfDoors) {
+            if (numberOfDoors != 'All') searchData['numberOfDoor'] = numberOfDoors;
+        }
+
+        if (fuelType) {
+            if (fuelType != 'All') searchData['fuelType'] = fuelType;
+        }
+
+        if (amountFrom && amountTo) {
+            searchData['priceFrom'] = amountFrom;
+            searchData['priceTo'] = amountTo;
+        }
+
+        if (model) {
+            if (model != 'All') searchData['model'] = model;
+        }
+
+        if (year) {
+            if (year != 'All') searchData['manufacturYear'] = year;
+        }
+
+        if (color) {
+            if (color != 'All') searchData['color'] = color;
+        }
+
+
+        if ($('#box_transmission_All_ForVehicle:checked').val()) {
+        } else if ($('#box_transmission_AUTOMATIC_ForVehicle:checked').val()) {
+            searchData['transmission'] = $('#box_transmission_AUTOMATIC_ForVehicle:checked').val();
+        } else if ($('#box_transmission_MANUAL_ForVehicle:checked').val()) {
+            searchData['transmission'] = $('#box_transmission_MANUAL_ForVehicle:checked').val();
+        } else if ($('#box_transmission_OTHER_ForVehicle:checked').val()) {
+            searchData['transmission'] = $('#box_transmission_OTHER_ForVehicle:checked').val()
+        }
+
+        if (searchData) {
+            $.ajax({
+                method: "POST",
+                url: "/search/searchAllPostByVehicle",
+                data: searchData
+            })
+                .done(function (data) {
+                    renderData(data);
+                });
+        }
+    }
+</script>
+
+
+<!-------Advanced Search for Vehicle----------->
+
+
+<!-------Advanced Search for Villa----------->
+
+<script>
+    advancedSearchForVilla = function (subcategoryId, title, address, numberOfRooms, numberOfBathRooms, amountFrom, amountTo, deposit, page, size) {
+        var searchData = {subCategoryId: $('#selectSubCategory').val(), page: page, size: size};
+
+        if (title) {
+            searchData['title'] = title;
+        }
+
+        if (address) {
+            if (address != 'All') searchData['address'] = address;
+        }
+
+        if (numberOfRooms) {
+            if (numberOfRooms != 'All') searchData['numberOfRoom'] = numberOfRooms;
+        }
+
+        if (numberOfBathRooms) {
+            if (numberOfBathRooms != 'All') searchData['numberOfBathroom'] = numberOfBathRooms;
+        }
+
+        if (deposit) {
+            if (deposit != 'All') searchData['deposit'] = deposit;
+        }
+
+        if (amountFrom && amountTo) {
+            searchData['priceFrom'] = amountFrom;
+            searchData['priceTo'] = amountTo;
+        }
+
+        if ($('#box_furnished_all_ForVilla:checked').val()) {
+        } else if ($('#box_furnished_fully_furnished_ForVilla:checked').val()) {
+            searchData['furnished'] = $('#box_furnished_fully_furnished_ForVilla').val();
+        } else if ($('#box_furnished_semi_furnished_ForVilla:checked').val()) {
+            searchData['furnished'] = $('#box_furnished_semi_furnished_ForVilla').val();
+        } else if ($('#box_furnished_not_furnished_ForVilla:checked').val()) {
+            searchData['furnished'] = $('#box_furnished_not_furnished_ForVilla').val();
+        }
+
+
+        if ($('#box_parking_all_ForVilla:checked').val()) {
+        } else if ($('#box_parking_COVERED_PARKING_ForVilla:checked').val()) {
+            searchData['parking'] = $('#box_parking_COVERED_PARKING_ForVilla:checked').val();
+        } else if ($('#box_parking_DEDICATED_ForVilla:checked').val()) {
+            searchData['parking'] = $('#box_parking_DEDICATED_ForVilla:checked').val();
+        } else if ($('#box_parking_ON_STREET_PARKING_ForVilla:checked').val()) {
+            searchData['parking'] = $('#box_parking_ON_STREET_PARKING_ForVilla:checked').val()
+        } else if ($('#box_parking_NONE_ForVilla:checked').val()) {
+            searchData['parking'] = $('#box_parking_NONE_ForVilla:checked').val()
+        }
+
+
+        if ($('#box_kitchen_All_ForVilla:checked').val()) {
+        } else if ($('#box_kitchen_Open_ForVilla:checked').val()) {
+            searchData['kitchenType'] = $('#box_kitchen_Open_ForVilla:checked').val();
+        } else if ($('#box_kitchen_Closed_ForVilla:checked').val()) {
+            searchData['kitchenType'] = $('#box_kitchen_Closed_ForVilla:checked').val();
+        } else if ($('#box_kitchen_None_ForVilla:checked').val()) {
+            searchData['kitchenType'] = $('#box_kitchen_None_ForVilla:checked').val();
+        }
+
+        if (searchData) {
+            $.ajax({
+                method: "POST",
+                url: "/search/searchAllPostByVilla",
+                data: searchData
+            })
+                .done(function (data) {
+                    renderData(data);
+                    $('#advanceSearchFlag').val(true);
+                    $(function () {
+                        $('#pagination').pagination({
+                            items: data.totalElements,
+                            itemsOnPage: size,
+                            cssStyle: 'light-theme',
+                            onPageClick: function () {
+                                page = $('#pagination').pagination('getCurrentPage') - 1;
+                                loadAdvancedSearchPageForVilla(subcategoryId, title, address, numberOfRooms, numberOfBathRooms, amountFrom, amountTo, deposit, page, size);
+                                $('#advanceSearchFlag').val(true);
+                            }
+                        });
+                    });
+                });
+        }
+    }
+</script>
+
+
+<script>
+    loadAdvancedSearchPageForVilla = function (subcategoryId, title, address, numberOfRooms, numberOfBathRooms, amountFrom, amountTo, deposit, page, size) {
+        var searchData = {subCategoryId: $('#selectSubCategory').val(), page: page, size: size};
+
+        if (title) {
+            searchData['title'] = title;
+        }
+
+        if (address) {
+            if (address != 'All') searchData['address'] = address;
+        }
+
+        if (numberOfRooms) {
+            if (numberOfRooms != 'All') searchData['numberOfRoom'] = numberOfRooms;
+        }
+
+        if (numberOfBathRooms) {
+            if (numberOfBathRooms != 'All') searchData['numberOfBathroom'] = numberOfBathRooms;
+        }
+
+        if (deposit) {
+            if (deposit != 'All') searchData['deposit'] = deposit;
+        }
+
+        if (amountFrom && amountTo) {
+            searchData['priceFrom'] = amountFrom;
+            searchData['priceTo'] = amountTo;
+        }
+
+        if ($('#box_furnished_all_ForVilla:checked').val()) {
+        } else if ($('#box_furnished_fully_furnished_ForVilla:checked').val()) {
+            searchData['furnished'] = $('#box_furnished_fully_furnished_ForVilla').val();
+        } else if ($('#box_furnished_semi_furnished_ForVilla:checked').val()) {
+            searchData['furnished'] = $('#box_furnished_semi_furnished_ForVilla').val();
+        } else if ($('#box_furnished_not_furnished_ForVilla:checked').val()) {
+            searchData['furnished'] = $('#box_furnished_not_furnished_ForVilla').val();
+        }
+
+
+        if ($('#box_parking_all_ForVilla:checked').val()) {
+        } else if ($('#box_parking_COVERED_PARKING_ForVilla:checked').val()) {
+            searchData['parking'] = $('#box_parking_COVERED_PARKING_ForVilla:checked').val();
+        } else if ($('#box_parking_DEDICATED_ForVilla:checked').val()) {
+            searchData['parking'] = $('#box_parking_DEDICATED_ForVilla:checked').val();
+        } else if ($('#box_parking_ON_STREET_PARKING_ForVilla:checked').val()) {
+            searchData['parking'] = $('#box_parking_ON_STREET_PARKING_ForVilla:checked').val()
+        } else if ($('#box_parking_NONE_ForVilla:checked').val()) {
+            searchData['parking'] = $('#box_parking_NONE_ForVilla:checked').val()
+        }
+
+
+        if ($('#box_kitchen_All_ForVilla:checked').val()) {
+        } else if ($('#box_kitchen_Open_ForVilla:checked').val()) {
+            searchData['kitchenType'] = $('#box_kitchen_Open_ForVilla:checked').val();
+        } else if ($('#box_kitchen_Closed_ForVilla:checked').val()) {
+            searchData['kitchenType'] = $('#box_kitchen_Closed_ForVilla:checked').val();
+        } else if ($('#box_kitchen_None_ForVilla:checked').val()) {
+            searchData['kitchenType'] = $('#box_kitchen_None_ForVilla:checked').val();
+        }
+
+        if (searchData) {
+            $.ajax({
+                method: "POST",
+                url: "/search/searchAllPostByVilla",
+                data: searchData
+            })
+                .done(function (data) {
+                    renderData(data);
+                });
+        }
+    }
+</script>
+
+<!-------Advanced Search for Villa----------->
+
+</body>
+</html>

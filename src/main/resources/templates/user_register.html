@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fraghment/header:: head"></th:block>
+    <!-- DataTables -->
+
+
+</head>
+<body>
+
+
+<header th:include="fraghment/head"></header>
+
+<section>
+    <div id="page-wrapper" class="sign-in-wrapper">
+        <div class="graphs">
+            <div class="sign-up">
+                <h1>Create an account</h1>
+                <p class="creating">Having hands on experience in creating innovative designs,I do offer design
+                    solutions which harness.</p>
+                <h4 style="color: #76cc74; text-align: center" th:text="*{successMessage}"></h4>
+                <h2>Personal Information</h2>
+                <form action="#" th:action="@{/registration}" method="post">
+                    <div class="sign-u">
+                        <div class="sign-up1">
+                            <h4>First Name* :</h4>
+                        </div>
+                        <div class="sign-up2">
+
+                            <input type="text" class="username" name="firstName" placeholder="Enter First Name "
+                                   required=" " th:field="*{profile.firstName}"/>
+                            <div th:if="${#fields.hasErrors('profile.firstName')}"
+                                 th:errors="*{profile.firstName}"></div>
+
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="sign-u">
+                        <div class="sign-up1">
+                            <h4>Last Name* :</h4>
+                        </div>
+                        <div class="sign-up2">
+
+                            <input type="text" class="username" name="lastName" placeholder="Enter Last Name "
+                                   required=" " th:field="*{profile.lastName}"/>
+                            <div th:if="${#fields.hasErrors('profile.lastName')}" th:errors="*{profile.lastName}"></div>
+
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="sign-u">
+                        <div class="sign-up1">
+                            <h4>Email or Phone number* :</h4>
+                        </div>
+                        <div class="sign-up2">
+
+                            <input type="text" name="email" placeholder="Enter Your Email or Phone number" required=" "
+                                   th:field="*{user.email}"/>
+                            <div th:if="${#fields.hasErrors('user.email')}" th:errors="*{user.email}"></div>
+
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+
+                    <div class="sign-u">
+                        <div class="sign-up1">
+                            <h4>Password* :</h4>
+                        </div>
+                        <div class="sign-up2">
+
+                            <input type="password" placeholder="Enter Password " required=" "
+                                   th:field="*{user.password}"/>
+                            <div th:if="${#fields.hasErrors('user.password')}" th:errors="*{user.password}"></div>
+                            <div style="color: red" th:text="*{passwordNotMatch}"></div>
+
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="sign-u">
+                        <div class="sign-up1">
+                            <h4>Confirm Password* :</h4>
+                        </div>
+                        <div class="sign-up2">
+
+                            <input type="password" placeholder="Enter Confirm Password " required=" "
+                                   th:field="*{user.confirmPassword}"/>
+                            <div th:if="${#fields.hasErrors('user.confirmPassword')}"
+                                 th:errors="*{user.confirmPassword}"></div>
+
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="sub_home">
+                        <div class="sub_home_left">
+
+                            <input type="submit" value="Create New Account">
+
+                        </div>
+                        <div class="sub_home_right">
+                            <p>Go Back to <a href="/">Home</a></p>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+<th:block th:include="fraghment/footer"></th:block>
+
+<th:block th:include="fraghment/header :: footer"></th:block>
+</body>
+</html>

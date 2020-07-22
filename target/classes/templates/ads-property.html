@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fraghment/header:: head"></th:block>
+    <!-- DataTables -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/jquery-ui1.css}">
+    <style>
+
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        input[type="checkbox"] + label {
+            display: block;
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 20px;
+            font: 14px/20px 'Open Sans', Arial, sans-serif;
+            color: #000;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        input[type="checkbox"] + label:last-child {
+            margin-bottom: 0;
+        }
+
+        input[type="checkbox"] + label:before {
+            content: '';
+            display: block;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #6cc0e5;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: .6;
+            -webkit-transition: all .12s, border-color .08s;
+            transition: all .12s, border-color .08s;
+        }
+
+        input[type="checkbox"]:checked + label:before {
+            width: 10px;
+            top: -5px;
+            left: 5px;
+            border-radius: 0;
+            opacity: 1;
+            border: 1px solid green;
+            border-top-color: transparent;
+            border-left-color: transparent;
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+
+    </style>
+
+</head>
+<body>
+
+
+<header th:if="${#request.isUserInRole('USER')}" th:include="fraghment/user_header"></header>
+<header th:unless="${#request.isUserInRole('USER')}" th:include="fraghment/head"></header>
+
+<!-- Products -->
+<div class="total-ads main-grid-border">
+    <div class="container">
+        <ol class="breadcrumb" style="margin-bottom: 5px;"> <li><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/}">Home</a></li>
+            <li><a class="active" th:href="@{'/listOfPostByPostTypeId?postTypeId='+${subCategories.category.postType.id}}"><span th:text="${subCategories.category.postType.name}"></span></a></li>
+            <li><a class="active" th:href="@{'/allAdsByCategory?categoryId='+${subCategories.category.id}}"><span th:text="${subCategories.category.name}"></span></a></li>
+            <li class="active" th:text="${subCategories.name}">Animals</li>
+        </ol>
+        <div class="ads-grid">
+            <div class="side-bar col-md-3">
+                <div class="search-hotel">
+                    <h3 class="sear-head">Name contains</h3>
+                    <input type="text" placeholder="Name contains..." id="title">
+                    <input type="button" value=" " id="titleSearchButton">
+                </div>
+
+                <div class="brand-select">
+                    <h3 class="sear-head">Location</h3>
+                    <select class="selectpicker" data-live-search="true" id="location">
+                        <option data-tokens="All">All</option>
+                        <option data-tokens="Doha">Doha</option>
+                        <option data-tokens="Alkhore">Alkhore</option>
+                        <option data-tokens="Najma">Najma</option>
+                        <option data-tokens="Alwhakra">Alwhakra</option>
+
+                    </select>
+                </div>
+
+                <div class="range">
+                    <h3 class="sear-head">Price range</h3>
+                    <ul class="dropdown-menu6">
+                        <li>
+
+                            <div id="slider-range"></div>
+                            <input type="text" id="amount" style="border: 0; color: #ffffff; font-weight: normal;"/>
+                            <input type="hidden" id="amountFrom">
+                            <input type="hidden" id="amountTo">
+                        </li>
+                    </ul>
+                    <!---->
+
+                </div>
+                <!--     <div class="brand-select">
+                         <h3 class="sear-head">Type</h3>
+                         <select class="selectpicker" data-live-search="true">
+                             <option data-tokens="WANTED">WANTED</option>
+                             <option data-tokens="ADVERTISED">ADVERTISED</option>
+                             <option data-tokens="EXCHANGE">EXCHANGE</option>
+                             <option data-tokens="SALE">SALE</option>
+                             <option data-tokens="lOOKING fOR">lOOKING fOR</option>
+                             <option data-tokens="NEEDED">NEEDED</option>
+
+
+                         </select>
+                     </div>-->
+
+                <div class="range search_button">
+                    <button class="btn btn-block serach" id="advancedSearchButton">Search</button>
+                </div>
+
+                <div class="featured-ads">
+                    <h2 class="sear-head fer">Featured Ads</h2>
+                    <div class="featured-ad">
+                        <a href="single.html">
+                            <div class="featured-ad-left">
+                                <img th:src="@{../images/f1.jpg}" title="ad image" alt=""/>
+                            </div>
+                            <div class="featured-ad-right">
+                                <h4>Lorem Ipsum is simply dummy text of the printing industry</h4>
+                                <p> 450</p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </a>
+                    </div>
+                    <div class="featured-ad">
+                        <a href="single.html">
+                            <div class="featured-ad-left">
+                                <img th:src="@{../images/f2.jpg}" title="ad image" alt=""/>
+                            </div>
+                            <div class="featured-ad-right">
+                                <h4>Lorem Ipsum is simply dummy text of the printing industry</h4>
+                                <p> 380</p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </a>
+                    </div>
+                    <div class="featured-ad">
+                        <a href="single.html">
+                            <div class="featured-ad-left">
+                                <img th:src="@{../images/f3.jpg}" title="ad image" alt=""/>
+                            </div>
+                            <div class="featured-ad-right">
+                                <h4>Lorem Ipsum is simply dummy text of the printing industry</h4>
+                                <p> 560</p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="ads-display col-md-9">
+                <div class="wrapper">
+                    <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+                        <ul id="myTab" class="nav nav-tabs nav-tabs-responsive" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home"
+                                   aria-expanded="true">
+                                    <span class="text">All Ads</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div id="myTabContent" class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
+                                <div>
+                                    <div id="container">
+                                        <div class="view-controls-list" id="viewcontrols">
+                                            <label>view :</label>
+                                            <a class="gridview active"><i class="glyphicon glyphicon-th"></i></a>
+                                            <a class="listview "><i class="glyphicon glyphicon-th-list"></i></a>
+                                        </div>
+                                        <div class="sort">
+                                            <div class="sort-by">
+                                                <input type="hidden" id="advanceSearchFlag">
+                                                <label>Sort By : </label>
+                                                <select id="size">
+                                                    <option value="1">1</option>
+                                                    <option value="5">5</option>
+                                                    <option value="10">10</option>
+                                                    <option value="20" selected>20</option>
+                                                    <option value="50">50</option>
+                                                    <option value="20">100</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <ul class="grid" id="postList"></ul>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <ul class="pagination pagination-sm" id="pagination"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <input id="subCategoryId" type="hidden" th:value="${subCategories.id}"/>
+        </div>
+    </div>
+</div>
+
+<div class="trending-ads">
+    <div class="container">
+        <!-- slider -->
+        <div class="trend-ads">
+            <h2>Similar Ads</h2>
+            <div class="   owl-carousel owl-theme ">
+
+            </div>
+        </div>
+    </div>
+    <!-- //slider -->
+</div>
+<!-- // Products -->
+<!--footer section start-->
+
+<th:block th:include="fraghment/footer"></th:block>
+
+<th:block th:include="fraghment/header :: footer"></th:block>
+<script>
+    $(document).ready(function () {
+        var page = 0;
+        var size = 20;
+        var subCategory = $('#subCategoryId').val();
+        loadPost1(subCategory, page, size);
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('.owl-carousel').owlCarousel({
+            loop: false,
+            margin: 10,
+            nav: true,
+            autoplay:true,
+            autoplayTimeout:5000,
+            responsive: {
+                0: {
+                    items: 2
+                },
+                600: {
+                    items: 3
+                },
+                1000: {
+                    items: 4
+                }
+            }
+        })
+    });
+    owl.on('mousewheel', '.owl-stage', function (e) {
+        if (e.deltaY>0) {
+            owl.trigger('next.owl');
+        } else {
+            owl.trigger('prev.owl');
+        }
+        e.preventDefault();
+    });
+</script>
+<script type="text/javascript" th:src="@{/js/jquery-ui.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.simplePagination.js}"></script>
+<link th:href="@{/css/simplePagination.css}" rel="stylesheet"/>
+<script>
+    $(document).ready(function () {
+        var subcategoryId = $('#subCategoryId').val();
+        $.ajax({
+            method: "POST",
+            url: "/getMaxPriceBySubcategoryId",
+            data: {
+                subcategoryId: subcategoryId
+            },
+            success: function (data) {
+                $("#slider-range").slider({
+                    range: true,
+                    min: 0,
+                    max: data,
+                    values: [0, data / 3],
+                    slide: function (event, ui) {
+                        $("#amount").val(ui.values[0] + "QR" + " - " + ui.values[1] + "QR");
+                        $('#amountFrom').val(ui.values[0]);
+                        $('#amountTo').val(ui.values[1]);
+                    }
+                });
+                $("#amount").val($("#slider-range").slider("values", 0) + "QR" + " - " + $("#slider-range").slider("values", 1) + "QR");
+            }
+
+        })
+    });
+</script>
+
+<script th:src="@{/js/tabs.js}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var elem = $('#container ul');
+        $('#viewcontrols a').on('click', function (e) {
+            if ($(this).hasClass('gridview')) {
+                elem.fadeOut(1000, function () {
+                    $('#container ul').removeClass('list').addClass('grid');
+                    $('#viewcontrols').removeClass('view-controls-list').addClass('view-controls-grid');
+                    $('#viewcontrols .gridview').addClass('active');
+                    $('#viewcontrols .listview').removeClass('active');
+                    elem.fadeIn(1000);
+                });
+            } else if ($(this).hasClass('listview')) {
+                elem.fadeOut(1000, function () {
+                    $('#container ul').removeClass('grid').addClass('list');
+                    $('#viewcontrols').removeClass('view-controls-grid').addClass('view-controls-list');
+                    $('#viewcontrols .gridview').removeClass('active');
+                    $('#viewcontrols .listview').addClass('active');
+                    elem.fadeIn(1000);
+                });
+            }
+        });
+    });
+</script>
+<script>
+    $('#titleSearchButton').on('click', function () {
+        advancedSearch($('#selectSubCategory').val(), $('#title').val(), $('#location').val(), $('#amountFrom').val(), $('#amountTo').val(), 0, $('#size').val());
+        $('#advanceSearchFlag').val(true);
+    });
+</script>
+
+<script>
+    $('#advancedSearchButton').on('click', function () {
+        advancedSearch($('#selectSubCategory').val(), $('#title').val(), $('#location').val(), $('#amountFrom').val(), $('#amountTo').val(), 0, $('#size').val());
+        $('#advanceSearchFlag').val(true);
+    })
+</script>
+
+<script>
+    advancedSearch = function (subcategoryId, title, address, amountFrom, amountTo, page, size) {
+        var searchData = {subCategoryId: $('#subCategoryId').val(), page: page, size: size};
+
+        if (title) {
+            searchData['title'] = title;
+        }
+
+        if (address) {
+            if (address != 'All') searchData['address'] = address;
+        }
+
+
+        if (amountFrom && amountTo) {
+            searchData['priceFrom'] = amountFrom;
+            searchData['priceTo'] = amountTo;
+        }
+
+        if (searchData) {
+            $.ajax({
+                method: "POST",
+                url: "/search/searchAllPostByProperty",
+                data: searchData
+            })
+                .done(function (data) {
+                    renderData(data);
+                    $('#advanceSearchFlag').val(true);
+                    $(function () {
+                        $('#pagination').pagination({
+                            items: data.totalElements,
+                            itemsOnPage: size,
+                            cssStyle: 'light-theme',
+                            onPageClick: function () {
+                                page = $('#pagination').pagination('getCurrentPage') - 1;
+                                loadAdvancedSearchPage(subcategoryId, title, address, amountFrom, amountTo, page, size);
+                                $('#advanceSearchFlag').val(true);
+                            }
+                        });
+                    });
+                });
+        }
+    }
+</script>
+
+
+<script>
+    loadAdvancedSearchPage = function (subcategoryId, title, address, amountFrom, amountTo, page, size) {
+        var searchData = {subCategoryId: $('#subCategoryId').val(), page: page, size: size};
+
+        if (title) {
+            searchData['title'] = title;
+        }
+
+        if (address) {
+            if (address != 'All') searchData['address'] = address;
+        }
+
+
+        if (amountFrom && amountTo) {
+            searchData['priceFrom'] = amountFrom;
+            searchData['priceTo'] = amountTo;
+        }
+
+        if (searchData) {
+            $.ajax({
+                method: "POST",
+                url: "/search/searchAllPostByProperty",
+                data: searchData
+            })
+                .done(function (data) {
+                    renderData(data);
+                });
+        }
+    }
+</script>
+
+<script>
+    $(document).ready(
+        function () {
+            var size = $('#size').val();
+            var elem = $('#container ul');
+            var subCategory = $('#subCategoryId').val();
+            var page = 0;
+            loadPost(subCategory, page, size);
+        });
+</script>
+<script>
+    $('#size').on('change',
+        function () {
+            var size = $('#size').val();
+            var elem = $('#container ul');
+            var subCategory = $('#subCategoryId').val();
+            var page = 0;
+            if ($('#advanceSearchFlag').val() && $('#advanceSearchFlag').val() == true) {
+                advancedSearch($('#title').val(), $('#selectSubCategory').val(), $('#amountFrom').val(), $('#amountTo').val(), 0, $('#size').val());
+            } else {
+                loadPost(subCategory, page, size);
+                $('#advanceSearchFlag').val(false);
+            }
+        });
+</script>
+<script>
+    loadPost = function (subCategoriesId, page, size) {
+        $.ajax({
+            method: "POST",
+            url: "/allPostBySubCategoryId",
+            data: {subCategoriesId: subCategoriesId, page: page, size: size}
+        })
+            .done(function (data) {
+                renderData(data);
+                /*$('#pagination').empty();*/
+                $(function () {
+                    $('#pagination').pagination({
+                        items: data.totalElements,
+                        itemsOnPage: size,
+                        cssStyle: 'light-theme',
+                        onPageClick: function () {
+                            page = $('#pagination').pagination('getCurrentPage') - 1;
+                            loadPage(subCategoriesId, page, size);
+                        }
+                    });
+                });
+            });
+    };
+</script>
+
+<script>
+    loadPage = function (subCategoriesId, page, size) {
+        $.ajax({
+            method: "POST",
+            url: "/allPostBySubCategoryId",
+            data: {subCategoriesId: subCategoriesId, page: page, size: size}
+        })
+            .done(function (data) {
+                renderData(data);
+            });
+    };
+</script>
+<script>
+    renderData = function (data) {
+        $("#postList").empty();
+        $.each(data.content, function (key, entry) {
+            /*   console.log(entry.promotedAds,entry.postStatus);*/
+            if (entry.promotedAds == true) {
+
+                $('#postList').append(
+                    $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.id}).append(
+                        $('<li>').append(
+                            $('<span>').addClass('fas fa-bookmark premiumad_img')
+                        ).append(
+                            $('<span>').addClass('price_view').text(entry.price + " QR")
+                        ).append(
+                            $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                        ).append(
+                            $('<section>').addClass('list-left').append(
+                                $('<h5>').addClass('title').text(entry.title)
+                            )
+                        ).append(
+                            $('<section>').addClass('list-right').append(
+                                $('<span>').addClass('cityname').text(entry.address)
+                            ).append(
+                                $('<p>').addClass('date').text(new Date(entry.postCreateTime).toLocaleDateString())
+                            ).append(
+                                $('<p>').addClass('view_count').append(
+                                    $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                                ).append(
+                                    $('<span>').addClass('count').attr({id: 'comments_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getComment/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('#comments_count' + entry.id).text(data);
+                                            }
+                                        })
+                                    })
+                                ).append(
+                                    $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                                ).append(
+                                    $('<span>').addClass('view').attr({id: 'view_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getView/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('#view_count' + entry.id).text(data);
+                                            }
+                                        })
+                                    })
+                                ).append(
+                                    $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                                ).append(
+                                    $('<span>').addClass('like').attr({id: 'like_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getLike/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('#like_count' + entry.id).text(data);
+                                            }
+                                        })
+                                    })
+                                )
+                            )
+                        ).append(
+                            $('<div>').addClass('clearfix')
+                        )
+                    )
+                );
+            }
+            else if (entry.postStatus == true){
+                $('#postList').append(
+                    $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.id}).append(
+                        $('<li>').append(
+                            $('<span>').addClass(' sold_item').text('SOLD')
+                        ).append(
+                            $('<span>').addClass('price_view').text(entry.price + " QR")
+                        ).append(
+                            $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                        ).append(
+                            $('<section>').addClass('list-left').append(
+                                $('<h5>').addClass('title').text(entry.title)
+                            )
+                        ).append(
+                            $('<section>').addClass('list-right').append(
+                                $('<span>').addClass('cityname').text(entry.address)
+                            ).append(
+                                $('<p>').addClass('date').text(new Date(entry.postCreateTime).toLocaleDateString())
+                            ).append(
+                                $('<p>').addClass('view_count').append(
+                                    $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                                ).append(
+                                    $('<span>').addClass('count').attr({id: 'comments_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getComment/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('#comments_count' + entry.id).text(data);
+                                            }
+                                        })
+                                    })
+                                ).append(
+                                    $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                                ).append(
+                                    $('<span>').addClass('view').attr({id: 'view_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getView/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('#view_count' + entry.id).text(data);
+                                            }
+                                        })
+                                    })
+                                ).append(
+                                    $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                                ).append(
+                                    $('<span>').addClass('like').attr({id: 'like_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getLike/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('#like_count' + entry.id).text(data);
+                                            }
+                                        })
+                                    })
+                                )
+                            )
+                        ).append(
+                            $('<div>').addClass('clearfix')
+                        )
+                    )
+                );
+            }
+            else{
+                $('#postList').append(
+                    $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.id}).append(
+                        $('<li>').append(
+                            $('<span>').addClass('price_view').text(entry.price + " QR")
+                        ).append(
+                            $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                        ).append(
+                            $('<section>').addClass('list-left').append(
+                                $('<h5>').addClass('title').text(entry.title)
+                            )
+                        ).append(
+                            $('<section>').addClass('list-right').append(
+                                $('<span>').addClass('cityname').text(entry.address)
+                            ).append(
+                                $('<p>').addClass('date').text(new Date(entry.postCreateTime).toLocaleDateString())
+                            ).append(
+                                $('<p>').addClass('view_count').append(
+                                    $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                                ).append(
+                                    $('<span>').addClass('count').attr({id: 'comments_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getComment/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('#comments_count' + entry.id).text(data);
+                                            }
+                                        })
+                                    })
+                                ).append(
+                                    $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                                ).append(
+                                    $('<span>').addClass('view').attr({id: 'view_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getView/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('#view_count' + entry.id).text(data);
+                                            }
+                                        })
+                                    })
+                                ).append(
+                                    $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                                ).append(
+                                    $('<span>').addClass('like').attr({id: 'like_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getLike/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('#like_count' + entry.id).text(data);
+                                            }
+                                        })
+                                    })
+                                )
+                            )
+                        ).append(
+                            $('<div>').addClass('clearfix')
+                        )
+                    )
+                );
+            }
+        });
+    }
+</script>
+
+
+<script>
+    loadPost1 = function (subCategoriesId,page, size) {
+        $.ajax({
+            method: "POST",
+            url: "/allPostBySubCategoryId",
+            async: false,
+            data: {subCategoriesId: subCategoriesId, page: page, size: size},
+            success: function (data) {
+                renderData1(data);
+            }
+        })
+    };
+</script>
+
+<script>
+    renderData1 = function (data) {
+
+        $(".owl-carousel").empty();
+        $.each(data.content, function (key, entry) {
+            $('.owl-carousel').append(
+                $('<div>').addClass(' item  ').append(
+                    $('<div>').addClass(' biseller-column').append(
+                        $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.id}).append(
+                            $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                        ).append(
+                            $('<span>').addClass('premium_img')
+                        ).append(
+                            $('<span>').addClass('price').text('QR ' + entry.price)
+                        )
+                    ).append(
+                        $('<div>').addClass('ad-info').append(
+                            $('<h5>').text(entry.title)
+                        ).append(
+                            $('<span>').text(new Date(entry.postCreateTime).toLocaleDateString())
+                        )
+                    )
+                )
+            );
+
+        });
+
+
+    }
+</script>
+</body>
+</html>

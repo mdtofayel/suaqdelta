@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fraghment/header:: head"></th:block>
+    <!-- DataTables -->
+    <link th:href="@{/css/product.css}" rel="stylesheet" type="text/css" media="all"/>
+
+</head>
+<body>
+
+
+<header th:if="${#request.isUserInRole('USER')}" th:include="fraghment/user_header"></header>
+<header th:unless="${#request.isUserInRole('USER')}" th:include="fraghment/head"></header>
+
+<!--single-page-->
+<div class="single-page main-grid-border">
+    <div class="container">
+        <ol class="breadcrumb" style="margin-bottom: 5px;">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="all-classifieds.html">All Ads</a></li>
+            <li class=""><a href="mobiles.html">Mobiles</a></li>
+            <li class="">Mobile Phone</li>
+        </ol>
+        <div class="product-desc">
+            <div class="col-md-7 product-view">
+                <h2>Lorem Ipsum is simply dummy text of the printing and typesetting industry</h2>
+                <p><i class="glyphicon glyphicon-map-marker"></i><a
+                        href="https://www.google.com/maps/?q=25.2540130,51.4994660">location</a>| Added at 06:55 pm, Ad
+                    ID: 987654321</p>
+                <div class="flexslider">
+                    <ul class="slides">
+                        <li th:each="postImage, itr : ${post.get().photosLink}"
+                            th:attr="data-thumb=@{'/images/post/' + ${post.get().id}+'_'+${itr.index}}">
+                            <img th:src="@{'/images/post/' + ${post.get().id}+'_'+${itr.index}}" onclick="openModal();currentSlide(1)" />
+                        </li>
+                        <li th:each="postVideo, itrr : ${post.get().videosLink}" data-thumb="/images/videothumb.jpg">
+                            <video width="100%" height="auto" controls onclick="openModal();currentSlide(1)" alt="Second slide">
+                                <source th:src="@{'/videos/post/' + ${post.get().id}+'_'+${itrr.index}}"
+                                        type="video/webm">
+                            </video>
+                        </li>
+                    </ul>
+                </div>
+                <!-- FlexSlider -->
+                <script defer th:src="@{/js/jquery.flexslider.js}"></script>
+                <link rel="stylesheet" th:href="@{/css/flexslider.css}" type="text/css" media="screen"/>
+
+                <script>
+                    // Can also be used with $(document).ready()
+                    $(window).load(function () {
+                        $('.flexslider').flexslider({
+                            animation: "slide",
+                            controlNav: "thumbnails"
+                        });
+                    });
+                </script>
+                <!-- //FlexSlider -->
+                <div class="product-details">
+                    <h4><span>Manufacturer </span> <a href="#"><span class="size">Company name</span></a></h4>
+                    <h4><span>Model </span> <a href="#"><span class="size">Model name</span></a></h4>
+                    <!--Vehicle-->
+                    <h4><span>Manufacure Year </span> <a href="#"><span class="size">2017</span></a></h4>
+                    <h4><span>Body Type </span> <a href="#"><span class="size">SEDAN</span></a></h4>
+                    <h4><span>Number Of Door </span> <a href="#"><span class="size">4</span></a></h4>
+                    <h4><span>Transmission </span> <a href="#"><span class="size">Automatic</span></a></h4>
+                    <h4><span>Fuel Type </span> <a href="#"><span class="size">Petrole</span></a></h4>
+                    <h4><span>Service History </span> <a href="#"><span class="size">Other</span></a></h4>
+                    <h4><span>KM </span> <a href="#"><span class="size">1200</span></a></h4>
+                    <h4><span>Engine Size </span> <a href="#"><span class="size">12</span></a></h4>
+                    <!--Pets-->
+                    <h4><span>Age </span> <a href="#"><span class="size">12</span></a></h4>
+                    <h4><span>Count </span> <a href="#"><span class="size">2</span></a></h4>
+                    <h4><span>Item Name </span> <a href="#"><span class="size">Love Bird</span></a></h4>
+                    <h4><span>Sex </span> <a href="#"><span class="size">Both</span></a></h4>
+                    <!-- Property-->
+                    <h4><span>Furnishing </span> <a href="#"><span class="size">Not Furnished</span></a></h4>
+                    <h4><span>Number Of Rooms</span> <a href="#"><span class="size">2</span></a></h4>
+                    <h4><span>Number Of Bathrooms</span> <a href="#"><span class="size">1</span></a></h4>
+                    <h4><span>Kitchen</span> <a href="#"><span class="size">Open</span></a></h4>
+                    <h4><span>Parking</span> <a href="#"><span class="size">Dedicated</span></a></h4>
+                    <h4><span>Deposit</span> <a href="#"><span class="size">2 Month</span></a></h4>
+                    <h4><span>Area</span> <a href="#"><span class="size">2 Ac</span></a></h4>
+                    <!--JOB-->
+                    <h4><span>Role</span> <a href="#"><span class="size">2 Ac</span></a></h4>
+                    <h4><span>Position</span> <a href="#"><span class="size">2 Ac</span></a></h4>
+                    <h4><span>Embloyment Type</span> <a href="#"><span class="size">2 Ac</span></a></h4>
+                    <h4><span>Job Level</span> <a href="#"><span class="size">2 Ac</span></a></h4>
+                    <h4><span>Language</span> <a href="#"><span class="size">2 Ac</span></a></h4>
+                    <h4><span>Nationality </span> <a href="#"><span class="size">2 Ac</span></a></h4>
+                    <h4><span>Gender </span> <a href="#"><span class="size">2 Ac</span></a></h4>
+                    <h4><span>Experience </span> <a href="#"><span class="size">2 Ac</span></a></h4>
+                    <h4><span>Company Name </span> <a href="#"><span class="size">2 Ac</span></a></h4>
+                    <!--JOB-->
+                    <h4><span>Views </span> <strong><span class="size">150</span></strong></h4>
+                    <h4><span>Color </span><span class="size"> White</span></h4>
+                    <h4><span>Storage </span><span class="size"> 8GB</span></h4>
+                    <h4><span>Sim Type </span><span class="size"> Dual Sim</span></h4>
+                    <h4><span>Front Camera </span><span class="size"> 5MP</span></h4>
+                    <h4><span>Back Camera </span><span class="size"> 2MP</span></h4>
+                    <h4><span>Network Type</span><span class="size"> 2G</span></h4>
+                    <h4><span>RAM</span><span class="size"> 512MB</span></h4>
+                    <h4><span>Processor</span><span class="size">2GH</span></h4>
+                    <h4><span>Display</span> <a href="#"><span class="size">28"</span></a></h4>
+                    <h4><span>User Name</span> <a href="#"><span class="size">ABC</span></a></h4>
+                    <p><strong>Discription</strong> : It is a long established fact that a reader will be distracted by
+                        the readable content of a page when looking at its layout. The point of using Lorem Ipsum is
+                        that it has a more-or-less normal distribution of letters, as opposed to using 'Content here,
+                        content here', making it look like readable English.</p>
+
+                </div>
+                <div class="panel panel-white post panel-shadow">
+
+                    <div class="post-footer">
+                        <form action="comment.php" method="post">
+                            <div class="input-group">
+                                <!--
+                                <input type="text" value="<?php echo $id ?>" name="uid" hidden>
+                                <input type="text" value="<?php echo $aid ?>" name="cid" hidden>-->
+
+                                <textarea class="form-control" id="newComment" placeholder="Add a comment" type="text"
+                                          name="comment"
+                                          required></textarea>
+                                <span class="input-group-addon">
+                        <button type="button" class="btn btn-primary mt-4 ml-1 bs-style"
+                                id="submitComment" style="height: 37px;width: 40px;   " name="csub"><!--<i class="fas fa-comment" style=""></i>-->Send</button>
+                    </span>
+                            </div>
+                        </form>
+                        <div class="comments" style="height:250px; overflow-y:scroll;">
+
+                            <ul class="comments-list">
+                                <li class="comment">
+                                    <a class="pull-left" href="#">
+                                        <img class="avatar" th:src="@{images/2.png}" alt="avatar">
+                                    </a>
+                                    <div class="comment-body">
+                                        <div class="comment-heading">
+                                            <h4 class="user">Abc</h4>
+
+                                            <h5 class="time" style="">2 Days Ago</h5>
+                                            <!-- <h5 class="time" style="<?php if($stk_agna!=0){echo'display:none';}?>">Today</h5>-->
+                                        </div>
+                                        <p>HAi sdsdd ddsa d sa</p>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul class="comments-list">
+                                <li class="comment">
+                                    <a class="pull-left" href="#">
+                                        <img class="avatar" th:src="@{images/1.jpg}" alt="avatar">
+                                    </a>
+                                    <div class="comment-body">
+                                        <div class="comment-heading">
+                                            <h4 class="user">Abc</h4>
+
+                                            <h5 class="time" style="">2 Days Ago</h5>
+                                            <!-- <h5 class="time" style="<?php if($stk_agna!=0){echo'display:none';}?>">Today</h5>-->
+                                        </div>
+                                        <p>HAi sdsdd ddsa d sa</p>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-md-5 product-details-grid">
+                <div class="item-price">
+                    <div class="product-price">
+                        <p class="p-price">Price</p>
+                        <h3 class="rate">259</h3>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="condition">
+                        <p class="p-price">Condition</p>
+                        <h4>Good</h4>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="itemtype">
+                        <p class="p-price">Item Type</p>
+                        <h4>Phones</h4>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="itemtype">
+                        <p class="p-price">Views</p>
+                        <h4>150</h4>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="interested text-center">
+                    <!--<h4>Interested in this Ad?<small> Contact the Seller!</small></h4>
+                    <p><i class="glyphicon glyphicon-earphone"></i>00-85-9875462655</p>-->
+
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 col-lg-6 number_user_button">
+                            <a class="btn btn-nav btn-block btn-tel-adv" href="tel:0097466136245">
+                                <i class="fas fa-phone-volume" aria-hidden="true"></i>
+                                <span id="showphone">0097466136245</span>
+                            </a>
+                        </div>
+                        <div id="addclass" class="col-xs-12 col-md-12 col-lg-6 number_user_button">
+                            <a class="btn btn-nav btn-block btn-tel-adv">
+                                <i class="fas fa-envelope" aria-hidden="true"></i>
+                                <span>Chat</span>
+                            </a>
+                        </div>
+                        <!-- IF CUSTOMER IS ANONYMOUS -->
+                        <!--<div th:if="${customer.anonymous}">
+                            <div>Welcome, Guest</div>
+                        </div>-->
+                        <!-- ELSE -->
+                        <!-- <div th:unless="${customer.anonymous}">
+                             <div th:text=" 'Hi,' + ${customer.name}">Hi, User</div>
+                         </div>-->
+                        <div class="col-xs-12 col-md-12 col-lg-6 tow_buttons_style-one">
+                            <button class="btn btn-yellow btn-block btn_group_big_size" id="like_button2">
+                                <i class="fas fa-thumbs-up" aria-hidden="true"></i>
+                                <span>Like</span>
+                            </button>
+                        </div>
+                        <input th:text="${post.get().id}" hidden="hidden" id="postId">
+                        <div class="col-xs-12 col-md-12 col-lg-6 tow_buttons_style-tow">
+                            <button class="btn btn-purple btn-block btn_group_big_size" id="fav_button2">
+                                <i class="fas fa-heart" aria-hidden="true"></i>
+                                <span>Favorite</span>
+                            </button>
+                        </div>
+                    </div>
+                    <a href="https://www.google.com/maps/?q=25.2540130,51.4994660" class="show-map" target="_blank">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        <span>Show Map</span>
+                    </a>
+                    <button class="btn btn-block btn-report" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fas fa-flag" aria-hidden="true"></i><span>Report Ad</span>
+                    </button>
+                    <div th:if="${#request.userPrincipal}">
+                        <div th:if="${#request.getUserPrincipal().name == post.get().postedBy.email}">
+                            <a th:href="@{'/userPost/postEditAds/'+${post.get().id}}">
+                                <button class="btn btn-block btn-edit" data-toggle="modal" data-target="#">
+                                    <i class="far fa-edit" aria-hidden="true"></i><span>Edit Ad</span>
+                                </button>
+                            </a>
+                            <button class="btn btn-block btn-report" data-toggle="modal" data-target="#exampleModal">
+                                <i class="fas fa-trash-alt" aria-hidden="true"></i><span>Delete</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tips">
+                    <h4>Safety Tips for Buyers</h4>
+                    <ol>
+                        <li><a href="#">Contrary to popular belief.</a></li>
+                        <li><a href="#">Contrary to popular belief.</a></li>
+                        <li><a href="#">Contrary to popular belief.</a></li>
+                        <li><a href="#">Contrary to popular belief.</a></li>
+                        <li><a href="#">Contrary to popular belief.</a></li>
+                        <li><a href="#">Contrary to popular belief.</a></li>
+                        <li><a href="#">Contrary to popular belief.</a></li>
+                        <li><a href="#">Contrary to popular belief.</a></li>
+                        <li><a href="#">Contrary to popular belief.</a></li>
+                    </ol>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Report Ad</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="repo" action="#" method="post">
+                    <div class="form-group" hidden>
+                        <label for="recipient-name" class="col-form-label">Recipient:</label>
+                        <input type="text" class="form-control" id="recipient-name">
+                        <input type="text" class="form-control" name="raid" id="recipient-user"
+                               value="">
+                    </div>
+                    <label id="gender_error_message"></label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
+                               onclick="return show2();" value="Ad Violate The QB Rules" checked>
+                        <label class="form-check-label" for="exampleRadios1">
+                            Ad Violate The QB Rules
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" onclick="return show2();"
+                               id="exampleRadios2" value="Ad Repeat">
+                        <label class="form-check-label" for="exampleRadios2">
+                            Ad Repeat
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3"
+                               onclick="return show2();" value="Ad Image Or Content didnt Match">
+                        <label class="form-check-label" for="exampleRadios2">
+                            Ad Image Or Content didnt Match
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios4"
+                               onclick="return show2();" value="Ad Added In Wrong Section">
+                        <label class="form-check-label" for="exampleRadios2">
+                            Ad Added In Wrong Section
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios5"
+                               value="Other" onclick="return show1();">
+                        <label class="form-check-label" for="exampleRadios2">
+                            Other
+                        </label>
+                    </div>
+                    <div class="form-group" id="other" style="display:none">
+
+                        <textarea type="text" class="form-control" placeholder="Enter Complaint Here...." name="other"></textarea>
+
+
+                    </div>
+                    <div class="form-group">
+
+                        <button type="submit" class="btn btn-primary" name="repo">Report</button>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="popup-box chat-popup" id="qnimate">
+    <div class="popup-head">
+        <div class="popup-head-left pull-left"><img src="images/client_4.jpg" alt="iamgurdeeposahan"> Abcd</div>
+        <div class="popup-head-right pull-right">
+            <!--<div class="btn-group">
+                          <button class="chat-header-button" data-toggle="dropdown" type="button" aria-expanded="false">
+                           <i class="glyphicon glyphicon-cog"></i> </button>
+                          <ul role="menu" class="dropdown-menu pull-right">
+                            <li><a href="#">Media</a></li>
+                            <li><a href="#">Block</a></li>
+                            <li><a href="#">Clear Chat</a></li>
+                            <li><a href="#">Email Chat</a></li>
+                          </ul>
+            </div>-->
+
+            <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button"><i
+                    class="fas fa-window-close"></i></button>
+        </div>
+    </div>
+    <div id="chat" class="chat_box_wrapper chat_box_small chat_box_active"
+         style="opacity: 1; display: block; transform: translateX(0px);">
+        <div class="chat_box touchscroll chat_box_colors_a">
+            <div class="chat_message_wrapper">
+                <div class="chat_user_avatar">
+                    <a href="#" target="_blank">
+                        <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)"
+                             src="images/client_3.jpg" class="md-user-image">
+                    </a>
+                </div>
+                <ul class="chat_message">
+                    <li>
+                        <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, eum? </p>
+                    </li>
+                    <li>
+                        <p> Lorem ipsum dolor sit amet.<span class="chat_message_time">13:38</span></p>
+                    </li>
+                </ul>
+            </div>
+            <div class="chat_message_wrapper chat_message_right">
+                <div class="chat_user_avatar">
+                    <a href="#" target="_blank">
+                        <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)"
+                             src="images/client_4.jpg" class="md-user-image">
+                    </a>
+                </div>
+                <ul class="chat_message">
+                    <li>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem delectus distinctio dolor
+                            earum est hic id impedit ipsum minima mollitia natus nulla perspiciatis quae quasi, quis
+                            recusandae, saepe, sunt totam.
+                            <span class="chat_message_time">13:34</span>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            <div class="chat_message_wrapper">
+                <div class="chat_user_avatar">
+                    <a href="#" target="_blank">
+                        <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)"
+                             src="images/client_3.jpg" class="md-user-image">
+                    </a>
+                </div>
+                <ul class="chat_message">
+                    <li>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque ea mollitia pariatur porro
+                            quae sed sequi sint tenetur ut veritatis.https://www.facebook.com/iamgurdeeposahan
+                            <span class="chat_message_time">23 Jun 1:10am</span>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            <div class="chat_message_wrapper chat_message_right">
+                <div class="chat_user_avatar">
+                    <a href="#" target="_blank">
+                        <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)"
+                             src="images/client_4.jpg" class="md-user-image">
+                    </a>
+                </div>
+                <ul class="chat_message">
+                    <li>
+                        <p> Lorem ipsum dolor sit amet, consectetur. </p>
+                    </li>
+                    <li>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                            <span class="chat_message_time">Friday 13:34</span>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="popup-messages-footer">
+
+        <textarea id="status_message" placeholder="Type a message..." rows="10" cols="40" name="message"></textarea>
+        <button class="bg_none pull-right"><i class="fas fa-location-arrow"></i></button>
+        <!--<div class="btn-footer">
+        <button class="bg_none"><i class="glyphicon glyphicon-film"></i> </button>
+        <button class="bg_none"><i class="glyphicon glyphicon-camera"></i> </button>
+        <button class="bg_none"><i class="glyphicon glyphicon-paperclip"></i> </button>
+        <button class="bg_none pull-right"><i class="glyphicon glyphicon-thumbs-up"></i> </button>
+        </div>
+        </div>-->
+    </div>
+
+</div>
+
+<div id="myModal" class="modal mt-5 ">
+    <span class="close cursor" onclick="closeModal()">&times;</span>
+    <div class="modal-content">
+
+        <div class="mySlides">
+            <div class="numbertext">1 / 4</div>
+            <img th:src="@{/images/ss1.jpg}"   class=" img-responsive">
+        </div>
+
+        <div class="mySlides">
+            <div class="numbertext">2 / 4</div>
+            <img th:src="@{/images/ss2.jpg}" class=" img-responsive">
+        </div>
+
+        <div class="mySlides">
+            <div class="numbertext">3 / 4</div>
+            <img th:src="@{/images/ss3.jpg}"  class=" img-responsive">
+        </div>
+
+        <div class="mySlides">
+            <div class="numbertext">4 / 4</div>
+            <video class=" img-responsive" width="100%" height="auto" controls>
+                <source th:src="@{/uploads/vde.mp4}" type="video/mp4"  >
+            </video>
+        </div>
+
+        <!-- Next/previous controls -->
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+        <!-- Caption text -->
+        <div class="caption-container">
+            <p id="caption"></p>
+        </div>
+
+        <!-- Thumbnail image controls -->
+        <div class="row ">
+            <div class="col-md-3">
+                <img class="demo  img-responsive" th:src="@{/images/ss1.jpg}"  onclick="currentSlide(1)" alt="1">
+            </div>
+
+            <div class="col-md-3">
+                <img class="demo  img-responsive" th:src="@{/images/ss2.jpg}"  onclick="currentSlide(2)" alt="2">
+            </div>
+
+            <div class="col-md-3">
+                <img class="demo  img-responsive" th:src="@{/images/ss3.jpg}"  onclick="currentSlide(3)" alt="3">
+            </div>
+
+            <div class="col-md-3">
+                <video class="demo  img-responsive" width="100%" height="auto" controls>
+                    <source  th:src="@{/uploads/vde.mp4}" type="video/mp4" onclick="currentSlide(4)" alt="4">
+                </video>
+                <!--<img class="demo" src="{{url('image/')}}/{{$vads->aimage4}}" onclick="currentSlide(4)" alt="4">-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--//single-page-->
+
+
+<th:block th:include="fraghment/footer"></th:block>
+
+<th:block th:include="fraghment/header :: footer"></th:block>
+
+<script>
+    $(document).scroll(function () {
+        checkOffset();
+    });
+
+    function checkOffset() {
+        if ($('#qnimate').offset().top + $('#qnimate').height()
+            >= $('#footer').offset().top - 10)
+            $('#qnimate').css({
+                position: 'absolute',
+                bottom: 'auto'
+            });
+        /* $('#qnimate').css('bottom','none');*/
+        if ($(document).scrollTop() + window.innerHeight < $('#footer').offset().top)
+            $('#qnimate').css({
+                position: 'fixed',
+                bottom: '0px'
+            }); // restore when you scroll up
+    }
+
+
+    /*     css({
+     border-bottom:'2px solid red',
+     padding-bottom: '26px'
+ });*/
+    $(function () {
+        $("#addclass").click(function () {
+            $('#qnimate').addClass('popup-box-on');
+        });
+
+        $("#removeClass").click(function () {
+            $('#qnimate').removeClass('popup-box-on');
+        });
+    })
+
+</script>
+
+
+<script>
+    $('#like_button2').on('click', function () {
+        var postId = $('#postId').val();
+        $.ajax({
+            url: '/user/post/likeUnlike',
+            type: 'POST',
+            data: {postId: postId},
+            success: function (data) {
+                window.location = data
+            }
+
+        })
+    })
+</script>
+
+<script>
+    $('#fav_button2').on('click', function () {
+        var postId = $('#postId').val();
+        $.ajax({
+            url: '/user/post/favorite',
+            type: 'POST',
+            data: {postId: postId},
+            success: function (data) {
+                alert("fav");
+                window.location = data
+            }
+
+        })
+    })
+</script>
+
+<script>
+    $('#submitComment').on('click', function () {
+
+        var postId = $('#postId').val();
+        var commentBody = $('#newComment').val();
+        $.ajax({
+            url: '/userPost/post/comment',
+            type: 'POST',
+            data: {postId: postId, commentBody: commentBody},
+            success: function (data) {
+
+            }
+
+
+        })
+    })
+</script>
+<script>
+    function show2(){
+        $("#other").css('display', 'none');
+    }
+    $("#exampleRadios5").on('click', function() {
+        /*       $("#exampleRadios5").prop("checked", true);
+               alert(value);*/
+        $("#other").css('display', 'block');
+    });
+    /*if(document.getElementById('exampleRadios5').checked) {
+        //Male radio button is checked
+        alert("jass");
+    }*/
+</script>
+
+<script>
+    // Open the Modal
+    function openModal() {
+        document.getElementById('myModal').style.display = "block";
+    }
+
+    // Close the Modal
+    function closeModal() {
+        document.getElementById('myModal').style.display = "none";
+    }
+
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    // Next/previous controls
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    // Thumbnail image controls
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("demo");
+        var captionText = document.getElementById("caption");
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";
+        dots[slideIndex-1].className += " active";
+        captionText.innerHTML = dots[slideIndex-1].alt;
+    }
+</script>
+</body>
+</html>
+

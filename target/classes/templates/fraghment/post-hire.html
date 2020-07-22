@@ -1,0 +1,144 @@
+<!--<form enctype="multipart/form-data"  method="POST">-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="row">
+    <div class="col-sm-6" id="vm">
+        <label class="vm">Role<span>*</span></label>
+        <select id="hireType" data-live-search="true" class="selectpicker">
+            <!--    <select class="" name="role" id="hireEmploymentType">-->
+            <option value="Others" selected disabled>Choose Role</option>
+            <option value="ART/DESIGN">ART/DESIGN</option>
+            <option value="ACCOUNTING/FINANCE"> ACCOUNTING/FINANCE</option>
+            <option value="HEALTHCARE/MEDICAL">HEALTHCARE/MEDICAL</option>
+            <option value="IT/TECHNOLOGY">IT/TECHNOLOGY</option>
+            <option value="MARKETING/PR">MARKETING/PR</option>
+            <option value="SECRETARIAL">SECRETARIAL</option>
+            <option value="WRITING/EDITING">WRITING/EDITING</option>
+            <option value="SUPPORT SERVICES">SUPPORT SERVICES</option>
+            <option value="CUSTOMER SERVICE">CUSTOMER SERVICE</option>
+            <option value="HR/PERSONNEL">HR/PERSONNEL</option>
+            <option value="LAW/LEGAL">LAW/LEGAL</option>
+            <option value="PHOTOGRAPHER">PHOTOGRAPHER</option>
+            <option value="TRANSPORTATION">TRANSPORTATION</option>
+            <option value="ADMINISTRATION">ADMINISTRATION</option>
+            <option value="ARCHITECTURE">ARCHITECTURE</option>
+            <option value="EDUCATION">EDUCATION/TRAINING</option>
+            <option value="ENGINEERING">ENGINEERING</option>
+            <option value="INTERIOR DESIGNER">INTERIOR DESIGNER</option>
+            <option value="INTERNSHIP">INTERNSHIP</option>
+            <option value="LOGISTICS">LOGISTICS</option>
+            <option value="MANAGEMENT">MANAGEMENT</option>
+            <option value="PURCHASING/PROCUREMENT">PURCHASING/PROCUREMENT</option>
+            <option value="QUALITY CONTROL">QUALITY CONTROL</option>
+            <option value="SAFETY">SAFETY</option>
+            <option value="SALES">SALES</option>
+            <option value="OTHER">OTHER</option>
+        </select></div>
+    <div class="col-sm-6" id="vm">
+        <label class="vm">Position<span>*</span></label>
+        <select id="hirePosition" data-live-search="true" class="selectpicker">
+            <!-- <select class="" name="position" th:filed="*{hire.position}"  id="hirePosition" >-->
+            <option selected disabled value="Others">Choose Position</option>
+            <option value="Finance Analyst">Finance Analyst</option>
+            <option value="Accountant">Accountant</option>
+            <option value="Web Designer">Web Designer</option>
+            <option value="Country manager">Country manager</option>
+            <option value="Others">Others</option>
+
+
+        </select></div>
+    <div class="col-sm-6" id="vm">
+        <label class="vm">Employment Type <span>*</span></label>
+        <select class="" name="embloyment" th:filed="*{hire.employmentType}" id="hireEmploymentType">
+            <option selected disabled value="-1">Select Employment type</option>
+            <option value="Full Time">Full Time</option>
+            <option value="Part Time">Part Time</option>
+            <option value="One Time">One Time</option>
+
+        </select></div>
+
+
+    <div class="col-sm-6" id="vm">
+        <label class="vm">Job Level<span>*</span></label>
+        <select class="" name="job_level" th:filed="*{hire.jobLevel}" id="hireJobLevel">
+            <option selected disabled value="-1">Choose Type</option>
+            <option value="Internship">Internship</option>
+            <option value="Entry Level">Entry Level</option>
+            <option value="Mid Career">Mid Career</option>
+            <option value="Executive/Director">Management</option>
+            <option value="">Executive/Director</option>
+            <option value="Senior Executive">Senior Executive</option>
+            <option value="Other">Other</option>
+
+        </select></div>
+    <div class="col-sm-6" id="vm">
+        <label class="vm">Language<span>*</span></label>
+        <select class="" name="hireLnagauge" th:filed="*{hire.language}" id="hireLnagauge">
+            <option selected disabled value="Others">Choose Language</option>
+            <option value="Any">Any</option>
+            <option value="Arabic">Arabic</option>
+            <option value="English">English</option>
+            <option value="Hindi">Hindi</option>
+            <option value="Arabic, English">Arabic, English</option>
+            <option value="Arabic, Hindi">Arabic, Hindi</option>
+            <option value="English, Hindi">English, Hindi</option>
+            <option value="Arabic, English, Hindi">Arabic, English, Hindi</option>
+            <option value="Arabic, English, Hindi, Others">Arabic, English, Hindi, Others</option>
+            <option value="Others">Others</option>
+        </select>
+    </div>
+
+    <div class="col-sm-6" id="vm">
+        <label class="vm">Nationality <span>*</span></label>
+        <select class="" name="nationality" th:filed="*{hire.nationality}" id="hireNationality">
+            <option selected disabled value="-1">Choose Nationality</option>
+            <option value="Any">Any</option>
+            <option value="In Country Hire">In Country Hire</option>
+            <option value="International">International</option>
+
+        </select></div>
+    <div class="col-sm-6" id="vm">
+        <label class="vm">Gender<span>*</span></label>
+        <select class="" name="gender" th:filed="*{hire.gender}" id="hireGender">
+            <option selected disabled value="Others">Choose Type</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Both">Both</option>
+            <option value="Others">Others</option>
+        </select></div>
+    <div class="col-sm-6" id="vm">
+        <label class="vm">Experience<span>*</span></label>
+        <select class="" name="experiance" th:filed="*{hire.experiences}" id="hireExperiences">
+            <option selected disabled value="-1">Choos Type</option>
+            <option value="0-2 Years">0-2 Years</option>
+            <option value="3-4 Years">3-4 Years</option>
+            <option value="5-6 Years">5-6 Years</option>
+            <option value="7+ Years">7+ Years</option>
+
+
+        </select></div>
+    <div class="col-sm-6" id="vm">
+        <label class="vm">Salary<span>*</span></label>
+        <input type="number" name="price" class="phone" placeholder="" th:filed="*{hire.salary}" id="hireSalary"></div>
+
+    <div class="col-sm-6" id="vm">
+        <label class="vm">Company Name<span>*</span></label>
+        <input type="text" name="company_name" class="phone" placeholder="" th:filed="*{hire.companyName}"
+               id="hireCompanyName"></div>
+    <div class="col-sm-6" id="vm">
+        <label class="vm">Company URL<span>*</span></label>
+        <input type="text" name="company_url" class="phone" placeholder="" th:filed="*{hire.Url}" id="hireUrl"></div>
+    <!-- <div class="col-sm-12">
+         <label>Company Logo :</label>
+         <div class="photos-upload-view">
+             <div>
+                 <input type="file" name="logo" id="fileselect" name="video" th:filed="*{hire.}" />
+
+             </div>
+         </div>
+     </div>-->
+    <div class="col-sm-6" id="vm">
+        <label class="vm">Company Email *<span>*</span></label>
+        <input type="email" name="company_email" class="phone" placeholder="" th:filed="*{hire.email}" id="hireEmail">
+    </div>
+
+</div>

@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/easy-responsive-tabs.css }"/>
+    <link th:href="@{/css/simplePagination.css}" rel="stylesheet"/>
+    <th:block th:include="fraghment/header:: head"></th:block>
+
+    <script th:src="@{/js/easyResponsiveTabs.js}"></script>
+    <style>
+        .psub {
+            display: none;
+            margin-left: 20%
+        }
+
+        .wrap-custom-file {
+
+            background-size: cover;
+            background-position: center;
+            object-fit: cover;
+            max-width: 100%;
+        }
+        .search-hotel input[type="number"],.search-hotel input[type="text"] {
+            background: #fff;
+            border: 1px solid #dfdfdf;
+            width: 260px;
+            outline: none;
+            padding: 11px 10px 10px 10px;
+            font-size: 13px;
+            color: #c4c4c4;
+        }
+        #b {
+            display: none;
+        }
+
+        .gridview, .listview {
+            color: #0C0C0C;
+        }
+
+        .active .glyphicon-th {
+            color: #1e70bf;
+        }
+
+        #container .grid li {
+            width: 300px;
+        }
+
+        .premiumad_img {
+            position: absolute;
+            float: left;
+            font-size: 40px;
+       /*     top: 40px;*/
+            color: rgb(138, 21, 56);
+        }
+
+        li:hover span.premiumad_img {
+            color: rgb(9, 113, 178);
+            transition: 0.5s all;
+            -webkit-transition: 0.5s all;
+            -moz-transition: 0.5s all;
+            -o-transition: 0.5s all;
+            -ms-transition: 0.5s all;
+        }
+
+        @media (max-width: 640px) {
+            .premiumad_img {
+              /*  top: 30px;*/
+                font-size: 30px;
+            }
+        }
+
+        #container .list li .premium_img {
+        /*    left: 52px;*/
+            top: 0px;
+        }
+
+        #container .list li span.price_view {
+            top: 0px;
+           /* right: -20px;*/
+        }
+
+        #container .list li span.price_view:after {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            #container .grid li {
+                width: 46%;
+            }
+        }
+        #fragmentDiv .brand-select {
+
+            display: inline-block;
+        }
+        .brand-select,.search-hotel,.range{
+            border-bottom: 0px;
+            padding: 7px 0 7px 0;
+        }
+        .search_button{
+            text-align: start;
+        }
+        #lap, #animal, #general, #hire, #mobile, #property, #seek, #vehicle, #villa {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<header th:if="${#request.isUserInRole('USER')}" th:include="fraghment/user_header"></header>
+<header th:unless="${#request.isUserInRole('USER')}" th:include="fraghment/head"></header>
+
+<div class="categories-section main-grid-border">
+    <div class="container">
+        <h2 class="head">Main Categories</h2>
+        <!--<div class="side-bar row">
+            <div class="search-hotel col-md-4">
+
+                <input id="title" type="text" placeholder="Product name..." required="">
+
+            </div>
+
+
+            <div class="brand-select col-md-4" id="categoryAddId" >
+
+                <select id="selectCategory" class="selectpicker" data-live-search="true"></select>
+            </div>
+
+            <div class="brand-select col-md-4">
+
+                <select id="selectSubCategory" class="selectpicker" data-live-search="true"></select>
+            </div>
+            <div class="clearfix "></div>
+
+            <div id="fragmentDiv" class="">
+                <div class="" id="lap" th:include="fraghment/category_lap"></div>
+                <div class="" id="general" th:include="fraghment/category_general"></div>
+                <div class="" id="animal" th:include="fraghment/category_animal"></div>
+                <div class="" id="property" th:include="fraghment/category_property"></div>
+                <div class="" id="mobile" th:include="fraghment/category_mobile"></div>
+                <div class="" id="villa" th:include="fraghment/category_villa"></div>
+                <div class="" id="seek" th:include="fraghment/category_seek"></div>
+                <div class="" id="vehicle" th:include="fraghment/category_vehicle"></div>
+                <div class="" id="hire" th:include="fraghment/category_hire"></div>
+            </div>
+            <div class="search-hotel col-md-4">
+
+                <input id="min_price" type="number" placeholder="Minimum Price..." required="">
+
+            </div>
+            <div class="search-hotel col-md-4">
+
+                <input id="max_price" type="number" placeholder="Maximum Price..." required="">
+
+            </div>
+            <div class="range search_button col-md-4">
+                <button class="btn btn-block serach" id="advancedSearchButton">Search</button>
+            </div>
+        </div>-->
+        <div>
+            <input type="hidden" id="typeSize" th:value="${postTypesList.size()}">
+
+            <ul class="nav nav-tabs phor_1" role="tablist" id="parentVerticalTab1">
+                <li th:each="postType, iter : ${postTypesList}"
+                ><a th:href="@{'#'+ ${postType.id} +'tabpane'}"
+                    aria-controls="profile" role="presentation"
+                    data-toggle="tab"
+                    th:text="${postType.name}"></a>
+                </li>
+            </ul>
+
+            <input id="categoryId" th:value="${categoriesById.id}" type="hidden">
+            <!-- Tab panes -->
+            <div class="tab-content" id="tab_content">
+
+                <div th:each="npostType, niter : ${postTypesList}" role="tabpanel" class="tab-pane  "
+                     th:id="${npostType.id  +'tabpane'}">
+                    <div class="category-list">
+                        <div th:id="verticalTab + ${niter.index}">
+                            <ul class="resp-tabs-list hor_1" th:id="'subcat' + ${niter.index}">
+                                <li class="resp-tab-item hor_1 resp-tab-active" role="tab"
+                                    style="background-color: white; border-color: rgb(193, 193, 193);">All Ads
+                                </li>
+                                <div th:each="subcategory : ${subCategoryList}"
+                                     th:if="${subcategory.category.postType.id == npostType.id}">
+                                    <li th:text="${subcategory.name}" th:value="${subcategory.id}"></li>
+                                </div>
+                                <a th:href="@{/allAdsByGlobalSearch?searchString=}">All Ads</a>
+                            </ul>
+                            <div class="resp-tabs-container hor_1">
+
+                                <div class="resp-tab-content hor_1 resp-tab-content-active"
+                                     aria-labelledby="hor_1_tab_item-0" style="display:block">
+
+                                    <div class="category">
+                                        <div class="category-img">
+                                            <img src="images/cat1.png" title="image" alt=""/>
+                                        </div>
+                                        <div class="category-info" th:each="category : ${categoriesList}"
+                                             th:if="${category.postType.id == npostType.id}">
+                                            <h4 th:text="${category.name}">Mobiles</h4>
+                                            <span>5,12,850 Ads</span>
+                                            <a th:href="@{'/allAdsByCategory?categoryId='+${category.id}}">View
+                                                all Ads</a>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="sub-categories">
+
+                                        <div th:id="'container' + ${niter.index} ">
+                                            <div id="container">
+                                                <div class="view-controls-list"
+                                                     th:id="'viewcontrols' + ${niter.index}  + ' viewcontrols'">
+                                                    <label>view :</label>
+                                                    <a class="gridview active"><i
+                                                            class="glyphicon glyphicon-th"></i></a>
+                                                    <a class="listview "><i class="glyphicon glyphicon-th-list"></i></a>
+                                                </div>
+                                                <div class="sort">
+                                                    <div class="sort-by">
+                                                        <input type="hidden"
+                                                               th:id="'advanceSearchFlag' + ${niter.index}">
+                                                        <label>Sort By : </label>
+                                                        <select th:id="size + ${niter.index}">
+                                                            <option value="1">1</option>
+                                                            <option value="5">5</option>
+                                                            <option value="10">10</option>
+                                                            <option value="20" selected>20</option>
+                                                            <option value="50">50</option>
+                                                            <option value="20">100</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <ul class="grid" th:id="'postList' + ${npostType.id}"></ul>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <ul class="pagination pagination-sm" id="pagination"></ul>
+                                    </div>
+                                </div>
+                                <div th:each="subcategory : ${subCategoryList}"
+                                     th:if="${subcategory.category.postType.id == npostType.id}">
+                                    <div>
+                                        <div class="category">
+                                            <div class="category-img">
+                                                <img th:src="@{'/images/category/'+ ${categoriesById.id}}" title="image"
+                                                     alt=""/>
+                                            </div>
+                                            <div class="category-info">
+                                                <h4 th:text="${subcategory.name}">Mobiles</h4>
+                                                <span>5,12,850 Ads</span>
+                                                <a th:href="@{'/allAdsByCategory?categoryId='+ ${subcategory.id}}">View
+                                                    all
+                                                    Ads</a>
+                                            </div>
+
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="sub-categories">
+                                            <!-- <ul th:each="subcategory :  ${category.subCategoryList}">
+                                                 <div>
+                                                     <li>
+                                                         <a th:href="@{'/allAdsBySubcategory?subCategoryId='+ ${subcategory.id}}"
+                                                            th:text="${subcategory.name}"></a></li>
+                                                 </div>
+                                                &lt;!&ndash; <div class="clearfix"></div>&ndash;&gt;
+                                             </ul>-->
+                                            <div id="container">
+                                                <div class="view-controls-list" id="viewcontrols">
+                                                    <label>view :</label>
+                                                    <a class="gridview active"><i
+                                                            class="glyphicon glyphicon-th"></i></a>
+                                                    <a class="listview "><i class="glyphicon glyphicon-th-list"></i></a>
+                                                </div>
+                                                <div class="sort">
+                                                    <div class="sort-by">
+                                                        <input type="hidden" id="advanceSearchFlag">
+                                                        <label>Sort By : </label>
+                                                        <select id="size">
+                                                            <option value="1">1</option>
+                                                            <option value="5">5</option>
+                                                            <option value="10">10</option>
+                                                            <option value="20" selected>20</option>
+                                                            <option value="50">50</option>
+                                                            <option value="20">100</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <ul class="grid" th:id="'postListPost' + ${subcategory.id}"></ul>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <ul class="pagination pagination-sm"
+                                                th:id="'paginationL' + ${subcategory.id}"></ul>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="fraghment/footer"></th:block>
+
+<th:block th:include="fraghment/header :: footer"></th:block>
+<script type="text/javascript" th:src="@{/js/jquery.simplePagination.js}"></script>
+<script>
+    $(document).ready(function () {
+        var categoryId = $('#categoryId').val();
+        $.ajax({
+            method: "POST",
+            url: "/getMaxPriceByCategoryId",
+            data: {
+                categoryId: categoryId
+            },
+            success: function (data) {
+                $("#slider-range").slider({
+                    range: true,
+                    min: 0,
+                    max: data,
+                    values: [0, data / 3],
+                    slide: function (event, ui) {
+                        $("#amount").val(ui.values[0] + "QR" + " - " + ui.values[1] + "QR");
+                        $('#amountFrom').val(ui.values[0]);
+                        $('#amountTo').val(ui.values[1]);
+                    }
+                });
+                $("#amount").val($("#slider-range").slider("values", 0) + "QR" + " - " + $("#slider-range").slider("values", 1) + "QR");
+            }
+
+        })
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#parentVerticalTab').easyResponsiveTabs({
+            type: 'accordion', //Types: default, vertical, accordion
+            width: 'auto', //auto or any width like 600px
+            fit: true, // 100% fit in a container
+            closed: 'vertical', // Start closed if in accordion view
+            tabidentify: 'phor_1', // The tab groups identifier
+            activate: function (event) { // Callback function if tab is switched
+                var $tab = $(this);
+                var $info = $('#nested-tabInfo2');
+                var $name = $('span', $info);
+                $name.text($tab.text());
+                $info.show();
+            }
+        });
+
+        for (var i = 0; i < $('#typeSize').val(); i++) {
+            $('#verticalTab' + i).easyResponsiveTabs({
+                type: 'vertical', //Types: default, vertical, accordion
+                width: 'auto', //auto or any width like 600px
+                fit: true, // 100% fit in a container
+                closed: 'accordion', // Start closed if in accordion view
+                tabidentify: 'hor_1', // The tab groups identifier
+                activate: function (event) { // Callback function if tab is switched
+                    var $tab = $(this);
+                    var $info = $('#nested-tabInfo2');
+                    var $name = $('span', $info);
+                    $name.text($tab.text());
+                    $info.show();
+                }
+            });
+        }
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#parentVerticalTab1 > li ').first().addClass('active');
+        $('#tab_content > div ').first().addClass('active');
+        /*   $('.resp-tab-content').first().css('display','block');*/
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        firstCall();
+    });
+</script>
+<script th:inline="javascript">
+    firstCall = function () {
+        var page = 0;
+        var size = 20;
+        var tabList = [[${postTypesList}]];
+        var categoryList = [[${categoriesList}]];
+
+        $.each(tabList, function (tIndex, tEntry) {
+            $.each(categoryList, function (index, entry) {
+                if (entry.postType.id == tEntry.id) {
+                    loadPost(entry.id, tEntry.id, page, size);
+                }
+            });
+        })
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $('#tab_content > div > div > div > ul > div > li').on('click', function () {
+            var x = $(this).val();
+            var page = 0;
+            var size = 20;
+            var subCategoriesId = $(this).val();
+            loadPostSubcategories(subCategoriesId, page, size);
+        });
+    });
+</script>
+<script>
+    loadPost = function (categoryId, tabNo, page, size) {
+        $.ajax({
+            method: "POST",
+            url: "/allPostByCategoryId",
+            data: {categoryId: categoryId, page: page, size: size}
+        })
+            .done(function (data) {
+                renderData(data, tabNo);
+                /*$('#pagination').empty();*/
+                $(function () {
+                    $('#pagination').pagination({
+                        items: data.totalElements,
+                        itemsOnPage: size,
+                        cssStyle: 'light-theme',
+                        onPageClick: function () {
+                            page = $('#pagination').pagination('getCurrentPage') - 1;
+                            loadPage(categoryId, tabNo, page, size);
+                        }
+                    });
+                });
+            });
+    };
+</script>
+<script>
+    loadPostSubcategories = function (subCategoriesId, page, size) {
+        $.ajax({
+            method: "POST",
+            url: "/allPostBySubCategoryId",
+            data: {subCategoriesId: subCategoriesId, page: page, size: size}
+        })
+
+            .done(function (data) {
+                renderData1(data, subCategoriesId);
+                $(function () {
+                    $('#paginationL' + subCategoriesId).pagination({
+                        items: data.totalElements,
+                        itemsOnPage: size,
+                        cssStyle: 'light-theme',
+                        onPageClick: function () {
+                            page = $('#paginationL' + subCategoriesId).pagination('getCurrentPage') - 1;
+                            loadPage1(subCategoriesId, page, size);
+                        }
+                    });
+                });
+            });
+    };
+</script>
+
+<script>
+    loadPage1 = function (subCategoriesId, page, size) {
+
+        $.ajax({
+            method: "POST",
+            url: "/allPostBySubCategoryId",
+            data: {subCategoriesId: subCategoriesId, page: page, size: size}
+        })
+            .done(function (data) {
+                renderData1(data, subCategoriesId);
+            });
+    };
+</script>
+<script>
+    loadPage = function (categoryId, tabNo, page, size) {
+        $.ajax({
+            method: "POST",
+            url: "/allPostByCategoryId",
+            data: {categoryId: categoryId, page: page, size: size}
+        })
+            .done(function (data) {
+                renderData(data, tabNo);
+            });
+    };
+</script>
+<script>
+    renderData = function (data, tabNo) {
+        $("#postList" + tabNo).empty();
+        $.each(data.content, function (key, entry) {
+            if (entry.promotedAds == true) {
+                $('#postList' + tabNo).append(
+                    $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.id}).append(
+                        $('<li>').append(
+                            $('<span>').addClass('fas fa-bookmark premiumad_img')
+                        ).append(
+                            $('<span>').addClass('price_view').text(entry.price + " QR")
+                        ).append(
+                            $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                        ).append(
+                            $('<section>').addClass('list-left').append(
+                                $('<h5>').addClass('title').text(entry.title)
+                            )
+                        ).append(
+                            $('<section>').addClass('list-right').append(
+                                $('<span>').addClass('cityname').text(entry.address)
+                            ).append(
+                                $('<p>').addClass('date').text(new Date(entry.postCreateTime).toLocaleDateString())
+                            ).append(
+                                $('<p>').addClass('view_count').append(
+                                    $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                                ).append(
+                                    $('<span>').addClass('count').attr({id: 'comments_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getComment/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('#comments_count' + entry.id).text(data);
+                                            }
+                                        })
+                                    })
+                                ).append(
+                                    $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                                ).append(
+                                    $('<span>').addClass('view').attr({id: 'view_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getView/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('#view_count' + entry.id).text(data);
+                                            }
+                                        })
+                                    })
+                                ).append(
+                                    $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                                ).append(
+                                    $('<span>').addClass('like').attr({id: 'like_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getLike/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('#like_count' + entry.id).text(data);
+                                            }
+                                        })
+                                    })
+                                )
+                            )
+                        ).append(
+                            $('<div>').addClass('clearfix')
+                        )
+                    )
+                );
+            }
+            else if (entry.postStatus == true){
+                $('#postList' + tabNo).append(  $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.id}).append(
+                    $('<li>').append(
+                        $('<span>').addClass(' sold_item').text('SOLD')
+                    ).append(
+                        $('<span>').addClass('price_view').text(entry.price + " QR")
+                    ).append(
+                        $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                    ).append(
+                        $('<section>').addClass('list-left').append(
+                            $('<h5>').addClass('title').text(entry.title)
+                        )
+                    ).append(
+                        $('<section>').addClass('list-right').append(
+                            $('<span>').addClass('cityname').text(entry.address)
+                        ).append(
+                            $('<p>').addClass('date').text(new Date(entry.postCreateTime).toLocaleDateString())
+                        ).append(
+                            $('<p>').addClass('view_count').append(
+                                $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                            ).append(
+                                $('<span>').addClass('count').attr({id: 'comments_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                    $.ajax({
+                                        url: '/userPost/getComment/' + entry.id,
+                                        type: 'GET',
+                                        success: function (data) {
+                                            $('#comments_count' + entry.id).text(data);
+                                        }
+                                    })
+                                })
+                            ).append(
+                                $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                            ).append(
+                                $('<span>').addClass('view').attr({id: 'view_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                    $.ajax({
+                                        url: '/userPost/getView/' + entry.id,
+                                        type: 'GET',
+                                        success: function (data) {
+                                            $('#view_count' + entry.id).text(data);
+                                        }
+                                    })
+                                })
+                            ).append(
+                                $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                            ).append(
+                                $('<span>').addClass('like').attr({id: 'like_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                    $.ajax({
+                                        url: '/userPost/getLike/' + entry.id,
+                                        type: 'GET',
+                                        success: function (data) {
+                                            $('#like_count' + entry.id).text(data);
+                                        }
+                                    })
+                                })
+                            )
+                        )
+                    ).append(
+                        $('<div>').addClass('clearfix')
+                    )
+                    )
+                );
+            }
+            else{
+                $('#postList' + tabNo).append(
+                    $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.id}).append(
+                        $('<li>').append(
+                            $('<span>').addClass('price_view').text(entry.price + " QR")
+                        ).append(
+                            $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                        ).append(
+                            $('<section>').addClass('list-left').append(
+                                $('<h5>').addClass('title').text(entry.title)
+                            )
+                        ).append(
+                            $('<section>').addClass('list-right').append(
+                                $('<span>').addClass('cityname').text(entry.address)
+                            ).append(
+                                $('<p>').addClass('date').text(new Date(entry.postCreateTime).toLocaleDateString())
+                            ).append(
+                                $('<p>').addClass('view_count').append(
+                                    $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                                ).append(
+                                    $('<span>').addClass('count').attr({id: 'comments_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getComment/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('#comments_count' + entry.id).text(data);
+                                            }
+                                        })
+                                    })
+                                ).append(
+                                    $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                                ).append(
+                                    $('<span>').addClass('view').attr({id: 'view_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getView/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('#view_count' + entry.id).text(data);
+                                            }
+                                        })
+                                    })
+                                ).append(
+                                    $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                                ).append(
+                                    $('<span>').addClass('like').attr({id: 'like_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                        $.ajax({
+                                            url: '/userPost/getLike/' + entry.id,
+                                            type: 'GET',
+                                            success: function (data) {
+                                                $('#like_count' + entry.id).text(data);
+                                            }
+                                        })
+                                    })
+                                )
+                            )
+                        ).append(
+                            $('<div>').addClass('clearfix')
+                        )
+                    )
+                );
+            }
+        });
+    }
+</script>
+
+<script>
+    renderData1 = function (data, subcategoryId) {
+        $("#postListPost" + subcategoryId).empty();
+        $.each(data.content, function (key, entry) {
+            $("#postListPost" + subcategoryId).append(
+                $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.id}).append(
+                    $('<li>').append(
+                        $('<span>').addClass('fas fa-bookmark premiumad_img')
+                    ).append(
+                        $('<span>').addClass('price_view').text(entry.price + " QR")
+                    ).append(
+                        $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                    ).append(
+                        $('<section>').addClass('list-left').append(
+                            $('<h5>').addClass('title').text(entry.title)
+                        )
+                    ).append(
+                        $('<section>').addClass('list-right').append(
+                            $('<span>').addClass('cityname').text(entry.address)
+                        ).append(
+                            $('<p>').addClass('date').text(new Date(entry.postCreateTime).toLocaleDateString())
+                        ).append(
+                            $('<p>').addClass('view_count').append(
+                                $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                            ).append(
+                                $('<span>').addClass('count').attr({id: 'comments_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                    $.ajax({
+                                        url: '/userPost/getComment/' + entry.id,
+                                        type: 'GET',
+                                        success: function (data) {
+                                            $('#comments_count' + entry.id).text(data);
+                                        }
+                                    })
+                                })
+                            ).append(
+                                $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                            ).append(
+                                $('<span>').addClass('view').attr({id: 'view_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                    $.ajax({
+                                        url: '/userPost/getView/' + entry.id,
+                                        type: 'GET',
+                                        success: function (data) {
+                                            $('#view_count' + entry.id).text(data);
+                                        }
+                                    })
+                                })
+                            ).append(
+                                $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                            ).append(
+                                $('<span>').addClass('like').attr({id: 'like_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                    $.ajax({
+                                        url: '/userPost/getLike/' + entry.id,
+                                        type: 'GET',
+                                        success: function (data) {
+                                            $('#like_count' + entry.id).text(data);
+                                        }
+                                    })
+                                })
+                            )
+                        )
+                    ).append(
+                        $('<div>').addClass('clearfix')
+                    )
+                )
+            );
+        });
+    }
+</script>
+
+
+</body>
+</html>

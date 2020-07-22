@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fraghment/header:: head"></th:block>
+    <!-- DataTables -->
+    <link th:href="@{/css/product.css}" rel="stylesheet" type="text/css" media="all"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/jssocials.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/jssocials-theme-flat.css}" />
+    <style>
+        .MAnufactur {
+            padding: 5px;
+        }
+
+        .border_shadow {
+            height: 100px;
+            /*  box-shadow: 0 0 1px 1px #948585;
+              padding: 2px;*/
+            padding: 5px;
+            border: 1px solid #948585;
+        }
+
+        .border_shadow h4 {
+            padding-bottom: 4px;
+            font-size: 10px;
+            margin-bottom: 4px;
+            margin-top: 4px;
+        }
+
+        .border_shadow p {
+            margin-top: 0px;
+            font-size: 9px;
+            color: #000;
+            font-weight: 700;
+        }
+
+        .fa-2x {
+            font-size: 2em;
+        }
+        #container{
+            text-align: center;
+        }
+        #container h5{
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+
+
+<header th:if="${#request.isUserInRole('USER')}" th:include="fraghment/user_header"></header>
+<header th:unless="${#request.isUserInRole('USER')}" th:include="fraghment/head"></header>
+
+<!--single-page-->
+<div class="single-page main-grid-border">
+    <div class="container">
+        <!--<ol class="breadcrumb" style="margin-bottom: 5px;">-->
+            <ol class="breadcrumb" style="margin-bottom: 5px;">
+                <li><a th:href="@{/}">Home</a></li>
+                <li><a class="active" th:href="@{'/listOfPostByPostTypeId?postTypeId='+${post.get().subCategory.category.postType.id}}"><span th:text="${post.get().subCategory.category.postType.name}"></span></a></li>
+                <li><a class="active" th:href="@{'/allAdsByCategory?categoryId='+${post.get().subCategory.category.id}}"><span th:text="${post.get().subCategory.category.name}"></span></a></li>
+                <li><a class="active" th:href="@{'/allAdsBySubcategory?subCategoryId='+${post.get().subCategory.id}}"><span th:text="${post.get().subCategory.name}"></span></a></li>
+                <li class="active" th:text="${post.get().title}">Animals</li>
+        </ol>
+        <div class="product-desc">
+            <div class="col-md-7 product-view">
+                <h2 th:text="*{post.get().title}">Lorem Ipsum is simply dummy text of the printing and typesetting
+                    industry</h2>
+                <p><i class="glyphicon glyphicon-map-marker"></i><a
+                        th:href="@{'https://www.google.com/maps/?q='+ ${post.get().latitude}+','+${post.get().longitude}}">location</a>|
+                    <span th:text="*{post.get().postCreateTime}"></span>, Ad ID: <span th:text="*{post.get().id}">987654321</span>
+                </p>
+                <div class="flexslider">
+                    <ul class="slides">
+                        <li th:each="postImage, itr : ${post.get().photosLink}"
+                            th:attr="data-thumb=@{'/images/post/' + ${post.get().id}+'_'+${itr.index}}">
+                            <img th:src="@{'/images/post/' + ${post.get().id}+'_'+${itr.index}}"
+                                 onclick="openModal();currentSlide(1)"/>
+                        </li>
+                        <li th:each="postVideo, itrr : ${post.get().videosLink}" data-thumb="/images/videothumb.jpg">
+                            <video width="100%" height="auto" controls="controls" preload="none"
+                                   onclick="openModal();currentSlide(1)">
+                                <source th:src="@{'/videos/post/' + ${post.get().id}+'_'+${itrr.index}}"
+                                        type="video/webm">
+                                Your browser does not support the video tag.
+                            </video>
+                        </li>
+                    </ul>
+                </div>
+                <!-- FlexSlider -->
+                <script defer th:src="@{/js/jquery.flexslider.js}"></script>
+                <link rel="stylesheet" th:href="@{/css/flexslider.css}" type="text/css" media="screen"/>
+
+                <script>
+                    // Can also be used with $(document).ready()
+                    $(window).load(function () {
+                        $('.flexslider').flexslider({
+                            animation: "slide",
+                            controlNav: "thumbnails"
+                        });
+                    });
+                </script>
+                <!-- //FlexSlider -->
+                <div class="product-details">
+                    <div class="row">
+                        <div class="col-md-2 col-sm-6 col-xs-6 text-center MAnufactur">
+                            <div class="border_shadow">
+                                <i class="fas fa-map fa-2x text-secondary" style="color:rgba(182,152,0,1);"></i><br>
+                                <h4 class="text-secondary" style="color:rgba(182,152,0,1);">Area </h4>
+                                <p th:text="*{post.get().properties.area}">Company name</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Vehicle-->
+
+                    <!--Pets-->
+
+                    <!-- Property-->
+
+                    <!--      <h4><span th:text="*{post.get().properties.area}">Area</span> <a href="#"><span
+                                  class="size">2 Ac</span></a></h4>-->
+
+                    <!--JOB-->
+
+                    <!--JOB-->
+
+                    <p><strong>Discription</strong> :<span th:text="*{post.get().description}"> It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</span>
+                    </p>
+
+                </div>
+                <div class="panel panel-white post panel-shadow">
+
+                    <div class="post-footer">
+                        <div class="input-group">
+                                <textarea class="form-control" id="newComment" placeholder="Add a comment" type="text"
+                                          name="comment" required></textarea>
+                            <span class="input-group-addon">
+                        <button class="btn btn-primary mt-4 ml-1 bs-style"
+                                style="height: 37px;width: 40px;   " name="csub" id="submitComment"><!--<i class="fas fa-comment" style=""></i>-->Send</button>
+                    </span>
+                        </div>
+                        <div class="comments" style="height:250px; overflow-y:scroll;" id="showComments">
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-5 product-details-grid">
+                <div class="item-price">
+                    <div class="itemtype">
+                        <p class="p-price">Price</p>
+                        <h4 class="rate" th:text="'QR '+ *{post.get().price}"></h4>
+                        <div class="clearfix"></div>
+                    </div>
+                    <!--<div class="condition">
+                        <p class="p-price">Condition</p>
+                        <h4>Good</h4>
+                        <div class="clearfix"></div>
+                    </div>-->
+                   <!-- <div class="itemtype">
+                        <p class="p-price">Item Type</p>
+                        <h4 th:text="${post.get().subCategory.category.postType.name}">Property</h4>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="itemtype">
+                        <p class="p-price">Views</p>
+                        <h4 th:text="*{post.get().postView.count}">150</h4>
+                        <div class="clearfix"></div>
+                    </div>-->
+                </div>
+                <div class="interested text-center">
+                    <!--<h4>Interested in this Ad?<small> Contact the Seller!</small></h4>
+                    <p><i class="glyphicon glyphicon-earphone"></i>00-85-9875462655</p>-->
+
+                    <div class="row">
+                        <a th:href="@{'/profile/'+${post.get().postedBy.id}}">
+                            <div class="col-xs-12 col-md-12 col-lg-12 single_profile">
+                                <img  th:src="@{'/images/profileImage/' + ${post.get().postedBy.id}}"class="img_fluid " onError="this.src='/images/user_default.png';" >
+                                <h4><span th:text="${post.get().postedBy.profile.firstName}"></span> <span th:text="${post.get().postedBy.profile.lastName}"></span></h4>
+                            </div>
+                        </a>
+                        <div class="col-xs-12 col-md-12 col-lg-6 number_user_button">
+                            <a class="btn btn-nav btn-block btn-tel-adv" href="tel:0097466136245">
+                                <i class="fas fa-phone-volume" aria-hidden="true"></i>
+                                <span id="showphone" th:text="*{post.get().contactNumber}">0097466136245</span>
+                            </a><input th:value="${post.get().id}" hidden="hidden" id="postId">
+                        </div>
+                        <div id="addclass" class="col-xs-12 col-md-12 col-lg-6 number_user_button">
+                            <a class="btn btn-nav btn-block btn-tel-adv">
+                                <i class="fas fa-envelope" aria-hidden="true"></i>
+                                <span>Chat</span>
+                            </a>
+                        </div>
+                        <div th:if="${#request.userPrincipal}">
+                            <div class="col-xs-12 col-md-12 col-lg-6 tow_buttons_style-one"
+                                 th:if="${likePost != null && likePost.likes == true}">
+                                <button class="btn btn-yellow btn-block btn_group_big_size" id="like_button2">
+                                    <i class="fas fa-thumbs-up" aria-hidden="true"></i>
+                                    <span>Unlike</span>
+                                </button>
+                            </div>
+                            <div class="col-xs-12 col-md-12 col-lg-6 tow_buttons_style-one"
+                                 th:if="${likePost == null || likePost.likes==false}">
+                                <button class="btn btn-yellow btn-block btn_group_big_size" id="like_button2">
+                                    <i class="fas fa-thumbs-up" aria-hidden="true"></i>
+                                    <span>like</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-12 col-lg-6 tow_buttons_style-one"
+                             th:unless="${#request.userPrincipal}">
+                            <button class="btn btn-yellow btn-block btn_group_big_size" id="like_button2">
+                                <i class="fas fa-thumbs-up" aria-hidden="true"></i>
+                                <span>Like</span>
+                            </button>
+                        </div>
+                        <div th:if="${#request.userPrincipal}">
+                            <div class="col-xs-12 col-md-12 col-lg-6 tow_buttons_style-tow"
+                                 th:if="${favoritePost != null && favoritePost.favorite == true}">
+                                <button class="btn btn-purple btn-block btn_group_big_size" id="fav_button2">
+                                    <i id="fav_buttoni" class="fas fa-heart red" aria-hidden="true"></i>
+                                    <span>Favorite</span>
+                                </button>
+                            </div>
+                            <div class="col-xs-12 col-md-12 col-lg-6 tow_buttons_style-tow"
+                                 th:if="${favoritePost == null || favoritePost.favorite == false}">
+                                <button class="btn btn-purple btn-block btn_group_big_size" id="fav_button2">
+                                    <i id="fav_buttoni" class="fas fa-heart" aria-hidden="true"></i>
+                                    <span>Favorite</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-12 col-lg-6 tow_buttons_style-tow"
+                             th:unless="${#request.userPrincipal}">
+                            <button class="btn btn-purple btn-block btn_group_big_size" id="fav_button2">
+                                <i id="fav_buttoni" class="fas fa-heart" aria-hidden="true"></i>
+                                <span>Favorite</span>
+                            </button>
+                        </div>
+                    </div>
+                   <!-- <a href="https://www.google.com/maps/?q=25.2540130,51.4994660" class="show-map" target="_blank">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        <span>Show Map</span>
+                    </a>-->
+                    <button class="btn btn-block btn-report" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fas fa-bug" aria-hidden="true"></i><span>Report Ad</span>
+                    </button>
+                    <div th:if="${#request.userPrincipal}">
+                        <div th:if="${#request.getUserPrincipal().name == post.get().postedBy.email}">
+                            <a th:href="@{'/userPost/postEditAds/'+${post.get().id}}">
+                                <button class="btn btn-block btn-edit" data-toggle="modal" data-target="#">
+                                    <i class="far fa-edit" aria-hidden="true"></i><span>Edit Ad</span>
+                                </button>
+                            </a>
+                            <button class="btn btn-block btn-warning" data-toggle="modal"
+                                    data-target="#deleteModal">
+                                <i class="fas fa-trash-alt" aria-hidden="true"></i><span>Delete</span>
+                            </button>
+
+                            <button class="btn btn-block btn-sold" data-toggle="modal" data-target="#soldModal">
+                                <i class="fas fa-cart-plus" aria-hidden="true"></i><span>Sold</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-map">
+                    <a th:href="@{'https://www.google.com/maps/?q='+ ${post.get().latitude}+','+${post.get().longitude}}"
+                       class="show-map" target="_blank">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        <span>Show Map</span>
+                    </a>
+                </div>
+                <div class="item-price" id="social_media">
+                    <div id="share"></div>
+                </div>
+                <!--<div class="tips">
+                    <h4>Safety Tips for Buyers</h4>
+                    <ol>
+                        <li><a href="#">Contrary to popular belief.</a></li>
+                        <li><a href="#">Contrary to popular belief.</a></li>
+                        <li><a href="#">Contrary to popular belief.</a></li>
+                        <li><a href="#">Contrary to popular belief.</a></li>
+                        <li><a href="#">Contrary to popular belief.</a></li>
+                        <li><a href="#">Contrary to popular belief.</a></li>
+                        <li><a href="#">Contrary to popular belief.</a></li>
+                        <li><a href="#">Contrary to popular belief.</a></li>
+                        <li><a href="#">Contrary to popular belief.</a></li>
+                    </ol>
+                </div>-->
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="trending-ads">
+            <div class="container">
+                <!-- slider -->
+                <div class="trend-ads">
+                    <h4 align="left">Related Ads</h4>
+                    <div class="   owl-carousel owl-theme ">
+
+                    </div>
+                </div>
+            </div>
+            <!-- //slider -->
+        </div>
+        <input id="subCategoryId" type="hidden" th:value="${post.get().subCategory.id}"/>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Report Ad</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="repo" action="#" method="post">
+                    <div class="form-group" hidden>
+                        <label for="recipient-name" class="col-form-label">Recipient:</label>
+                        <input type="text" class="form-control" id="recipient-name">
+                        <input type="text" class="form-control" name="raid" id="recipient-user"
+                               value="">
+                    </div>
+                    <label id="gender_error_message"></label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
+                               onclick="return show2();" value="Ad Violate The QB Rules" checked>
+                        <label class="form-check-label" for="exampleRadios1">
+                            Ad Violate The QB Rules
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" onclick="return show2();"
+                               id="exampleRadios2" value="Ad Repeat">
+                        <label class="form-check-label" for="exampleRadios2">
+                            Ad Repeat
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3"
+                               onclick="return show2();" value="Ad Image Or Content didnt Match">
+                        <label class="form-check-label" for="exampleRadios2">
+                            Ad Image Or Content didnt Match
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios4"
+                               onclick="return show2();" value="Ad Added In Wrong Section">
+                        <label class="form-check-label" for="exampleRadios2">
+                            Ad Added In Wrong Section
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios5"
+                               value="Other" onclick="return show1();">
+                        <label class="form-check-label" for="exampleRadios2">
+                            Other
+                        </label>
+                    </div>
+                    <div class="form-group" id="other" style="display:none">
+
+
+                        <textarea type="text" class="form-control" placeholder="Enter Complaint Here...."
+                                  id="otherTextArea" name="other"></textarea>
+
+
+                    </div>
+                    <div class="form-group">
+
+                        <button type="button" class="btn btn-primary" name="repo" id="reportSubmited">Report</button>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete Post</h5>
+
+                <h5 class="modal-body">Confirm Delete</h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="repo" action="#" method="post">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" name="repo" id="deleteSubmited">Delete</button>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="soldModal" tabindex="-1" role="dialog" aria-labelledby="soldModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="soldModalLabel">Change post Status!!</h5>
+                <div calss="modal-body">
+                    <h3 >Confirm sold</h3>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="repo1" action="#" method="post">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" name="repo" id="submitSoldModal">Confirm</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="myModal" class="modal mt-5 ">
+    <span class="close cursor" onclick="closeModal()">&times;</span>
+    <div class="modal-content">
+
+        <div class="mySlides" th:each="postImage, itr : ${post.get().photosLink}">
+            <div class="numbertext">1 / 4</div>
+            <img th:src="@{'/images/post/' + ${post.get().id}+'_'+${itr.index}}" class=" img-responsive">
+        </div>
+
+
+        <div class="mySlides" th:each="postVideo, itrr : ${post.get().videosLink}">
+            <div class="numbertext">4 / 4</div>
+            <video class=" img-responsive" width="100%" height="auto" controls>
+                <source  th:src="@{'/videos/post/' + ${post.get().id}+'_'+${itrr.index}}" type="video/mp4">
+            </video>
+        </div>
+
+        <!-- Next/previous controls -->
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+        <!-- Caption text -->
+        <!--      <div class="caption-container">
+                  <p id="caption"></p>
+              </div>
+
+              &lt;!&ndash; Thumbnail image controls &ndash;&gt;
+              <div class="row ">
+                  &lt;!&ndash; <li th:each="postImage, itr : ${post.get().photosLink}"
+                       th:attr="data-thumb=@{'/images/post/' + ${post.get().id}+'_'+${itr.index}}">
+                       <img th:src="@{'/images/post/' + ${post.get().id}+'_'+${itr.index}}"
+                            onclick="openModal();currentSlide(1)"/>
+                   </li>&ndash;&gt;
+                  <div class="col-md-3" th:each="postImage, itr : ${post.get().photosLink}">
+                      <img class="demo  img-responsive" th:src="@{'/images/post/' + ${post.get().id}+'_'+${itr.index}}" onclick="currentSlide(1)" alt="1">
+                  </div>
+
+
+
+                  <div class="col-md-3">
+                      <video class="demo  img-responsive" width="100%" height="auto" controls>
+                          <source th:src="@{/images/videothumb.jpg}" type="video/mp4" onclick="currentSlide(4)" alt="4">
+                      </video>
+                      &lt;!&ndash;<img class="demo" src="{{url('image/')}}/{{$vads->aimage4}}" onclick="currentSlide(4)" alt="4">&ndash;&gt;
+                  </div>
+              </div>
+          </div>-->
+    </div>
+    <!--//single-page-->
+</div>
+<div class="popup-box chat-popup" id="qnimate" th:if="${#request.userPrincipal}">
+    <input th:value="${#request.userPrincipal.name}" id="getUserForImage" hidden="hidden">
+    <div class="popup-head">
+        <div id="profileImageForChatBox" class="popup-head-left pull-left"></div>
+        <div class="popup-head-right pull-right">
+            <!--<div class="btn-group">
+                          <button class="chat-header-button" data-toggle="dropdown" type="button" aria-expanded="false">
+                           <i class="glyphicon glyphicon-cog"></i> </button>
+                          <ul role="menu" class="dropdown-menu pull-right">
+                            <li><a href="#">Media</a></li>
+                            <li><a href="#">Block</a></li>
+                            <li><a href="#">Clear Chat</a></li>
+                            <li><a href="#">Email Chat</a></li>
+                          </ul>
+            </div>-->
+
+            <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button"><i
+                    class="fas fa-window-close"></i></button>
+        </div>
+    </div>
+    <div id="chat" class="chat_box_wrapper chat_box_small chat_box_active"
+         style="opacity: 1; display: block; transform: translateX(0px);">
+        <div class="chat_box touchscroll chat_box_colors_a" id="shoeChatOfTwoChatOwner"></div>
+    </div>
+    <div class="popup-messages-footer">
+
+        <textarea id="status_message" placeholder="Type a message..." rows="10" cols="40" name="message"></textarea>
+        <button class="bg_none pull-right" id="sendMesseages"><i class="fas fa-location-arrow"></i></button>
+        <!--<div class="btn-footer">
+        <button class="bg_none"><i class="glyphicon glyphicon-film"></i> </button>
+        <button class="bg_none"><i class="glyphicon glyphicon-camera"></i> </button>
+        <button class="bg_none"><i class="glyphicon glyphicon-paperclip"></i> </button>
+        <button class="bg_none pull-right"><i class="glyphicon glyphicon-thumbs-up"></i> </button>
+        </div>
+        </div>-->
+    </div>
+
+</div>
+<!--//single-page-->
+
+
+<th:block th:include="fraghment/footer"></th:block>
+
+<th:block th:include="fraghment/header :: footer"></th:block>
+<script>
+    $(document).ready(function () {
+        var page = 0;
+        var size = 20;
+        var subCategory = $('#subCategoryId').val();
+        loadPost(subCategory, page, size);
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('.owl-carousel').owlCarousel({
+            loop: false,
+            margin: 10,
+            nav: true,
+            autoplay:true,
+            autoplayTimeout:5000,
+            responsive: {
+                0: {
+                    items: 2
+                },
+                600: {
+                    items: 3
+                },
+                1000: {
+                    items: 4
+                }
+            }
+        })
+    });
+    owl.on('mousewheel', '.owl-stage', function (e) {
+        if (e.deltaY>0) {
+            owl.trigger('next.owl');
+        } else {
+            owl.trigger('prev.owl');
+        }
+        e.preventDefault();
+    });
+</script>
+<script th:src="@{/js/singleview.js}"></script>
+<script th:inline="javascript">
+    $(document).scroll(function () {
+        checkOffset();
+    });
+
+    function checkOffset() {
+        if ($('#qnimate').offset().top + $('#qnimate').height()
+            >= $('#footer').offset().top - 10)
+            $('#qnimate').css({
+                position: 'absolute',
+                bottom: 'auto'
+            });
+        /* $('#qnimate').css('bottom','none');*/
+        if ($(document).scrollTop() + window.innerHeight < $('#footer').offset().top)
+            $('#qnimate').css({
+                position: 'fixed',
+                bottom: '0px'
+
+            });
+    }
+
+    var flag = false;
+
+    $(function () {
+        $("#addclass").click(function () {
+
+            $.ajax({
+                url: '/user/checkAuthentication',
+                type: 'POST',
+                success: function (data) {
+
+                    if (data.id != null) {
+
+                        $('#qnimate').addClass('popup-box-on');
+                        findImage();
+
+                    } else {
+                        var pathname = window.location.pathname;
+                        window.location.replace('/user' + pathname);
+                    }
+                }
+            })
+        });
+
+        $("#removeClass").click(function () {
+            $('#qnimate').removeClass('popup-box-on');
+        });
+
+    })
+</script>
+
+<script th:inline="javascript">
+
+    findImage = function () {
+        var name = $('#getUserForImage').val();
+
+        $.ajax({
+            url: '/user/getuserForImage',
+            type: 'POST',
+            data: {name: name},
+            success: function (data) {
+
+                $('#sendFrom').val(data.user.id);
+
+                $('#profileImageForChatBox').empty();
+
+                $('#profileImageForChatBox').append(
+                    $('<a>').attr({href: '/user/userprofile'}).append($('<img>').attr({src: '/images/profileImage/' + [[${post.get().postedBy.id}]]}).error(function (){
+
+                        $(this).attr({src:'/images/user_default.png'})
+                    }))
+                ).append(
+                    $('<a>').attr({href: '/user/userprofile'}).append($('<span>').addClass('name').text('' + [[${post.get().postedBy.email}]])
+                    )
+                )
+            }
+
+        });
+
+        listMessagesK();
+
+    };
+
+</script>
+
+<script th:inline="javascript">
+    var flag24 = false;
+    listMessagesK = function () {
+        var postId = $('#postId').val();
+        var prevDate = '';
+        flag23 = false;
+        if (flag24 != true) {
+            flag24 = true;
+            $.ajax({
+
+                url: '/user/messagesBox/listMessage',
+                type: 'POST',
+                data: {postId: postId},
+                success: function (data) {
+                    $('#checkMessagesReload').text(0);
+                    if (data.length > 0) {
+                        $.each(data, function (key, entry) {
+
+                            var postOwner = [[${post.get().postedBy.id}]];
+
+                            if (new Date(entry.time).toLocaleDateString() != prevDate || flag23 == false) {
+                                $('<p>').text(new Date(entry.time).toLocaleDateString());
+                            }
+
+                            if (entry.sendFrom.id === postOwner) {
+                                $('#shoeChatOfTwoChatOwner').append(
+                                    $('<div>').addClass('chat_message_wrapper').append(
+                                        $('<div>').addClass('chat_user_avatar').append(
+                                            $('<a>').attr({href: '/user/userprofile/' + entry.sendFrom.id}).append(
+                                                $('<img>').addClass('md-user-image img_left').attr({src: '/images/profileImage/' + entry.sendFrom.id}).error(function (){
+
+                                                    $(this).attr({src:'/images/user_default.png'})
+                                                })
+                                            )
+                                        ).append(
+                                            $('<ul>').addClass('chat_message').append(
+                                                $('<li>').append(
+                                                    $('<p>').text(entry.message).append(
+                                                        $('<span>').addClass('chat_message_time').text(new Date(entry.time).toLocaleDateString()).append(
+                                                            $('<span>').addClass('chat_message_time').text(new Date(entry.time).toLocaleTimeString())
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            } else {
+                                $('#shoeChatOfTwoChatOwner').append(
+                                    $('<div>').addClass('chat_message_wrapper chat_message_right').append(
+                                        $('<div>').addClass('chat_user_avatar').append(
+                                            $('<a>').attr({href: '/user/userprofile/' + entry.sendFrom.id}).append(
+                                                $('<img>').addClass('md-user-image img_right').attr({src: '/images/profileImage/' + entry.sendFrom.id}).error(function (){
+
+                                                    $(this).attr({src:'/images/user_default.png'})
+                                                })
+                                            )
+                                        ).append(
+                                            $('<ul>').addClass('chat_message').append(
+                                                $('<li>').append(
+                                                    $('<p>').text(entry.message).append(
+                                                        $('<span>').addClass('chat_message_time').text(new Date(entry.time).toLocaleTimeString()).append(
+                                                            $('<span>').addClass('chat_message_time').text(new Date(entry.time).toLocaleTimeString())
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            }
+                            scroller();
+                        });
+                    }
+
+                }
+            });
+        }
+    }
+</script>
+<script th:inline="javascript">
+    $(window).load(function () {
+        $('#sendMesseages').on('click', function () {
+            var messageBody = $("#status_message").val();
+            $('#status_message').empty();
+            var receiverId = [[${post.get().postedBy.id}]];
+            if (messageBody != '') {
+                $.ajax({
+                    type: "POST",
+                    url: "/user/chat/save",
+                    data: {message: messageBody, sendTo: receiverId},
+                    dataType: 'json',
+                    success: function (result) {
+                        $('#status_message').val('');
+                        if (result.length > 0) {
+                            $.each(result, function (key, entry) {
+
+                                var postOwner = [[${post.get().postedBy.id}]];
+
+                                if (entry.sendFrom.id === postOwner) {
+                                    $('#shoeChatOfTwoChatOwner').append(
+                                        $('<div>').addClass('chat_message_wrapper').append(
+                                            $('<div>').addClass('chat_user_avatar').append(
+                                                $('<a>').attr({href: '/user/userprofile/' + entry.sendFrom.id}).append(
+                                                    $('<img>').addClass('md-user-image img_left').attr({src: '/images/profileImage/' + entry.sendFrom.id}).error(function (){
+
+                                                        $(this).attr({src:'/images/user_default.png'})
+                                                    })
+                                                )
+                                            ).append(
+                                                $('<ul>').addClass('chat_message').append(
+                                                    $('<li>').append(
+                                                        $('<p>').text(entry.message).append(
+                                                            $('<span>').addClass('chat_message_time').text(new Date(entry.time).toLocaleDateString()).append(
+                                                                $('<span>').addClass('chat_message_time').text(new Date(entry.time).toLocaleTimeString())
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                } else {
+                                    $('#shoeChatOfTwoChatOwner').append(
+                                        $('<div>').addClass('chat_message_wrapper chat_message_right').append(
+                                            $('<div>').addClass('chat_user_avatar').append(
+                                                $('<a>').attr({href: '/user/userprofile/' + entry.sendFrom.id}).append(
+                                                    $('<img>').addClass('md-user-image img_right').attr({src: '/images/profileImage/' + entry.sendFrom.id}).error(function (){
+
+                                                        $(this).attr({src:'/images/user_default.png'})
+                                                    })
+                                                )
+                                            ).append(
+                                                $('<ul>').addClass('chat_message').append(
+                                                    $('<li>').append(
+                                                        $('<p>').text(entry.message).append(
+                                                            $('<span>').addClass('chat_message_time').text(new Date(entry.time).toLocaleTimeString()).append(
+                                                                $('<span>').addClass('chat_message_time').text(new Date(entry.time).toLocaleTimeString())
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                }
+
+                            });
+                        }
+                        scroller();
+                    },
+                    error: function (e) {
+                    }
+                })
+
+
+                    .done(function (msg) {
+
+                    });
+            }
+        })
+
+
+    });
+
+    function scroller() {
+        var objDiv = document.getElementById("chat");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var elem = $('#container ul');
+        $('#viewcontrols a').on('click', function (e) {
+            if ($(this).hasClass('gridview')) {
+                elem.fadeOut(1000, function () {
+                    $('#container ul').removeClass('list').addClass('grid');
+                    $('#viewcontrols').removeClass('view-controls-list').addClass('view-controls-grid');
+                    $('#viewcontrols .gridview').addClass('active');
+                    $('#viewcontrols .listview').removeClass('active');
+                    elem.fadeIn(1000);
+                });
+            } else if ($(this).hasClass('listview')) {
+                elem.fadeOut(1000, function () {
+                    $('#container ul').removeClass('grid').addClass('list');
+                    $('#viewcontrols').removeClass('view-controls-grid').addClass('view-controls-list');
+                    $('#viewcontrols .gridview').removeClass('active');
+                    $('#viewcontrols .listview').addClass('active');
+                    elem.fadeIn(1000);
+                });
+            }
+        });
+    });
+</script>
+
+<script>
+    loadPost = function (subCategoriesId,page, size) {
+        $.ajax({
+            method: "POST",
+            url: "/allPostBySubCategoryId",
+            async: false,
+            data: {subCategoriesId: subCategoriesId, page: page, size: size},
+            success: function (data) {
+                renderData(data);
+            }
+        })
+    };
+</script>
+
+<script>
+    renderData = function (data) {
+
+        $(".owl-carousel").empty();
+        var postId = [[${post.get().id}]];
+        $.each(data.content, function (key, entry) {
+            if (entry.id != postId)
+            $('.owl-carousel').append(
+                $('<div>').addClass(' item  ').append(
+                    $('<div>').addClass(' biseller-column').append(
+                        $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.id}).append(
+                            $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                        ).append(
+                            $('<span>').addClass('premium_img')
+                        ).append(
+                            $('<span>').addClass('price').text('QR ' + entry.price)
+                        )
+                    ).append(
+                        $('<div>').addClass('ad-info').append(
+                            $('<h5>').text(entry.title)
+                        ).append(
+                            $('<span>').text(new Date(entry.postCreateTime).toLocaleDateString())
+                        )
+                    )
+                )
+            );
+
+        });
+
+
+    }
+</script>
+<script th:src="@{/js/jssocials.min.js}"></script>
+<script>
+    $("#share").jsSocials({
+        shares: ["email", "twitter", "facebook", "googleplus", "linkedin",  "whatsapp"]
+    });
+</script>
+<script>
+
+    function show2() {
+        $("#other").css('display', 'none');
+    };
+
+    $("#exampleRadios5").on('click', function () {
+        $("#other").css('display', 'block');
+    });
+    $('#reportSubmited').on('click', function () {
+        console.log('get');
+        var report = $('input[name=exampleRadios]:checked').val();
+        var postId = $('#postId').val();
+        if (report == 'Other') {
+
+            var reportText = $('#otherTextArea').val();
+        } else {
+            var reportText = report;
+        }
+        $.ajax({
+            url: '/user/save/report',
+            type: 'POST',
+            data: {postId: postId, reportText: reportText},
+            success: function (data) {
+                if (data == 'success') {
+                } else {
+                    var pathname = window.location.pathname;
+                    window.location.replace('/user' + pathname);
+                }
+            }
+        });
+    });
+    $('#deleteSubmited').on('click', function () {
+        var postId = $('#postId').val();
+        $.ajax({
+            url: '/user/postDelete/delete',
+            type: 'POST',
+            data: {postId: postId},
+            success: function (data) {
+                if (data.response == 'success') {
+                    window.location.replace('/user');
+                } else {
+                    var pathname = window.location.pathname;
+                    window.location.replace( pathname);
+                }
+            }
+        });
+    });$('#submitSoldModal').on('click', function () {
+        var postId = $('#postId').val();
+        $.ajax({
+            url: '/user/postSold/sold',
+            type: 'POST',
+            data: {postId: postId},
+            success: function (data) {
+                if (data.response == 'success') {
+                    window.location.replace('/user');
+                } else {
+                    var pathname = window.location.pathname;
+                    window.location.replace( pathname);
+                }
+            }
+        });
+    });
+
+</script>
+</body>
+</html>

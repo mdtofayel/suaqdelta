@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fraghment/header:: head"></th:block>
+    <!-- DataTables -->
+
+    <style>
+        .psub {
+            display: none;
+            margin-left: 31%
+        }
+
+        .wrap-custom-file {
+
+            background-size: cover;
+            background-position: center;
+            object-fit: cover;
+            max-width: 100%;
+            border-radius: 50%;
+        }
+
+        #b {
+            display: none;
+            background: none;
+        }
+
+        /* .wrap-custom-file:hover + label {
+            display: block;
+         }*/
+
+    </style>
+</head>
+<body>
+
+
+<header th:if="${#request.isUserInRole('USER')}" th:include="fraghment/user_header"></header>
+<header th:unless="${#request.isUserInRole('USER')}" th:include="fraghment/head"></header>
+
+<input type="hidden" id="userId" th:value="${users.id}">
+
+<div class="container">
+    <div class="row profile">
+        <div class="col-md-3" style="padding-left: 0px">
+            <div class="profile-sidebar">
+                <form action="#" id="formadd" enctype="multipart/form-data" method="post">
+
+                    <div class="wrap-custom-file" id="a">
+                        <input type="file" name="image" id="image4" accept=".gif, .jpg, .png">
+                        <label for="image4" class="file-ok profile-img" id="b">
+                            <i class="fas fa-edit"></i>
+                        </label>
+                    </div>
+                    <br>
+                    <button id="uploadImage" type="button" name="upl" class="btn  psub">Upload</button>
+                </form>
+                <div class="profile-usertitle">
+                    <div class="profile-usertitle-name" th:text="${users.profile.firstName}">
+                        Abcs
+                    </div>
+                    <div class="profile-usertitle-job" th:text="${users.email}">
+                        asd@g.com
+                    </div>
+                </div>
+                <div class="profile-usermenu">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li class="active">
+                            <a href="#my_ad" aria-controls="home" role="tab" data-toggle="tab">
+                                <i class=" glyphicon glyphicon-bullhorn"></i>
+                                My Ads</a>
+                        </li>
+                        <li>
+                            <a href="#notification" aria-controls="home" role="tab" data-toggle="tab"
+                               id="notificationData">
+                                <i class="glyphicon glyphicon-bell"></i>
+                                Notifications </a>
+                        </li>
+                        <li>
+                            <a href="#favourite" aria-controls="home" role="tab" data-toggle="tab" id="favouriteShow">
+                                <i class="glyphicon  glyphicon-star"></i>
+                                Favourite Item </a>
+                        </li>
+                        <li>
+                            <a href="#profile" aria-controls="home" role="tab" data-toggle="tab">
+                                <i class="glyphicon glyphicon-user"></i>
+                                Edit Profile </a>
+                        </li>
+                        <li>
+                            <a href="#password" aria-controls="home" role="tab" data-toggle="tab">
+                                <i class="glyphicon glyphicon-lock"></i>
+                                Change Password </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- END MENU -->
+            </div>
+        </div>
+        <div class="col-md-9" style="padding-left: 0px">
+            <div class="tab-content">
+                <div role="tabpanel" class=" tab-pane profile-content  active" id="my_ad">
+                    <a style="float: right" class="account" th:href="@{/userPost/postNewAds}">Post Ad</a>
+                    <div>
+                        <div id="container">
+                            <div class="view-controls-list" id="viewcontrols">
+                                <label>view :</label>
+                                <a class="gridview"><i class="glyphicon glyphicon-th"></i></a>
+                                <a class="listview active"><i class="glyphicon glyphicon-th-list"></i></a>
+                            </div>
+                            <div class="sort">
+                                <div class="sort-by">
+                                    <label>Sort By : </label>
+                                    <select id="size">
+                                        <option value="1">1</option>
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="20" selected>20</option>
+                                        <option value="50">50</option>
+                                        <option value="20">100</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <ul class="list" id="postList">
+                                <!-- <a href="single.html">-->
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <ul class="pagination pagination-sm" id="pagination"></ul>
+                </div>
+                <div role="tabpanel" class=" tab-pane profile-content" id="notification">
+                    <div class="alert alert-dismissible alert-primary" id="notificationContent">
+                    </div>
+                </div>
+                <div role="tabpanel" class=" tab-pane profile-content" id="favourite">
+                    <a style="float: right" class="account" th:href="@{/userPost/postNewAds}">Post Ad</a>
+                    <div>
+                        <div id="container">
+                            <div class="view-controls-list" id="viewcontrols">
+                                <label>view :</label>
+                                <a class="gridview active"><i class="glyphicon glyphicon-th"></i></a>
+                                <a class="listview "><i class="glyphicon glyphicon-th-list"></i></a>
+                            </div>
+                            <div class="sort">
+                                <div class="sort-by">
+                                    <label>Sort By : </label>
+                                    <select id="sizeForFavouriteItem">
+                                        <option value="1">1</option>
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="20" selected>20</option>
+                                        <option value="50">50</option>
+                                        <option value="20">100</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <ul class="grid" id="favouritePostList">
+                                <div class="clearfix"></div>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <ul class="pagination pagination-sm" id="favouritePagination"></ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div role="tabpanel" class=" tab-pane profile-content" id="profile">
+                    <div class="row ">
+                        <div class="col-md-12">
+
+                            <div class="sign-up" style="width: 100%;">
+
+                                <form>
+                                    <div class="sign-u">
+                                        <div class="sign-up1">
+                                            <h4>First Name* :</h4>
+                                        </div>
+                                        <div class="sign-up2">
+
+                                            <input type="text" class="username" name="firstname" id="newFirstName"
+                                                   th:field="${users.profile.firstName}"
+                                                   placeholder="Enter First Name " required=" "/>
+
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="sign-u">
+                                        <div class="sign-up1">
+                                            <h4>Last Name* :</h4>
+                                        </div>
+                                        <div class="sign-up2">
+
+                                            <input type="text" class="username" name="lastname" id="newLastName"
+                                                   th:field="${users.profile.lastName}"
+                                                   placeholder="Enter Last Name " required=" "/>
+
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="sign-u">
+                                        <div class="sign-up1">
+                                            <h4>Email Address* :</h4>
+                                        </div>
+                                        <div class="sign-up2">
+
+                                            <input type="email" name="email" id="disabled"
+                                                   placeholder="Enter Your Email " required=" " disabled
+                                                   th:value="${users.email}">
+
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+
+
+                                    <button type="button" name="submit" class="btn  esub" id="editUserinfo" >Save</button>
+
+                                    <div class="clearfix"></div>
+
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" class=" tab-pane profile-content" id="password">
+                    <div class="sign-up" style="width: 90%;">
+                        <form>
+                            <div class="sign-u">
+                                <div class="sign-up1">
+                                    <h4>Current Password* :</h4>
+                                </div>
+                                <div class="sign-up2">
+
+                                    <input id="currentPassword" type="password" name="cpassword"
+                                           placeholder="Enter Password " required=" "/>
+
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="sign-u">
+                                <div class="sign-up1">
+                                    <h4>New Password* :</h4>
+                                </div>
+                                <div class="sign-up2">
+
+                                    <input id="newPassword" type="password" name="npassword"
+                                           placeholder="Enter Password " required=" "/>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="sign-u">
+                                <div class="sign-up1">
+                                    <h4>Confirm Password* :</h4>
+                                </div>
+                                <div class="sign-up2">
+
+                                    <input id="confirmPassword" type="password" name="cnfpassword"
+                                           placeholder="Enter Confirm Password "
+                                           required=" "/>
+
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <input type="button" id="savePassword" class="btn  esub" value="Save"/>
+
+                            <div class="clearfix"></div>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+<th:block th:include="fraghment/footer"></th:block>
+
+<th:block th:include="fraghment/header :: footer"></th:block>
+<link th:href="@{/css/simplePagination.css}" rel="stylesheet"/>
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Message</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <h6 id="modalMessage"></h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" th:src="@{/js/jquery.simplePagination.js}"></script>
+
+<script type="text/javascript" th:inline="javascript">
+    $(document).ready(function () {
+        /*$('#a').css({src: '/images/profileImage/[[${users.id}]]'});*/
+        var imageUrl = '/images/profileImage/[[${users.id}]]';
+        $('#a').css('background-image', 'url(' + imageUrl + ')');
+        var elem = $('#container ul');
+        $('#viewcontrols a').on('click', function (e) {
+            if ($(this).hasClass('gridview')) {
+                elem.fadeOut(1000, function () {
+                    $('#container ul').removeClass('list').addClass('grid');
+                    $('#viewcontrols').removeClass('view-controls-list').addClass('view-controls-grid');
+                    $('#viewcontrols .gridview').addClass('active');
+                    $('#viewcontrols .listview').removeClass('active');
+                    elem.fadeIn(1000);
+                });
+            } else if ($(this).hasClass('listview')) {
+                elem.fadeOut(1000, function () {
+                    $('#container ul').removeClass('grid').addClass('list');
+                    $('#viewcontrols').removeClass('view-controls-grid').addClass('view-controls-list');
+                    $('#viewcontrols .gridview').removeClass('active');
+                    $('#viewcontrols .listview').addClass('active');
+                    elem.fadeIn(1000);
+                });
+            }
+        });
+    });
+</script>
+<script>
+    document.getElementById('a').onmouseover = function () {
+        document.getElementById('b').style.display = 'block';
+    }
+    document.getElementById('a').onmouseout = function () {
+        document.getElementById('b').style.display = 'none';
+    }
+</script>
+<script>
+    $('input[type="file"]').each(function () {
+        var $file = $(this),
+            $label = $file.next('label'),
+            $labelText = $label.find('span'),
+            labelDefault = $labelText.text();
+
+        $file.on('change', function (event) {
+            var fileName = $file.val().split('\\').pop(),
+                tmppath = URL.createObjectURL(event.target.files[0]);
+            if (fileName) {
+                $('.psub').css('display', 'block');
+                $('.wrap-custom-file').addClass('file-ok')
+                    .css('background-image', 'url(' + tmppath + ')');
+            } else {
+                $label.removeClass('file-ok');
+                $labelText.text(labelDefault);
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#uploadImage').on('click', function (e) {
+            var formData = new FormData();
+            var file = $('#image4')[0].files[0];
+
+            var formData = new FormData();
+
+            formData.append("profileImage", file);
+
+            $.ajax({
+                url: '/user/change/images',
+                type: 'POST',
+                data: formData,
+                enctype: 'multipart/form-data',
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function (data) {
+                    if (data.response == 'Success') {
+                        $.ajax({
+                            url: '/images/profileImage/[[${users.id}]]',
+                            type: 'GET',
+                            success: function (imageData) {
+                                /* $('.psub').css('display', 'none');
+                                 $("#successModal #modalMessage").html(data.response);
+                                 $('#a').css('background-image', 'url(' + imageData + ')');*/
+                                history.go(0);
+                            }
+                        });
+                    } else {
+                        $("#successModal #modalMessage").html(data.response);
+                        $('#successModal').modal('show');
+                    }
+                }
+            });
+
+
+        });
+
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#savePassword').on('click', function (e) {
+            var currentPassword = $("#currentPassword").val();
+            var newPassword = $("#newPassword").val();
+            var confirmPassword = $("#confirmPassword").val();
+            if (newPassword.length < 6 || confirmPassword.length < 6 || currentPassword.length < 6) {
+                alert("Invalid password ");
+                return;
+            }
+            if (newPassword == confirmPassword) {
+                $.ajax({
+                    method: "POST",
+                    url: "/user/changePassword",
+                    data: {currentPassword: currentPassword, newPassword: newPassword, confirmPassword: confirmPassword}
+                })
+                    .done(function (msg) {
+                        alert("Data Saved: " + msg);
+                    });
+            } else {
+                alert("Password not matched");
+                $("#currentPassword").val("");
+                $("#newPassword").val("");
+                $("#confirmPassword").val("");
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#editUserinfo').on('click', function () {
+            var firstName = $("#newFirstName").val();
+            var lastName = $("#newLastName").val();
+            if (firstName.length <= 0 || firstName == null) {
+                alert("Firt Name can't be null");
+                return;
+            }
+            if (lastName.length <= 0 || lastName == null) {
+                alert("Last Name can't be null");
+                return;
+            }
+            alert("---------------------");
+            var formData = {
+                firstname: firstName,
+                lastname: lastName
+            };
+
+            $.ajax({
+                type: "POST",
+                /* contentType: "application/json",*/
+                url: "/user/edituser/save",
+                /*data: JSON.stringify(formData),*/
+                dataType: 'json',
+
+                data: {firstName: firstName, lastName: lastName}
+            })
+                .done(function (msg) {
+                    alert("Data Saved: " + msg);
+                });
+        })
+    })
+</script>
+<script>
+    $(document).ready(
+        function () {
+            var size = $('#size').val();
+            var elem = $('#container ul');
+            var userId = $('#userId').val();
+            var page = 0;
+            $.ajax({
+                method: "POST",
+                url: "/postByUser",
+                data: {userId: userId, page: page, size: size},
+                dataType: "json"
+            })
+                .done(function (data) {
+                    $("#postList").empty();
+                    $.each(data.content, function (key, entry) {
+                        /*   console.log(entry.promotedAds,entry.postStatus);*/
+                        if (entry.promotedAds == false) {
+
+                            $('#postList').append(
+                                $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.id}).append(
+                                    $('<li>').append(
+                                        $('<span>').addClass('fas fa-bookmark premiumad_img')
+                                    ).append(
+                                        $('<span>').addClass('price_view').text(entry.price + " QR")
+                                    ).append(
+                                        $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                                    ).append(
+                                        $('<section>').addClass('list-left').append(
+                                            $('<h5>').addClass('title').text(entry.title)
+                                        ).append(
+                                            $('<p>').addClass('discription').text(entry.description)
+                                        )
+                                    ).append(
+                                        $('<section>').addClass('list-right').append(
+                                            $('<span>').addClass('cityname').text(entry.address)
+                                        ).append(
+                                            $('<p>').addClass('date').text(new Date(entry.postCreateTime).toLocaleDateString())
+                                        ).append(
+                                            $('<p>').addClass('view_count').append(
+                                                $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                                            ).append(
+                                                $('<span>').addClass('count').attr({id: 'comments_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getComment/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#comments_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            ).append(
+                                                $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                                            ).append(
+                                                $('<span>').addClass('view').attr({id: 'view_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getView/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#view_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            ).append(
+                                                $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                                            ).append(
+                                                $('<span>').addClass('like').attr({id: 'like_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getLike/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#like_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            )
+                                        )
+                                    ).append(
+                                        $('<div>').addClass('clearfix')
+                                    )
+                                )
+                            );
+                        } else if (entry.postStatus == true) {
+                            $('#postList').append(
+                                $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.id}).append(
+                                    $('<li>').append(
+                                        $('<span>').addClass(' sold_item').text('SOLD')
+                                    ).append(
+                                        $('<span>').addClass('price_view').text(entry.price + " QR")
+                                    ).append(
+                                        $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                                    ).append(
+                                        $('<section>').addClass('list-left').append(
+                                            $('<h5>').addClass('title').text(entry.title)
+                                        )
+                                    ).append(
+                                        $('<section>').addClass('list-right').append(
+                                            $('<span>').addClass('cityname').text(entry.address)
+                                        ).append(
+                                            $('<p>').addClass('date').text(new Date(entry.postCreateTime).toLocaleDateString())
+                                        ).append(
+                                            $('<p>').addClass('view_count').append(
+                                                $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                                            ).append(
+                                                $('<span>').addClass('count').attr({id: 'comments_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getComment/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#comments_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            ).append(
+                                                $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                                            ).append(
+                                                $('<span>').addClass('view').attr({id: 'view_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getView/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#view_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            ).append(
+                                                $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                                            ).append(
+                                                $('<span>').addClass('like').attr({id: 'like_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getLike/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#like_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            )
+                                        )
+                                    ).append(
+                                        $('<div>').addClass('clearfix')
+                                    )
+                                )
+                            );
+                        } else {
+                            $('#postList').append(
+                                $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.id}).append(
+                                    $('<li>').append(
+                                        $('<span>').addClass('price_view').text(entry.price + " QR")
+                                    ).append(
+                                        $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                                    ).append(
+                                        $('<section>').addClass('list-left').append(
+                                            $('<h5>').addClass('title').text(entry.title)
+                                        )
+                                    ).append(
+                                        $('<section>').addClass('list-right').append(
+                                            $('<span>').addClass('cityname').text(entry.address)
+                                        ).append(
+                                            $('<p>').addClass('date').text(new Date(entry.postCreateTime).toLocaleDateString())
+                                        ).append(
+                                            $('<p>').addClass('view_count').append(
+                                                $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                                            ).append(
+                                                $('<span>').addClass('count').attr({id: 'comments_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getComment/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#comments_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            ).append(
+                                                $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                                            ).append(
+                                                $('<span>').addClass('view').attr({id: 'view_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getView/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#view_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            ).append(
+                                                $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                                            ).append(
+                                                $('<span>').addClass('like').attr({id: 'like_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getLike/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#like_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            )
+                                        )
+                                    ).append(
+                                        $('<div>').addClass('clearfix')
+                                    )
+                                )
+                            );
+                        }
+                    });
+                    $('#pagination').empty();
+                    $(function () {
+                        $('#pagination').pagination({
+                            items: data.totalElements,
+                            itemsOnPage: size,
+                            cssStyle: 'light-theme',
+                            onPageClick: function () {
+                                page = $('#pagination').pagination('getCurrentPage') - 1;
+                                $.ajax({
+                                    method: "POST",
+                                    url: "/postByUser",
+                                    data: {userId: userId, page: page, size: size},
+                                    dataType: "json"
+                                })
+                                    .done(function (data) {
+                                        $("#postList").empty();
+                                        $.each(data.content, function (key, entry) {
+                                            $('#postList').append(
+                                                $('<a>').attr({href: '/userPost/singlePrduct/view/' + entry.id}).append(
+                                                    $('<li>').append(
+                                                        $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                                                    ).append(
+                                                        $('<section>').addClass('list-left').append(
+                                                            $('<h5>').addClass('title').text(entry.title)
+                                                        ).append(
+                                                            $('<span>').addClass('adprice').text(entry.price + " QR")
+                                                        ).append(
+                                                            $('<p>').addClass('catpath').text("Mobile Phones » Brand")
+                                                        )
+                                                    ).append(
+                                                        $('<section>').addClass('list-right').append(
+                                                            $('<span>').addClass('date').text(new Date(entry.postCreateTime).toLocaleDateString())
+                                                        ).append(
+                                                            $('<span>').addClass('cityname').text(entry.address)
+                                                        ).append(
+                                                            $('<p>').addClass('view_count').append(
+                                                                $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                                                            ).append(
+                                                                $('<span>').addClass('count').attr({id: 'comments_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                                    $.ajax({
+                                                                        url: '/userPost/getComment/' + entry.id,
+                                                                        type: 'GET',
+                                                                        success: function (data) {
+                                                                            $('#comments_count' + entry.id).text(data);
+                                                                        }
+                                                                    })
+                                                                })
+                                                            ).append(
+                                                                $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                                                            ).append(
+                                                                $('<span>').addClass('view').attr({id: 'view_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                                    $.ajax({
+                                                                        url: '/userPost/getView/' + entry.id,
+                                                                        type: 'GET',
+                                                                        success: function (data) {
+                                                                            $('#view_count' + entry.id).text(data);
+                                                                        }
+                                                                    })
+                                                                })
+                                                            ).append(
+                                                                $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                                                            ).append(
+                                                                $('<span>').addClass('like').attr({id: 'like_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                                    $.ajax({
+                                                                        url: '/userPost/getLike/' + entry.id,
+                                                                        type: 'GET',
+                                                                        success: function (data) {
+                                                                            $('#like_count' + entry.id).text(data);
+                                                                        }
+                                                                    })
+                                                                })
+                                                            )
+                                                        )
+                                                    ).append(
+                                                        $('<div>').addClass('clearfix')
+                                                    )
+                                                )
+                                            );
+                                        });
+                                    });
+                            }
+                        });
+                    });
+                });
+        });
+</script>
+<script th:inline="javascript">
+    $('#size').on('change',
+        function () {
+            var size = $('#size').val();
+            var elem = $('#container ul');
+            var userId = $('#userId').val();
+            var page = 0;
+            $.ajax({
+                method: "POST",
+                url: "/postByUser",
+                data: {userId: userId, page: page, size: size},
+                dataType: "json"
+            })
+                .done(function (data) {
+                    $("#postList").empty();
+                    $.each(data.content, function (key, entry) {
+                        /*   console.log(entry.promotedAds,entry.postStatus);*/
+                        if (entry.promotedAds == false) {
+
+                            $('#postList').append(
+                                $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.id}).append(
+                                    $('<li>').append(
+                                        $('<span>').addClass('fas fa-bookmark premiumad_img')
+                                    ).append(
+                                        $('<span>').addClass('price_view').text(entry.price + " QR")
+                                    ).append(
+                                        $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                                    ).append(
+                                        $('<section>').addClass('list-left').append(
+                                            $('<h5>').addClass('title').text(entry.title)
+                                        ).append(
+                                            $('<p>').addClass('discription').text(entry.description)
+                                        )
+                                    ).append(
+                                        $('<section>').addClass('list-right').append(
+                                            $('<span>').addClass('cityname').text(entry.address)
+                                        ).append(
+                                            $('<p>').addClass('date').text(new Date(entry.postCreateTime).toLocaleDateString())
+                                        ).append(
+                                            $('<p>').addClass('view_count').append(
+                                                $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                                            ).append(
+                                                $('<span>').addClass('count').attr({id: 'comments_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getComment/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#comments_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            ).append(
+                                                $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                                            ).append(
+                                                $('<span>').addClass('view').attr({id: 'view_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getView/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#view_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            ).append(
+                                                $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                                            ).append(
+                                                $('<span>').addClass('like').attr({id: 'like_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getLike/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#like_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            )
+                                        )
+                                    ).append(
+                                        $('<div>').addClass('clearfix')
+                                    )
+                                )
+                            );
+                        } else if (entry.postStatus == true) {
+                            $('#postList').append(
+                                $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.id}).append(
+                                    $('<li>').append(
+                                        $('<span>').addClass(' sold_item').text('SOLD')
+                                    ).append(
+                                        $('<span>').addClass('price_view').text(entry.price + " QR")
+                                    ).append(
+                                        $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                                    ).append(
+                                        $('<section>').addClass('list-left').append(
+                                            $('<h5>').addClass('title').text(entry.title)
+                                        )
+                                    ).append(
+                                        $('<section>').addClass('list-right').append(
+                                            $('<span>').addClass('cityname').text(entry.address)
+                                        ).append(
+                                            $('<p>').addClass('date').text(new Date(entry.postCreateTime).toLocaleDateString())
+                                        ).append(
+                                            $('<p>').addClass('view_count').append(
+                                                $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                                            ).append(
+                                                $('<span>').addClass('count').attr({id: 'comments_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getComment/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#comments_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            ).append(
+                                                $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                                            ).append(
+                                                $('<span>').addClass('view').attr({id: 'view_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getView/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#view_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            ).append(
+                                                $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                                            ).append(
+                                                $('<span>').addClass('like').attr({id: 'like_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getLike/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#like_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            )
+                                        )
+                                    ).append(
+                                        $('<div>').addClass('clearfix')
+                                    )
+                                )
+                            );
+                        } else {
+                            $('#postList').append(
+                                $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.id}).append(
+                                    $('<li>').append(
+                                        $('<span>').addClass('price_view').text(entry.price + " QR")
+                                    ).append(
+                                        $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                                    ).append(
+                                        $('<section>').addClass('list-left').append(
+                                            $('<h5>').addClass('title').text(entry.title)
+                                        )
+                                    ).append(
+                                        $('<section>').addClass('list-right').append(
+                                            $('<span>').addClass('cityname').text(entry.address)
+                                        ).append(
+                                            $('<p>').addClass('date').text(new Date(entry.postCreateTime).toLocaleDateString())
+                                        ).append(
+                                            $('<p>').addClass('view_count').append(
+                                                $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                                            ).append(
+                                                $('<span>').addClass('count').attr({id: 'comments_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getComment/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#comments_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            ).append(
+                                                $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                                            ).append(
+                                                $('<span>').addClass('view').attr({id: 'view_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getView/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#view_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            ).append(
+                                                $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                                            ).append(
+                                                $('<span>').addClass('like').attr({id: 'like_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getLike/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#like_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            )
+                                        )
+                                    ).append(
+                                        $('<div>').addClass('clearfix')
+                                    )
+                                )
+                            );
+                        }
+                    });
+                    $('#pagination').empty();
+                    $(function () {
+                        $('#pagination').pagination({
+                            items: data.totalElements,
+                            itemsOnPage: size,
+                            cssStyle: 'light-theme',
+                            onPageClick: function () {
+                                page = $('#pagination').pagination('getCurrentPage') - 1;
+                                $.ajax({
+                                    method: "POST",
+                                    url: "/postByUser",
+                                    data: {userId: userId, page: page, size: size},
+                                    dataType: "json"
+                                })
+                                    .done(function (data) {
+                                        $("#postList").empty();
+                                        $.each(data.content, function (key, entry) {
+                                            $('#postList').append(
+                                                $('<a>').attr({href: '/userPost/singlePrduct/view/' + entry.id}).append(
+                                                    $('<li>').append(
+                                                        $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                                                    ).append(
+                                                        $('<section>').addClass('list-left').append(
+                                                            $('<h5>').addClass('title').text(entry.title)
+                                                        ).append(
+                                                            $('<span>').addClass('adprice').text(entry.price + " QR")
+                                                        ).append(
+                                                            $('<p>').addClass('catpath').text("Mobile Phones » Brand")
+                                                        )
+                                                    ).append(
+                                                        $('<section>').addClass('list-right').append(
+                                                            $('<span>').addClass('date').text(new Date(entry.postCreateTime).toLocaleDateString())
+                                                        ).append(
+                                                            $('<span>').addClass('cityname').text(entry.address)
+                                                        ).append(
+                                                            $('<p>').addClass('view_count').append(
+                                                                $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                                                            ).append(
+                                                                $('<span>').addClass('count').attr({id: 'comments_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                                    $.ajax({
+                                                                        url: '/userPost/getComment/' + entry.id,
+                                                                        type: 'GET',
+                                                                        success: function (data) {
+                                                                            $('#comments_count' + entry.id).text(data);
+                                                                        }
+                                                                    })
+                                                                })
+                                                            ).append(
+                                                                $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                                                            ).append(
+                                                                $('<span>').addClass('view').attr({id: 'view_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                                    $.ajax({
+                                                                        url: '/userPost/getView/' + entry.id,
+                                                                        type: 'GET',
+                                                                        success: function (data) {
+                                                                            $('#view_count' + entry.id).text(data);
+                                                                        }
+                                                                    })
+                                                                })
+                                                            ).append(
+                                                                $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                                                            ).append(
+                                                                $('<span>').addClass('like').attr({id: 'like_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                                    $.ajax({
+                                                                        url: '/userPost/getLike/' + entry.id,
+                                                                        type: 'GET',
+                                                                        success: function (data) {
+                                                                            $('#like_count' + entry.id).text(data);
+                                                                        }
+                                                                    })
+                                                                })
+                                                            )
+                                                        )
+                                                    ).append(
+                                                        $('<div>').addClass('clearfix')
+                                                    )
+                                                )
+                                            );
+                                        });
+                                    });
+                            }
+                        });
+                    });
+                });
+        });
+</script>
+
+
+<script>
+    $('#favouriteShow').on('click',
+        function () {
+            var size = $('#sizeForFavouriteItem').val();
+            var elem = $('#container ul');
+            var userId = $('#userId').val();
+            var page = 0;
+            $.ajax({
+                method: "POST",
+                url: "/userFavoriteItem",
+                data: {userId: userId, page: page, size: size},
+                dataType: "json"
+            })
+                .done(function (data) {
+                    $("#favouritePostList").empty();
+                    $.each(data.content, function (key, entry) {
+                        /*   console.log(entry.promotedAds,entry.postStatus);*/
+                        if (entry.promotedAds == false) {
+
+                            $('#favouritePostList').append(
+                                $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.post.id}).append(
+                                    $('<li>').append(
+                                        $('<span>').addClass('fas fa-bookmark premiumad_img')
+                                    ).append(
+                                        $('<span>').addClass('price_view').text(entry.post.price + " QR")
+                                    ).append(
+                                        $('<img>').attr({src: "/images/post/" + entry.post.id + "_0"})
+                                    ).append(
+                                        $('<section>').addClass('list-left').append(
+                                            $('<h5>').addClass('title').text(entry.post.title)
+                                        ).append(
+                                            $('<p>').addClass('discription').text(entry.post.description)
+                                        )
+                                    ).append(
+                                        $('<section>').addClass('list-right').append(
+                                            $('<span>').addClass('cityname').text(entry.post.address)
+                                        ).append(
+                                            $('<p>').addClass('date').text(new Date(entry.post.postCreateTime).toLocaleDateString())
+                                        ).append(
+                                            $('<p>').addClass('view_count').append(
+                                                $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                                            ).append(
+                                                $('<span>').addClass('count').attr({id: 'comments_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getComment/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#comments_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            ).append(
+                                                $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                                            ).append(
+                                                $('<span>').addClass('view').attr({id: 'view_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getView/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#view_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            ).append(
+                                                $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                                            ).append(
+                                                $('<span>').addClass('like').attr({id: 'like_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getLike/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#like_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            )
+                                        )
+                                    ).append(
+                                        $('<div>').addClass('clearfix')
+                                    )
+                                )
+                            );
+                        } else if (entry.postStatus == true) {
+                            $('#favouritePostList').append(
+                                $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.post.id}).append(
+                                    $('<li>').append(
+                                        $('<span>').addClass(' sold_item').text('SOLD')
+                                    ).append(
+                                        $('<span>').addClass('price_view').text(entry.post.price + " QR")
+                                    ).append(
+                                        $('<img>').attr({src: "/images/post/" + entry.post.id + "_0"})
+                                    ).append(
+                                        $('<section>').addClass('list-left').append(
+                                            $('<h5>').addClass('title').text(entry.post.title)
+                                        )
+                                    ).append(
+                                        $('<section>').addClass('list-right').append(
+                                            $('<span>').addClass('cityname').text(entry.post.address)
+                                        ).append(
+                                            $('<p>').addClass('date').text(new Date(entry.post.postCreateTime).toLocaleDateString())
+                                        ).append(
+                                            $('<p>').addClass('view_count').append(
+                                                $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                                            ).append(
+                                                $('<span>').addClass('count').attr({id: 'comments_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getComment/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#comments_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            ).append(
+                                                $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                                            ).append(
+                                                $('<span>').addClass('view').attr({id: 'view_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getView/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#view_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            ).append(
+                                                $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                                            ).append(
+                                                $('<span>').addClass('like').attr({id: 'like_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getLike/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#like_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            )
+                                        )
+                                    ).append(
+                                        $('<div>').addClass('clearfix')
+                                    )
+                                )
+                            );
+                        } else {
+                            $('#favouritePostList').append(
+                                $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.post.id}).append(
+                                    $('<li>').append(
+                                        $('<span>').addClass('price_view').text(entry.post.price + " QR")
+                                    ).append(
+                                        $('<img>').attr({src: "/images/post/" + entry.post.id + "_0"})
+                                    ).append(
+                                        $('<section>').addClass('list-left').append(
+                                            $('<h5>').addClass('title').text(entry.post.title)
+                                        )
+                                    ).append(
+                                        $('<section>').addClass('list-right').append(
+                                            $('<span>').addClass('cityname').text(entry.post.address)
+                                        ).append(
+                                            $('<p>').addClass('date').text(new Date(entry.post.postCreateTime).toLocaleDateString())
+                                        ).append(
+                                            $('<p>').addClass('view_count').append(
+                                                $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                                            ).append(
+                                                $('<span>').addClass('count').attr({id: 'comments_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getComment/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#comments_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            ).append(
+                                                $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                                            ).append(
+                                                $('<span>').addClass('view').attr({id: 'view_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getView/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#view_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            ).append(
+                                                $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                                            ).append(
+                                                $('<span>').addClass('like').attr({id: 'like_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                    $.ajax({
+                                                        url: '/userPost/getLike/' + entry.id,
+                                                        type: 'GET',
+                                                        success: function (data) {
+                                                            $('#like_count' + entry.id).text(data);
+                                                        }
+                                                    })
+                                                })
+                                            )
+                                        )
+                                    ).append(
+                                        $('<div>').addClass('clearfix')
+                                    )
+                                )
+                            );
+                        }
+                    });
+                    $('#favouritePagination').empty();
+                    $(function () {
+                        $('#favouritePagination').pagination({
+                            items: data.totalElements,
+                            itemsOnPage: size,
+                            cssStyle: 'light-theme',
+                            onPageClick: function () {
+                                page = $('#favouritePagination').pagination('getCurrentPage') - 1;
+                                $.ajax({
+                                    method: "POST",
+                                    url: "/userFavoriteItem",
+                                    data: {userId: userId, page: page, size: size},
+                                    dataType: "json"
+                                })
+                                    .done(function (data) {
+                                        $("#favouritePostList").empty();
+                                        $.each(data.content, function (key, entry) {
+                                            $('#favouritePostList').append(
+                                                $('<a>').attr({href: '/userPost/singlePrduct/view/' + entry.post.id}).append(
+                                                    $('<li>').append(
+                                                        $('<li>').append(
+                                                            $('<img>').attr({src: "/images/post/" + entry.post.id + "_0"})
+                                                        ).append(
+                                                            $('<section>').addClass('list-left').append(
+                                                                $('<h5>').addClass('title').text(entry.post.title)
+                                                            ).append(
+                                                                $('<span>').addClass('adprice').text(entry.post.price + " QR")
+                                                            ).append(
+                                                                $('<p>').addClass('catpath').text("Mobile Phones » Brand")
+                                                            )
+                                                        ).append(
+                                                            $('<section>').addClass('list-right').append(
+                                                                $('<span>').addClass('date').text(new Date(entry.post.postCreateTime).toLocaleDateString())
+                                                            ).append(
+                                                                $('<span>').addClass('cityname').text(entry.post.address)
+                                                            ).append(
+                                                                $('<p>').addClass('view_count').append(
+                                                                    $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                                                                ).append(
+                                                                    $('<span>').addClass('count').attr({id: 'comments_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                                        $.ajax({
+                                                                            url: '/userPost/getComment/' + entry.id,
+                                                                            type: 'GET',
+                                                                            success: function (data) {
+                                                                                $('#comments_count' + entry.id).text(data);
+                                                                            }
+                                                                        })
+                                                                    })
+                                                                ).append(
+                                                                    $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                                                                ).append(
+                                                                    $('<span>').addClass('view').attr({id: 'view_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                                        $.ajax({
+                                                                            url: '/userPost/getView/' + entry.id,
+                                                                            type: 'GET',
+                                                                            success: function (data) {
+                                                                                $('#view_count' + entry.id).text(data);
+                                                                            }
+                                                                        })
+                                                                    })
+                                                                ).append(
+                                                                    $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                                                                ).append(
+                                                                    $('<span>').addClass('like').attr({id: 'like_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                                        $.ajax({
+                                                                            url: '/userPost/getLike/' + entry.id,
+                                                                            type: 'GET',
+                                                                            success: function (data) {
+                                                                                $('#like_count' + entry.id).text(data);
+                                                                            }
+                                                                        })
+                                                                    })
+                                                                )
+                                                            )
+                                                        ).append(
+                                                            $('<div>').addClass('clearfix')
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        });
+                                    });
+                            }
+                        });
+                    });
+                });
+        });
+</script>
+<script th:inline="javascript">
+    $('#sizeForFavouriteItem').on('change',
+        function () {
+            var size = $('#sizeForFavouriteItem').val();
+            var elem = $('#container ul');
+            var userId = $('#userId').val();
+            var page = 0;
+            $.ajax({
+                method: "POST",
+                url: "/userFavoriteItem",
+                data: {userId: userId, page: page, size: size},
+                dataType: "json"
+            })
+                .done(function (data) {
+                    $("#favouritePostList").empty();
+                    $.each(data.content, function (key, entry) {
+                        $('#favouritePostList').append(
+                            $('<a>').attr({href: '/userPost/singlePrduct/view/' + entry.post.id}).append(
+                                $('<li>').append(
+                                    $('<img>').attr({src: "/images/post/" + entry.post.id + "_0"})
+                                ).append(
+                                    $('<section>').addClass('list-left').append(
+                                        $('<h5>').addClass('title').text(entry.post.title)
+                                    ).append(
+                                        $('<span>').addClass('adprice').text(entry.post.price + " QR")
+                                    ).append(
+                                        $('<p>').addClass('catpath').text("Mobile Phones » Brand")
+                                    )
+                                ).append(
+                                    $('<section>').addClass('list-right').append(
+                                        $('<span>').addClass('date').text(new Date(entry.post.postCreateTime).toLocaleDateString())
+                                    ).append(
+                                        $('<span>').addClass('cityname').text(entry.post.address)
+                                    ).append(
+                                        $('<p>').addClass('view_count').append(
+                                            $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                                        ).append(
+                                            $('<span>').addClass('count').attr({id: 'comments_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                $.ajax({
+                                                    url: '/userPost/getComment/' + entry.id,
+                                                    type: 'GET',
+                                                    success: function (data) {
+                                                        $('#comments_count' + entry.id).text(data);
+                                                    }
+                                                })
+                                            })
+                                        ).append(
+                                            $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                                        ).append(
+                                            $('<span>').addClass('view').attr({id: 'view_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                $.ajax({
+                                                    url: '/userPost/getView/' + entry.id,
+                                                    type: 'GET',
+                                                    success: function (data) {
+                                                        $('#view_count' + entry.id).text(data);
+                                                    }
+                                                })
+                                            })
+                                        ).append(
+                                            $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                                        ).append(
+                                            $('<span>').addClass('like').attr({id: 'like_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                $.ajax({
+                                                    url: '/userPost/getLike/' + entry.id,
+                                                    type: 'GET',
+                                                    success: function (data) {
+                                                        $('#like_count' + entry.id).text(data);
+                                                    }
+                                                })
+                                            })
+                                        )
+                                    )
+                                ).append(
+                                    $('<div>').addClass('clearfix')
+                                )
+                            )
+                        );
+                    });
+                    $('#favouritePagination').empty();
+                    $(function () {
+                        $('#favouritePagination').pagination({
+                            items: data.totalElements,
+                            itemsOnPage: size,
+                            cssStyle: 'light-theme',
+                            onPageClick: function () {
+                                page = $('#favouritePagination').pagination('getCurrentPage') - 1;
+                                $.ajax({
+                                    method: "POST",
+                                    url: "/userFavoriteItem",
+                                    data: {userId: userId, page: page, size: size},
+                                    dataType: "json"
+                                })
+                                    .done(function (data) {
+                                        $("#favouritePostList").empty();
+                                        $.each(data.content, function (key, entry) {
+                                            $('#favouritePostList').append(
+                                                $('<a>').attr({href: '/userPost/singlePrduct/view/' + entry.post.id}).append(
+                                                    $('<li>').append(
+                                                        $('<img>').attr({src: "/images/post/" + entry.post.id + "_0"})
+                                                    ).append(
+                                                        $('<section>').addClass('list-left').append(
+                                                            $('<h5>').addClass('title').text(entry.post.title)
+                                                        ).append(
+                                                            $('<span>').addClass('adprice').text(entry.post.price + " QR")
+                                                        ).append(
+                                                            $('<p>').addClass('catpath').text("Mobile Phones » Brand")
+                                                        )
+                                                    ).append(
+                                                        $('<section>').addClass('list-right').append(
+                                                            $('<span>').addClass('date').text(new Date(entry.post.postCreateTime).toLocaleDateString())
+                                                        ).append(
+                                                            $('<span>').addClass('cityname').text(entry.post.address)
+                                                        ).append(
+                                                            $('<p>').addClass('view_count').append(
+                                                                $('<i>').addClass('far fa-comment').css('color', 'rgb(146, 41, 41)')
+                                                            ).append(
+                                                                $('<span>').addClass('count').attr({id: 'comments_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                                    $.ajax({
+                                                                        url: '/userPost/getComment/' + entry.id,
+                                                                        type: 'GET',
+                                                                        success: function (data) {
+                                                                            $('#comments_count' + entry.id).text(data);
+                                                                        }
+                                                                    })
+                                                                })
+                                                            ).append(
+                                                                $('<i>').addClass('fas fa-eye').css('color', 'rgb(9, 113, 178)')
+                                                            ).append(
+                                                                $('<span>').addClass('view').attr({id: 'view_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                                    $.ajax({
+                                                                        url: '/userPost/getView/' + entry.id,
+                                                                        type: 'GET',
+                                                                        success: function (data) {
+                                                                            $('#view_count' + entry.id).text(data);
+                                                                        }
+                                                                    })
+                                                                })
+                                                            ).append(
+                                                                $('<i>').addClass('far fa-thumbs-up').css('color', 'rgb(43, 109, 103)')
+                                                            ).append(
+                                                                $('<span>').addClass('like').attr({id: 'like_count' + entry.id}).css('padding-right', '5px').text(function () {
+
+                                                                    $.ajax({
+                                                                        url: '/userPost/getLike/' + entry.id,
+                                                                        type: 'GET',
+                                                                        success: function (data) {
+                                                                            $('#like_count' + entry.id).text(data);
+                                                                        }
+                                                                    })
+                                                                })
+                                                            )
+                                                        )
+                                                    ).append(
+                                                        $('<div>').addClass('clearfix')
+                                                    )
+                                                )
+                                            );
+                                        });
+                                    });
+                            }
+                        });
+                    });
+                });
+        });
+</script>
+
+<script>
+    $('#notificationData').on('click',
+        function () {
+            $.ajax({
+                method: "GET",
+                url: '/notifications/findAllNotificationByUserId',
+                success: function (data) {
+                    if (data.length > 0) {
+                        $('#notification').empty();
+                        $.each(data, function (key, entry) {
+
+                            $('#notification').append(
+                                $('<div>').addClass('alert alert-dismissible alert-success').append(
+                                    $('<strong>').text(entry.description).append(
+                                        $('<a>').attr({href: entry.notificationUrl}).addClass('alert-link').text(' from ' + entry.notificationSender.profile.firstName)
+                                    )
+                                ))
+                        })
+                    }
+                }
+
+            })
+        });
+</script>
+
+</body>
+</html>

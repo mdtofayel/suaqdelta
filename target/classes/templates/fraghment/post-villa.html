@@ -1,0 +1,79 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="row">
+    <div class="col-sm-6" id="vm">
+        <label class="vm">Furnishing <span>*</span></label>
+        <select class="" name="furnishing" th:field="*{villa.furnished}" id="villaFurnished">
+            <option selected disabled value="-1">Select Furnishing</option>
+            <option value="Fully Furnished">Fully Furnished</option>
+            <option value="Semi Furnished">Semi Furnished</option>
+            <option value="Not Furnished">Not Furnished</option>
+
+        </select></div>
+
+
+    <div class="col-sm-6" id="vm">
+        <label class="vm">Number of Rooms<span>*</span></label>
+        <select class="" name="room" th:field="*{villa.numberOfRoom}" id="villaNumberOfRoom">
+            <option selected disabled value="-1">Choose Rooms</option>
+            <option value="Studio">Studio</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="More than 7">More than 7</option>
+
+
+        </select></div>
+    <div class="col-sm-6" id="vm">
+        <label class="vm">Number of Bathrooms<span>*</span></label>
+        <select class="" name="bathroom" th:field="*{villa.numberOfBathroom}" id="villaNumberOfBathRoom">
+            <option selected disabled value="-1">Choose Bathrooms</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="More than 7">More than 7</option>
+
+        </select></div>
+    <div class="col-sm-6" id="vm">
+        <label class="vm">Kitchen <span>*</span></label>
+        <select class="" name="kitchen" th:field="*{villa.kitchenType}" id="villaKitchen">
+            <option selected disabled value="Others">Choose Kitchen</option>
+            <option value="Closed">Closed</option>
+            <option value="Open">Open</option>
+            <option value="None">None</option>
+
+
+        </select></div>
+    <div class="col-sm-6" id="vm">
+        <label class="vm">Parking<span>*</span></label>
+        <select class="" name="parking" th:field="*{villa.parking}" id="villaParking">
+            <option selected disabled value="Others">Choose Parking</option>
+            <option value="Covered Parking">Covered Parking</option>
+            <option value="Dedicated">Dedicated</option>
+            <option value="On street Parking">On street Parking</option>
+            <option value="None">None</option>
+
+
+        </select></div>
+    <div class="col-sm-6" id="vm">
+        <label class="vm">Deposit<span>*</span></label>
+        <select class="" name="deposit" th:field="*{villa.deposit}" id="villaDeposit">
+            <option selected disabled value="None">Choose Type</option>
+            <option value="1 Month">1 Month</option>
+            <option value="2 Month">2 Month</option>
+            <option value="3 Month">3 Month</option>
+            <option value="4 Month">4 Month</option>
+            <option value="5 Month">5 Month</option>
+            <option value="Negotiable">Negotiable</option>
+            <option value="None">None</option>
+
+        </select></div>
+
+</div>

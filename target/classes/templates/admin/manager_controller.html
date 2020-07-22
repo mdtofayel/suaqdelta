@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:include="admin/fraghment/header_link:: head"></th:block>
+
+
+    <style>
+
+    </style>
+</head>
+
+<body id="page-top">
+
+<!-- Left side column. contains the logo and sidebar -->
+
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+    <aside th:include="admin/fraghment/admin_sidebar"></aside>
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <header th:include="admin/fraghment/manager_topbar"></header>
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Manager Controller</h1>
+                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                </div>
+
+
+                <div class="row">
+
+
+                    <div class="col-lg-12 mb-4">
+
+                        <!-- Illustrations -->
+                        <div class="card  shadow mb-4">
+                            <div class="card-header border-bottom-warning py-3">
+                                <h6 class="m-0 font-weight-bold text-primary text-center"
+                                    style=" display: inline-block">Subcategory</h6>
+                                <a href="#" class="btn btn-primary btn-icon-split text-right" style="float: right;"
+                                   data-toggle="modal" data-target="#categoryModal">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-plus-circle"></i>
+                    </span>
+                                    <span class="text">Add Manager</span>
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <!-- Begin Page Content -->
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped table-bordered" id="dataTable"
+                                           width="100%" cellspacing="0">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Location</th>
+                                            <th>Phone</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tfoot>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Location</th>
+                                            <th>Phone</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </tfoot>
+                                        <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>asdas</td>
+                                            <td>asd@e.com</td>
+                                            <td>Najma</td>
+                                            <td>12345</td>
+
+                                            <td>
+                                                <a href="#" data-toggle="modal" data-target="#editModal"
+                                                   class="btn btn-primary btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-edit"></i>
+                    </span>
+                                                    <span class="text">Edit</span>
+                                                </a>
+                                                <a href="#" class="btn btn-danger btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-trash"></i>
+                    </span>
+                                                    <span class="text">Delete</span>
+                                                </a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>asdas</td>
+                                            <td>asd@e.com</td>
+                                            <td>Najma</td>
+                                            <td>12345</td>
+
+                                            <td>
+                                                <a href="#" data-toggle="modal" data-target="#editModal"
+                                                   class="btn btn-primary btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-edit"></i>
+                    </span>
+                                                    <span class="text">Edit</span>
+                                                </a>
+                                                <a href="#" class="btn btn-danger btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-trash"></i>
+                    </span>
+                                                    <span class="text">Delete</span>
+                                                </a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>asdas</td>
+                                            <td>asd@e.com</td>
+                                            <td>Najma</td>
+                                            <td>12345</td>
+
+                                            <td>
+                                                <a href="#" data-toggle="modal" data-target="#editModal"
+                                                   class="btn btn-primary btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-edit"></i>
+                    </span>
+                                                    <span class="text">Edit</span>
+                                                </a>
+                                                <a href="#" class="btn btn-danger btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-trash"></i>
+                    </span>
+                                                    <span class="text">Delete</span>
+                                                </a></td>
+                                        </tr>
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal fade" id="categoryModal" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Add Manager</h5>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <form action="#" method="post">
+
+
+                                <div class="modal-body">
+                                    <!--  <div class="form-group">
+                              <label for="exampleFormControlSelect1">Select Category</label>
+                              <select name="category" class="form-control" id="exampleFormControlSelect1">
+                                <option>Mobile</option>
+                                <option>Electronics</option>
+                                <option>Vehicle</option>
+                                <option>Furniture</option>
+
+                              </select>
+                            </div>-->
+                                    <!--<div class="form-group">
+                            <label for="exampleFormControlSelect1">Select Post Model</label>
+                            <select name="post_model" class="form-control" id="exampleFormControlSelect1">
+                              <option>Mobile</option>
+                              <option>Electronics</option>
+                              <option>Vehicle</option>
+                              <option>Furniture</option>
+
+                            </select>
+                          </div>-->
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Enter User Name</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail1"
+                                               aria-describedby="emailHelp" placeholder="Enter  User Name"
+                                               name="user_name">
+                                        <small id="emailHelp" class="form-text text-muted">Enter User Name.</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Enter Email</label>
+                                        <input type="email" class="form-control" id="exampleInputEmail1"
+                                               aria-describedby="emailHelp" placeholder="Enter Email" name="email">
+                                        <small id="emailHelp" class="form-text text-muted">Enter Email.</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Enter Mobile Number</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail1"
+                                               aria-describedby="emailHelp" placeholder="Enter Mobile Number"
+                                               name="mobile">
+                                        <small id="emailHelp" class="form-text text-muted">Enter Mobile Number.</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Enter Location</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail1"
+                                               aria-describedby="emailHelp" placeholder="Enter Location"
+                                               name="location">
+                                        <small id="emailHelp" class="form-text text-muted">Enter Location.</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Enter Password</label>
+                                        <input type="password" class="form-control" id="exampleInputEmail1"
+                                               aria-describedby="emailHelp" placeholder="Enter password"
+                                               name="password">
+                                        <small id="emailHelp" class="form-text text-muted">Enter Password.</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Confirm Password</label>
+                                        <input type="password" class="form-control" id="exampleInputEmail1"
+                                               aria-describedby="emailHelp" placeholder="Reenter Password"
+                                               name="cpassword">
+                                        <small id="emailHelp" class="form-text text-muted">Reenter Password.</small>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Edit Manager</h5>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <form action="#" method="post">
+
+
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Enter User Name</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail1"
+                                               aria-describedby="emailHelp" placeholder="Enter  User Name"
+                                               name="user_name">
+                                        <small id="emailHelp" class="form-text text-muted">Enter User Name.</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Enter Email</label>
+                                        <input type="email" class="form-control" id="exampleInputEmail1"
+                                               aria-describedby="emailHelp" placeholder="Enter Email" name="email">
+                                        <small id="emailHelp" class="form-text text-muted">Enter Email.</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Enter Mobile Number</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail1"
+                                               aria-describedby="emailHelp" placeholder="Enter Mobile Number"
+                                               name="mobile">
+                                        <small id="emailHelp" class="form-text text-muted">Enter Mobile Number.</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Enter Location</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail1"
+                                               aria-describedby="emailHelp" placeholder="Enter Location"
+                                               name="location">
+                                        <small id="emailHelp" class="form-text text-muted">Enter Location.</small>
+                                    </div>
+                                    <!-- <div class="form-group">
+                             <label for="exampleInputEmail1">Enter Password</label>
+                             <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter password" name="password">
+                             <small id="emailHelp" class="form-text text-muted">Enter Password.</small>
+                           </div>
+                                     <div class="form-group">
+                             <label for="exampleInputEmail1">Confirm Password</label>
+                             <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Reenter Password" name="cpassword">
+                             <small id="emailHelp" class="form-text text-muted">Reenter Password.</small>
+                           </div>-->
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+
+        <th:block th:include="admin/fraghment/footer"></th:block>
+
+
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<th:block th:include="admin/fraghment/header_link :: footer"></th:block>
+</body>
+
+</html>

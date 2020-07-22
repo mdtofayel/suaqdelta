@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <th:block th:include="admin/fraghment/header_link:: head"></th:block>
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <div sec:authorize="isAuthenticated()">
+        <div sec:authorize="hasRole('ADMIN')">
+            <header th:include="admin/fraghment/admin_sidebar"></header>
+        </div>
+        <div sec:authorize="hasRole('MANAGER') && !hasRole('ADMIN')">
+            <header th:include="admin/fraghment/manager_sidebar"></header>
+        </div>
+    </div>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+
+            <header th:include="admin/fraghment/manager_topbar"></header>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">All Ads</h1>
+                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                </div>
+
+
+                <!-- Content Row -->
+                <div class="row">
+
+                    <!-- Content Column -->
+
+
+                    <div class="col-lg-12 mb-4">
+
+                        <!-- Illustrations -->
+                        <div class="card  shadow mb-4">
+                            <div class="card-header border-bottom-warning py-3">
+                                <!-- <h6 class="m-0 font-weight-bold text-primary text-center">Pending Requests</h6>-->
+                                <ul class="nav nav-pills">
+                                    <li class="nav-item active">
+                                        <a href="#my_ad" class="nav-link" aria-controls="home" role="tab"
+                                           data-toggle="tab">
+                                            <i class=" glyphicon glyphicon-bullhorn"></i>
+                                            All Ads</a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link" href="#notification" aria-controls="home" role="tab"
+                                           data-toggle="tab">
+                                            <i class="glyphicon glyphicon-bell"></i>
+                                            Pending Request </a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link" href="#favourite" aria-controls="home" role="tab"
+                                           data-toggle="tab">
+                                            <i class="glyphicon  glyphicon-star"></i>
+                                            Approved Ads </a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link" href="#like" aria-controls="home" role="tab"
+                                           data-toggle="tab">
+                                            <i class="glyphicon glyphicon-thumbs-up"></i>
+                                            Rejected Ads </a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link" href="#profile" aria-controls="home" role="tab"
+                                           data-toggle="tab">
+                                            <i class="glyphicon glyphicon-user"></i>
+                                            Completed Ads </a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link" href="#password" aria-controls="home" role="tab"
+                                           data-toggle="tab">
+                                            <i class="glyphicon glyphicon-lock"></i>
+                                            Blocked Ads </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-body">
+                                <!-- Begin Page Content -->
+                                <div class="tab-content">
+                                    <div role="tabpanel" class=" tab-pane profile-content  active" id="my_ad">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-striped table-bordered" id="dataTable"
+                                                   width="100%" cellspacing="0">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Title</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tfoot>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Title</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Sale</td>
+                                                    <td>Mobile</td>
+                                                    <td>Phone</td>
+                                                    <td>Mobile For Sale</td>
+                                                    <td>250 QR</td>
+                                                    <td><a href="#" class="btn btn-info btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-file"></i>
+                    </span>
+                                                        <span class="text">view</span>
+                                                    </a>
+                                                        <a href="#" class="btn btn-success btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-check"></i>
+                    </span>
+                                                            <span class="text">Approve</span>
+                                                        </a>
+                                                        <a href="#" class="btn btn-danger btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-trash"></i>
+                    </span>
+                                                            <span class="text">Reject</span>
+                                                        </a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>Exchange</td>
+                                                    <td>Vehicle</td>
+                                                    <td>Car</td>
+                                                    <td>There are many variations of passages</td>
+                                                    <td>0 QR</td>
+                                                    <td><a href="#" class="btn btn-info btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-file"></i>
+                    </span>
+                                                        <span class="text">view</span>
+                                                    </a>
+                                                        <a href="#" class="btn btn-primary btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-ban"></i>
+                    </span>
+                                                            <span class="text">Block</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>Sale</td>
+                                                    <td>Family Need</td>
+                                                    <td>Mens Stuff</td>
+                                                    <td>There are many variations of passages sale</td>
+                                                    <td>50 QR</td>
+                                                    <td><a href="#" class="btn btn-info btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-file"></i>
+                    </span>
+                                                        <span class="text">view</span>
+                                                    </a>
+                                                        <a href="#" class="btn btn-primary btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-check"></i>
+                    </span>
+                                                            <span class="text">Unblock</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>4</td>
+                                                    <td>Need</td>
+                                                    <td>Job</td>
+                                                    <td>Accounts</td>
+                                                    <td>There are many variations</td>
+                                                    <td>2000 QR</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-file"></i>
+                    </span>
+                                                            <span class="text">view</span>
+                                                        </a>
+                                                        <span class="badge badge-success">Completed</span>
+                                                    </td>
+                                                </tr>
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class=" tab-pane profile-content  " id="notification">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-striped table-bordered"
+                                                   id="dataTable1" width="100%" cellspacing="0">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Title</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tfoot>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Title</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Sale</td>
+                                                    <td>Mobile</td>
+                                                    <td>Phone</td>
+                                                    <td>Mobile For Sale</td>
+                                                    <td>250 QR</td>
+                                                    <td><a href="#" class="btn btn-info btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-file"></i>
+                    </span>
+                                                        <span class="text">view</span>
+                                                    </a>
+                                                        <a href="#" class="btn btn-success btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-check"></i>
+                    </span>
+                                                            <span class="text">Approve</span>
+                                                        </a>
+                                                        <a href="#" class="btn btn-danger btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-trash"></i>
+                    </span>
+                                                            <span class="text">Reject</span>
+                                                        </a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>Exchange</td>
+                                                    <td>Vehicle</td>
+                                                    <td>Car</td>
+                                                    <td>There are many variations of passages</td>
+                                                    <td>0 QR</td>
+                                                    <td><a href="#" class="btn btn-info btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-file"></i>
+                    </span>
+                                                        <span class="text">view</span>
+                                                    </a>
+                                                        <a href="#" class="btn btn-success btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-check"></i>
+                    </span>
+                                                            <span class="text">Approve</span>
+                                                        </a>
+                                                        <a href="#" class="btn btn-danger btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-trash"></i>
+                    </span>
+                                                            <span class="text">Reject</span>
+                                                        </a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>Sale</td>
+                                                    <td>Family Need</td>
+                                                    <td>Mens Stuff</td>
+                                                    <td>There are many variations of passages sale</td>
+                                                    <td>50 QR</td>
+                                                    <td><a href="#" class="btn btn-info btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-file"></i>
+                    </span>
+                                                        <span class="text">view</span>
+                                                    </a>
+                                                        <a href="#" class="btn btn-success btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-check"></i>
+                    </span>
+                                                            <span class="text">Approve</span>
+                                                        </a>
+                                                        <a href="#" class="btn btn-danger btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-trash"></i>
+                    </span>
+                                                            <span class="text">Reject</span>
+                                                        </a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>4</td>
+                                                    <td>Need</td>
+                                                    <td>Job</td>
+                                                    <td>Accounts</td>
+                                                    <td>There are many variations</td>
+                                                    <td>2000 QR</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-file"></i>
+                    </span>
+                                                            <span class="text">view</span>
+                                                        </a>
+                                                        <a href="#" class="btn btn-success btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-check"></i>
+                    </span>
+                                                            <span class="text">Approve</span>
+                                                        </a>
+                                                        <a href="#" class="btn btn-danger btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-trash"></i>
+                    </span>
+                                                            <span class="text">Reject</span>
+                                                        </a></td>
+                                                </tr>
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class=" tab-pane profile-content  " id="favourite">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-striped table-bordered"
+                                                   id="dataTable2" width="100%" cellspacing="0">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Title</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tfoot>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Title</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Sale</td>
+                                                    <td>Mobile</td>
+                                                    <td>Phone</td>
+                                                    <td>Mobile For Sale</td>
+                                                    <td>250 QR</td>
+                                                    <td><a href="#" class="btn btn-info btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-file"></i>
+                    </span>
+                                                        <span class="text">view</span>
+                                                    </a>
+                                                        <a href="#" class="btn btn-primary btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-ban"></i>
+                    </span>
+                                                            <span class="text">Block</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>Exchange</td>
+                                                    <td>Vehicle</td>
+                                                    <td>Car</td>
+                                                    <td>There are many variations of passages</td>
+                                                    <td>0 QR</td>
+                                                    <td><a href="#" class="btn btn-info btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-file"></i>
+                    </span>
+                                                        <span class="text">view</span>
+                                                    </a>
+                                                        <a href="#" class="btn btn-primary btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-ban"></i>
+                    </span>
+                                                            <span class="text">Block</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>Sale</td>
+                                                    <td>Family Need</td>
+                                                    <td>Mens Stuff</td>
+                                                    <td>There are many variations of passages sale</td>
+                                                    <td>50 QR</td>
+                                                    <td><a href="#" class="btn btn-info btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-file"></i>
+                    </span>
+                                                        <span class="text">view</span>
+                                                    </a>
+                                                        <a href="#" class="btn btn-primary btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-ban"></i>
+                    </span>
+                                                            <span class="text">Block</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>4</td>
+                                                    <td>Need</td>
+                                                    <td>Job</td>
+                                                    <td>Accounts</td>
+                                                    <td>There are many variations</td>
+                                                    <td>2000 QR</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-file"></i>
+                    </span>
+                                                            <span class="text">view</span>
+                                                        </a>
+                                                        <a href="#" class="btn btn-primary btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-check"></i>
+                    </span>
+                                                            <span class="text">Unblock</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class=" tab-pane profile-content  " id="like">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-striped table-bordered"
+                                                   id="dataTable3" width="100%" cellspacing="0">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Title</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tfoot>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Title</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Sale</td>
+                                                    <td>Mobile</td>
+                                                    <td>Phone</td>
+                                                    <td>Mobile For Sale</td>
+                                                    <td>250 QR</td>
+                                                    <td><a href="#" class="btn btn-info btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-file"></i>
+                    </span>
+                                                        <span class="text">view</span>
+                                                    </a>
+                                                        <a href="#" class="btn btn-success btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-check"></i>
+                    </span>
+                                                            <span class="text">Approve</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>Exchange</td>
+                                                    <td>Vehicle</td>
+                                                    <td>Car</td>
+                                                    <td>There are many variations of passages</td>
+                                                    <td>0 QR</td>
+                                                    <td><a href="#" class="btn btn-info btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-file"></i>
+                    </span>
+                                                        <span class="text">view</span>
+                                                    </a>
+                                                        <a href="#" class="btn btn-success btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-check"></i>
+                    </span>
+                                                            <span class="text">Approve</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>Sale</td>
+                                                    <td>Family Need</td>
+                                                    <td>Mens Stuff</td>
+                                                    <td>There are many variations of passages sale</td>
+                                                    <td>50 QR</td>
+                                                    <td><a href="#" class="btn btn-info btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-file"></i>
+                    </span>
+                                                        <span class="text">view</span>
+                                                    </a>
+                                                        <a href="#" class="btn btn-success btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-check"></i>
+                    </span>
+                                                            <span class="text">Approve</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>4</td>
+                                                    <td>Need</td>
+                                                    <td>Job</td>
+                                                    <td>Accounts</td>
+                                                    <td>There are many variations</td>
+                                                    <td>2000 QR</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-file"></i>
+                    </span>
+                                                            <span class="text">view</span>
+                                                        </a>
+                                                        <a href="#" class="btn btn-success btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-check"></i>
+                    </span>
+                                                            <span class="text">Approve</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class=" tab-pane profile-content  " id="profile">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-striped table-bordered"
+                                                   id="dataTable4" width="100%" cellspacing="0">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Title</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tfoot>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Title</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Sale</td>
+                                                    <td>Mobile</td>
+                                                    <td>Phone</td>
+                                                    <td>Mobile For Sale</td>
+                                                    <td>250 QR</td>
+                                                    <td><a href="#" class="btn btn-info btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-file"></i>
+                    </span>
+                                                        <span class="text">view</span>
+                                                    </a>
+                                                        <span class="badge badge-success">Completed</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>Exchange</td>
+                                                    <td>Vehicle</td>
+                                                    <td>Car</td>
+                                                    <td>There are many variations of passages</td>
+                                                    <td>0 QR</td>
+                                                    <td><a href="#" class="btn btn-info btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-file"></i>
+                    </span>
+                                                        <span class="text">view</span>
+                                                    </a>
+                                                        <span class="badge badge-success">Completed</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>Sale</td>
+                                                    <td>Family Need</td>
+                                                    <td>Mens Stuff</td>
+                                                    <td>There are many variations of passages sale</td>
+                                                    <td>50 QR</td>
+                                                    <td><a href="#" class="btn btn-info btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-file"></i>
+                    </span>
+                                                        <span class="text">view</span>
+                                                    </a>
+                                                        <span class="badge badge-success">Completed</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>4</td>
+                                                    <td>Need</td>
+                                                    <td>Job</td>
+                                                    <td>Accounts</td>
+                                                    <td>There are many variations</td>
+                                                    <td>2000 QR</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-file"></i>
+                    </span>
+                                                            <span class="text">view</span>
+                                                        </a>
+                                                        <span class="badge badge-success">Completed</span>
+                                                    </td>
+                                                </tr>
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class=" tab-pane profile-content  " id="password">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-striped table-bordered"
+                                                   id="dataTable5" width="100%" cellspacing="0">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Title</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tfoot>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Title</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Sale</td>
+                                                    <td>Mobile</td>
+                                                    <td>Phone</td>
+                                                    <td>Mobile For Sale</td>
+                                                    <td>250 QR</td>
+                                                    <td><a href="#" class="btn btn-info btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-file"></i>
+                    </span>
+                                                        <span class="text">view</span>
+                                                    </a>
+                                                        <a href="#" class="btn btn-primary btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-check"></i>
+                    </span>
+                                                            <span class="text">Unblock</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>Exchange</td>
+                                                    <td>Vehicle</td>
+                                                    <td>Car</td>
+                                                    <td>There are many variations of passages</td>
+                                                    <td>0 QR</td>
+                                                    <td><a href="#" class="btn btn-info btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-file"></i>
+                    </span>
+                                                        <span class="text">view</span>
+                                                    </a>
+                                                        <a href="#" class="btn btn-primary btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-check"></i>
+                    </span>
+                                                            <span class="text">Unblock</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>Sale</td>
+                                                    <td>Family Need</td>
+                                                    <td>Mens Stuff</td>
+                                                    <td>There are many variations of passages sale</td>
+                                                    <td>50 QR</td>
+                                                    <td><a href="#" class="btn btn-info btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-file"></i>
+                    </span>
+                                                        <span class="text">view</span>
+                                                    </a>
+                                                        <a href="#" class="btn btn-primary btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-check"></i>
+                    </span>
+                                                            <span class="text">Unblock</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>4</td>
+                                                    <td>Need</td>
+                                                    <td>Job</td>
+                                                    <td>Accounts</td>
+                                                    <td>There are many variations</td>
+                                                    <td>2000 QR</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-file"></i>
+                    </span>
+                                                            <span class="text">view</span>
+                                                        </a>
+                                                        <a href="#" class="btn btn-primary btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-check"></i>
+                    </span>
+                                                            <span class="text">Unblock</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.container-fluid -->
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <th:block th:include="admin/fraghment/footer"></th:block>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+
+<th:block th:include="admin/fraghment/header_link :: footer"></th:block>
+</body>
+
+</html>

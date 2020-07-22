@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en" th:fragment="head">
+    <link rel="icon" href="/images/Suqlogo.png" type="image/gif">
+    <title>SUQ QATAR</title>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-select.css}">
+    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css" media="all"/>
+    <!-- for-mobile-apps -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content=" Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola web design"/>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <!-- //for-mobile-apps -->
+    <!--fonts-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link href='//fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic'
+          rel='stylesheet' type='text/css'>
+    <!--//fonts-->
+
+    <link th:href="@{/css/jquery.uls.css}" rel="stylesheet"/>
+    <link th:href="@{/css/jquery.uls.grid.css}" rel="stylesheet"/>
+    <link th:href="@{/css/jquery.uls.lcd.css}" rel="stylesheet"/>
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.semanticui.min.css">
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/js/OwlCarousel2-2.3.4/dist/assets/owl.carousel.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/js/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css}"/>
+</head>
+<body>
+
+<th:block th:fragment="footer">
+    <!-- js -->
+
+    <!-- js -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/bootstrap-select.js}"></script>
+    <script>
+        $(document).ready(function () {
+            var mySelect = $('#first-disabled2');
+
+            $('#special').on('click', function () {
+                mySelect.find('option:selected').prop('disabled', true);
+                mySelect.selectpicker('refresh');
+            });
+
+            $('#special2').on('click', function () {
+                mySelect.find('option:disabled').prop('disabled', false);
+                mySelect.selectpicker('refresh');
+            });
+
+            $('#basic2').selectpicker({
+                liveSearch: true,
+                maxOptions: 1
+            });
+        });
+    </script>
+    <script type="text/javascript" th:src="@{/js/jquery.leanModal.min.js}"></script>
+    <!-- Source -->
+    <script th:src="@{/js/jquery.uls.data.js}"></script>
+    <script th:src="@{/js/jquery.uls.data.utils.js}"></script>
+    <script th:src="@{/js/jquery.uls.lcd.js}"></script>
+    <script th:src="@{/js/jquery.uls.languagefilter.js}"></script>
+    <script th:src="@{/js/jquery.uls.regionfilter.js}"></script>
+    <script th:src="@{/js/jquery.uls.core.js}"></script>
+    <script>
+        $(document).ready(function () {
+            $('.uls-trigger').uls({
+                onSelect: function (language) {
+                    var languageName = $.uls.data.getAutonym(language);
+                    $('.uls-trigger').text(languageName);
+                },
+                quickList: ['en', 'hi', 'he', 'ml', 'ta', 'fr']
+            });
+        });
+    </script>
+<!--    <script th:src="@{/js/OwlCarousel2-2.3.4/docs/assets/vendors/jquery.min.js}"></script>-->
+    <script th:src="@{/js/OwlCarousel2-2.3.4/dist/owl.carousel.js}"></script>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fraghment/header:: head"></th:block>
+    <!-- DataTables -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/jquery-ui1.css}">
+    <style>
+
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        input[type="checkbox"] + label {
+            display: block;
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 20px;
+            font: 14px/20px 'Open Sans', Arial, sans-serif;
+            color: #000;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        input[type="checkbox"] + label:last-child {
+            margin-bottom: 0;
+        }
+
+        input[type="checkbox"] + label:before {
+            content: '';
+            display: block;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #6cc0e5;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: .6;
+            -webkit-transition: all .12s, border-color .08s;
+            transition: all .12s, border-color .08s;
+        }
+
+        input[type="checkbox"]:checked + label:before {
+            width: 10px;
+            top: -5px;
+            left: 5px;
+            border-radius: 0;
+            opacity: 1;
+            border: 1px solid green;
+            border-top-color: transparent;
+            border-left-color: transparent;
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+
+    </style>
+
+</head>
+<body>
+
+
+<header th:if="${#request.isUserInRole('USER')}" th:include="fraghment/user_header"></header>
+<header th:unless="${#request.isUserInRole('USER')}" th:include="fraghment/head"></header>
+
+
+<!-- Products -->
+<div class="total-ads main-grid-border">
+    <div class="container">
+
+        <ol class="breadcrumb" style="margin-bottom: 5px;">
+            <li><a href="index.html" th:href="@{/}">Home</a></li>
+            <li class="active">All Ads</li>
+        </ol>
+        <div class="ads-grid">
+            <div class="side-bar col-md-3">
+                <div class="search-hotel">
+                    <h3 class="sear-head">Name contains</h3>
+                    <form>
+                        <input type="text" value="Product name..." onfocus="this.value = '';"
+                               onblur="if (this.value == '') {this.value = 'Product name...';}" required="">
+                        <input type="submit" value=" ">
+                    </form>
+                </div>
+                <div class="brand-select">
+                    <h3 class="sear-head">Subcategory</h3>
+                    <select class="selectpicker" data-live-search="true">
+                        <option data-tokens="All">All</option>
+                        <option data-tokens="Villa">Villa</option>
+                        <option data-tokens="Appartment">Appartment</option>
+                        <option data-tokens="Car">Car</option>
+                        <option data-tokens="Byke">Byke</option>
+                        <option data-tokens="Mobile">Mobile</option>
+                        <option data-tokens="Tablets">Tablets</option>
+
+                    </select>
+                </div>
+                <div class="brand-select">
+                    <h3 class="sear-head">Brand name</h3>
+                    <select class="selectpicker" data-live-search="true">
+                        <option data-tokens="All">All</option>
+                        <option data-tokens="Audi">Audi</option>
+                        <option data-tokens="Bentley">Bentley</option>
+                        <option data-tokens="BMW">BMW</option>
+                        <option data-tokens="Chevrolet">Chevrolet</option>
+                        <option data-tokens="Ferrari">Ferrari</option>
+                        <option data-tokens="Fiat">Fiat</option>
+                        <option data-tokens="Force Motors">Force Motors</option>
+                        <option data-tokens="Ford">Ford</option>
+                        <option data-tokens="Hindustan Motors">Hindustan Motors</option>
+                        <option data-tokens="Honda">Honda</option>
+                        <option data-tokens="Hyundai">Hyundai</option>
+                        <option data-tokens="Samsung">Samsung</option>
+                        <option data-tokens="Apple">Apple</option>
+                        <option data-tokens="HTC">HTC</option>
+                        <option data-tokens="MI">MI</option>
+                        <option data-tokens="Other Brands">Other Brands</option>
+                    </select>
+                </div>
+                <div class="brand-select">
+                    <h3 class="sear-head">Location</h3>
+                    <select class="selectpicker" data-live-search="true">
+                        <option data-tokens="All">All</option>
+                        <option data-tokens="Doha">Doha</option>
+                        <option data-tokens="Alkhore">Alkhore</option>
+                        <option data-tokens="Najma">Najma</option>
+                        <option data-tokens="Alwhakra">Alwhakra</option>
+
+                    </select>
+                </div>
+                <div class="brand-select">
+                    <h3 class="sear-head">Number Of Rooms</h3>
+                    <select class="selectpicker" data-live-search="true">
+                        <option data-tokens="Studio">Studio</option>
+                        <option data-tokens="1">1</option>
+                        <option data-tokens="2">2</option>
+                        <option data-tokens="3">3</option>
+                        <option data-tokens="4">4</option>
+                        <option data-tokens="5">5</option>
+                        <option data-tokens="6">6</option>
+                        <option data-tokens="7">7</option>
+                        <option data-tokens="Morthan 7">Morthan 7</option>
+
+                    </select>
+                </div>
+                <div class="brand-select">
+                    <h3 class="sear-head">Parking</h3>
+                    <input type="checkbox" id="box-4" checked>
+                    <label for="box-4">Any</label>
+                    <input type="checkbox" id="box-1">
+                    <label for="box-1">COVERED PARKING</label>
+
+                    <input type="checkbox" id="box-2">
+                    <label for="box-2">DEDICATED</label>
+
+                    <input type="checkbox" id="box-3">
+                    <label for="box-3">ON STREET PARKING</label>
+                    <input type="checkbox" id="box-5">
+                    <label for="box-5">NONE</label>
+                </div>
+                <div class="brand-select">
+                    <h3 class="sear-head">Parking</h3>
+                    <input type="checkbox" id="box-6">
+                    <label for="box-6">COVERED PARKING</label>
+
+                    <input type="checkbox" id="box-7" checked>
+                    <label for="box-7">DEDICATED</label>
+
+                    <input type="checkbox" id="box-8">
+                    <label for="box-8">ON STREET PARKING</label>
+                    <input type="checkbox" id="box-9">
+                    <label for="box-9">NONE</label>
+                </div>
+                <div class="range">
+                    <h3 class="sear-head">Price range</h3>
+                    <ul class="dropdown-menu6">
+                        <li>
+
+                            <div id="slider-range"></div>
+                            <input type="text" id="amount" style="border: 0; color: #ffffff; font-weight: normal;"/>
+                        </li>
+                    </ul>
+                    <!---->
+                    <script type="text/javascript" th:src="@{/js/jquery-ui.js}"></script>
+                    <script type='text/javascript'>//<![CDATA[
+                    $(window).load(function () {
+                        $("#slider-range").slider({
+                            range: true,
+                            min: 0,
+                            max: 1000,
+                            values: [50, 600],
+                            slide: function (event, ui) {
+                                $("#amount").val(ui.values[0] + "QR" + " - " + ui.values[1] + "QR");
+                            }
+                        });
+                        $("#amount").val($("#slider-range").slider("values", 0) + "QR" + " - " + $("#slider-range").slider("values", 1) + "QR");
+
+                    });//]]>
+
+                    </script>
+                </div><!--
+                    <div class="brand-select">
+					<h3 class="sear-head">Property furnish</h3>
+					  <select class="selectpicker" data-live-search="true">
+					  <option data-tokens="Any">Any</option>
+					  <option data-tokens="COVERED PARKING">COVERED PARKING</option>
+					  <option data-tokens="DEDICATED">DEDICATED</option>
+					  <option data-tokens="ON STREET PARKING">ON STREET PARKING</option>
+					  <option data-tokens="NONE">NONE</option>
+
+
+					</select>
+				</div>-->
+                <div class="brand-select">
+                    <h3 class="sear-head">Type</h3>
+                    <select class="selectpicker" data-live-search="true">
+                        <option data-tokens="WANTED">WANTED</option>
+                        <option data-tokens="ADVERTISED">ADVERTISED</option>
+                        <option data-tokens="EXCHANGE">EXCHANGE</option>
+                        <option data-tokens="SALE">SALE</option>
+                        <option data-tokens="lOOKING fOR">lOOKING fOR</option>
+                        <option data-tokens="NEEDED">NEEDED</option>
+
+
+                    </select>
+                </div>
+                <div class="brand-select">
+                    <h3 class="sear-head">Model</h3>
+                    <select class="selectpicker" data-live-search="true">
+                        <option data-tokens="A1">A1</option>
+                        <option data-tokens="A3">A3</option>
+                        <option data-tokens="ALTO">ALTO</option>
+                        <option data-tokens="BALENO">BALENO</option>
+                        <option data-tokens="S5">S5</option>
+                        <option data-tokens="6S">6S</option>
+
+
+                    </select>
+                </div>
+                <div class="brand-select">
+                    <h3 class="sear-head">Year</h3>
+                    <select class="selectpicker" data-live-search="true">
+                        <option data-tokens="2019">2019</option>
+                        <option data-tokens="2018">2018</option>
+                        <option data-tokens="2017">2017</option>
+                        <option data-tokens="2016">2016</option>
+                        <option data-tokens="2015">2015</option>
+                        <option data-tokens="2014">2014</option>
+                        <option data-tokens="2013">2013</option>
+                        <option data-tokens="2012">2012</option>
+                        <option data-tokens="2011">2011</option>
+                        <option data-tokens="2010">2010</option>
+                        <option data-tokens="2005-2010">2005-2010</option>
+                        <option data-tokens="2000-2005">2000-2005</option>
+                        <option data-tokens="Before 2000">Before 2000</option>
+
+
+                    </select>
+                </div>
+                <!--
+                <div class="brand-select">
+                <h3 class="sear-head">Parking</h3>
+                  <select class="selectpicker" data-live-search="true">
+                  <option data-tokens="Any">Any</option>
+                  <option data-tokens="FULLY FURNISHED">FULLY FURNISHED</option>
+                  <option data-tokens="SEMI-FURNISHED">SEMI-FURNISHED</option>
+                  <option data-tokens="UNFURNISHED">UNFURNISHED</option>
+
+
+                </select>
+            </div>-->
+                <div class="brand-select">
+                    <h3 class="sear-head">Color</h3>
+                    <select class="selectpicker" data-live-search="true">
+                        <option data-tokens="Any">Any</option>
+                        <option data-tokens="Black">Black</option>
+                        <option data-tokens="White">White</option>
+                        <option data-tokens="Yellow">Yellow</option>
+
+
+                    </select>
+                </div>
+                <div class="brand-select">
+                    <h3 class="sear-head">Transmission</h3>
+                    <input type="checkbox" id="box-10">
+                    <label for="box-10">Any</label>
+
+                    <input type="checkbox" id="box-11" checked>
+                    <label for="box-11">AUTOMATIC</label>
+
+                    <input type="checkbox" id="box-12">
+                    <label for="box-12">MANUAL</label>
+                    <input type="checkbox" id="box-13">
+                    <label for="box-13">OTHER</label>
+                </div>
+                <!--<div class="brand-select">
+                <h3 class="sear-head">Transmission</h3>
+                  <select class="selectpicker" data-live-search="true">
+                  <option data-tokens="Any">Any</option>
+                  <option data-tokens="AUTOMATIC">AUTOMATIC</option>
+                  <option data-tokens="MANUAL">MANUAL</option>
+                  <option data-tokens="OTHER">OTHER</option>
+
+
+                </select>
+            </div>-->
+                <div class="brand-select">
+                    <h3 class="sear-head">Job Level</h3>
+                    <select class="selectpicker" data-live-search="true">
+                        <option data-tokens="INTERNSHIP">INTERNSHIP</option>
+                        <option data-tokens="ENTRY LEVEL">ENTRY LEVEL</option>
+                        <option data-tokens="MID CAREER">MID CAREER</option>
+                        <option data-tokens="MANAGEMENT">MANAGEMENT</option>
+                        <option data-tokens="OTHER">OTHER</option>
+
+
+                    </select>
+                </div>
+
+                <div class="brand-select">
+                    <h3 class="sear-head">Employment Type</h3>
+                    <input type="checkbox" id="box-29">
+                    <label for="box-29">FULL-TIME</label>
+
+                    <input type="checkbox" id="box-14" checked>
+                    <label for="box-14">PART-TIME</label>
+
+                    <input type="checkbox" id="box-15">
+                    <label for="box-15">ONE-TIME</label>
+
+                </div>
+                <div class="brand-select">
+                    <h3 class="sear-head">Experience</h3>
+                    <input type="checkbox" id="box-16">
+                    <label for="box-16">0-2 YEARS</label>
+
+                    <input type="checkbox" id="box-17" checked>
+                    <label for="box-17">3-4 YEARS</label>
+
+                    <input type="checkbox" id="box-18">
+                    <label for="box-18">5-6 YEARS</label>
+                    <input type="checkbox" id="box-19">
+                    <label for="box-19">7+ YEARS</label>
+
+                </div>
+                <div class="featured-ads">
+                    <h2 class="sear-head fer">Featured Ads</h2>
+                    <div class="featured-ad">
+                        <a href="single.html">
+                            <div class="featured-ad-left">
+                                <img th:src="@{../images/f1.jpg}" title="ad image" alt=""/>
+                            </div>
+                            <div class="featured-ad-right">
+                                <h4>Lorem Ipsum is simply dummy text of the printing industry</h4>
+                                <p>450</p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </a>
+                    </div>
+                    <div class="featured-ad">
+                        <a href="single.html">
+                            <div class="featured-ad-left">
+                                <img th:src="@{../images/f2.jpg}" title="ad image" alt=""/>
+                            </div>
+                            <div class="featured-ad-right">
+                                <h4>Lorem Ipsum is simply dummy text of the printing industry</h4>
+                                <p> 380</p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </a>
+                    </div>
+                    <div class="featured-ad">
+                        <a href="single.html">
+                            <div class="featured-ad-left">
+                                <img th:src="@{../images/f3.jpg}" title="ad image" alt=""/>
+                            </div>
+                            <div class="featured-ad-right">
+                                <h4>Lorem Ipsum is simply dummy text of the printing industry</h4>
+                                <p> 560</p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="ads-display col-md-9">
+                <div class="wrapper">
+                    <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+                        <ul id="myTab" class="nav nav-tabs nav-tabs-responsive" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home"
+                                   aria-expanded="true">
+                                    <span class="text">All Ads</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div id="myTabContent" class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
+                                <div>
+                                    <div id="container">
+                                        <div class="view-controls-list" id="viewcontrols">
+                                            <label>view :</label>
+                                            <a class="gridview active"><i class="glyphicon glyphicon-th"></i></a>
+                                            <a class="listview "><i class="glyphicon glyphicon-th-list"></i></a>
+                                        </div>
+                                        <div class="sort">
+                                            <div class="sort-by">
+                                                <input type="hidden" id="advanceSearchFlag">
+                                                <label>Sort By : </label>
+                                                <select id="size">
+                                                    <option value="1">1</option>
+                                                    <option value="5">5</option>
+                                                    <option value="10">10</option>
+                                                    <option value="20" selected>20</option>
+                                                    <option value="50">50</option>
+                                                    <option value="20">100</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <ul class="grid" id="postList"></ul>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <ul class="pagination pagination-sm" id="pagination"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <input id="categoryId" type="hidden" th:value="${category.id}"/>
+        </div>
+    </div>
+</div>
+<!-- // Products -->
+<!--footer section start-->
+
+<th:block th:include="fraghment/footer"></th:block>
+
+<th:block th:include="fraghment/header :: footer"></th:block>
+
+<script type="text/javascript" th:src="@{/js/jquery.simplePagination.js}"></script>
+<link th:href="@{/css/simplePagination.css}" rel="stylesheet"/>
+
+
+<script th:src="@{/js/tabs.js}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var elem = $('#container ul');
+        $('#viewcontrols a').on('click', function (e) {
+            if ($(this).hasClass('gridview')) {
+                elem.fadeOut(1000, function () {
+                    $('#container ul').removeClass('list').addClass('grid');
+                    $('#viewcontrols').removeClass('view-controls-list').addClass('view-controls-grid');
+                    $('#viewcontrols .gridview').addClass('active');
+                    $('#viewcontrols .listview').removeClass('active');
+                    elem.fadeIn(1000);
+                });
+            } else if ($(this).hasClass('listview')) {
+                elem.fadeOut(1000, function () {
+                    $('#container ul').removeClass('grid').addClass('list');
+                    $('#viewcontrols').removeClass('view-controls-grid').addClass('view-controls-list');
+                    $('#viewcontrols .gridview').removeClass('active');
+                    $('#viewcontrols .listview').addClass('active');
+                    elem.fadeIn(1000);
+                });
+            }
+        });
+    });
+</script>
+<script th:inline="javascript">
+    $(document).ready(
+        function () {
+            var size = $('#size').val();
+            var elem = $('#container ul');
+            var categoryId = $('#categoryId').val();
+            var page = 0;
+            $.ajax({
+                method: "POST",
+                url: "/allPostByCategoryId",
+                data: {categoryId: categoryId, page: page, size: size},
+                dataType: "json"
+            })
+                .done(function (data) {
+                    $("#postList").empty();
+                    $.each(data.content, function (key, entry) {
+                        $('#postList').append(
+                            $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.id}).append(
+                                $('<li>').append(
+                                    $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                                ).append(
+                                    $('<section>').addClass('list-left').append(
+                                        $('<h5>').addClass('title').text(entry.title)
+                                    ).append(
+                                        $('<span>').addClass('adprice').text(entry.price + " QR")
+                                    )/*.append(
+                                        $('<p>').addClass('catpath').text("Mobile Phones » Brand")
+                                    )*/
+                                ).append(
+                                    $('<section>').addClass('list-right').append(
+                                        $('<span>').addClass('date').text(new Date(entry.postCreateTime).toLocaleDateString())
+                                    ).append(
+                                        $('<span>').addClass('cityname').text(entry.address)
+                                    )
+                                ).append(
+                                    $('<div>').addClass('clearfix')
+                                )
+                            ).append(
+                                $('<div>').addClass('clearfix')
+                            )
+                        );
+                    });
+                    $('#pagination').empty();
+                    $(function () {
+                        $('#pagination').pagination({
+                            items: data.totalElements,
+                            itemsOnPage: size,
+                            cssStyle: 'light-theme',
+                            onPageClick: function () {
+                                page = $('#pagination').pagination('getCurrentPage') - 1;
+                                $.ajax({
+                                    method: "POST",
+                                    url: "/allPostByCategoryId",
+                                    data: {categoryId: categoryId, page: page, size: size},
+                                    dataType: "json"
+                                })
+                                    .done(function (data) {
+                                        $("#postList").empty();
+                                        $.each(data.content, function (key, entry) {
+                                            $('#postList').append(
+                                                $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.id}).append(
+                                                    $('<li>').append(
+                                                        $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                                                    ).append(
+                                                        $('<section>').addClass('list-left').append(
+                                                            $('<h5>').addClass('title').text(entry.title)
+                                                        ).append(
+                                                            $('<span>').addClass('adprice').text(entry.price + " QR")
+                                                        )/*.append(
+                                                            $('<p>').addClass('catpath').text("Mobile Phones » Brand")
+                                                        )*/
+                                                    ).append(
+                                                        $('<section>').addClass('list-right').append(
+                                                            $('<span>').addClass('date').text(new Date(entry.postCreateTime).toLocaleDateString())
+                                                        ).append(
+                                                            $('<span>').addClass('cityname').text(entry.address)
+                                                        )
+                                                    ).append(
+                                                        $('<div>').addClass('clearfix')
+                                                    )
+                                                ).append(
+                                                    $('<div>').addClass('clearfix')
+                                                )
+                                            );
+                                        });
+                                    });
+                            }
+                        });
+                    });
+                });
+        });
+</script>
+<script>
+    $('#size').on('change',
+        function () {
+            var size = $('#size').val();
+            var elem = $('#container ul');
+            var categoryId = $('#categoryId').val();
+            var page = 0;
+            $.ajax({
+                method: "POST",
+                url: "/allPostByCategoryId",
+                data: {categoryId: categoryId, page: page, size: size},
+                dataType: "json"
+            })
+                .done(function (data) {
+                    $("#postList").empty();
+                    $.each(data.content, function (key, entry) {
+                        $('#postList').append(
+                            $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.id}).append(
+                                $('<li>').append(
+                                    $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                                ).append(
+                                    $('<section>').addClass('list-left').append(
+                                        $('<h5>').addClass('title').text(entry.title)
+                                    ).append(
+                                        $('<span>').addClass('adprice').text(entry.price + " QR")
+                                    )/*.append(
+                                        $('<p>').addClass('catpath').text("Mobile Phones » Brand")
+                                    )*/
+                                ).append(
+                                    $('<section>').addClass('list-right').append(
+                                        $('<span>').addClass('date').text(new Date(entry.postCreateTime).toLocaleDateString())
+                                    ).append(
+                                        $('<span>').addClass('cityname').text(entry.address)
+                                    )
+                                ).append(
+                                    $('<div>').addClass('clearfix')
+                                )
+                            ).append(
+                                $('<div>').addClass('clearfix')
+                            )
+                        );
+                    });
+                    $('#pagination').empty();
+                    $(function () {
+                        $('#pagination').pagination({
+                            items: data.totalElements,
+                            itemsOnPage: size,
+                            cssStyle: 'light-theme',
+                            onPageClick: function () {
+                                page = $('#pagination').pagination('getCurrentPage') - 1;
+                                $.ajax({
+                                    method: "POST",
+                                    url: "/allPostByCategoryId",
+                                    data: {categoryId: categoryId, page: page, size: size},
+                                    dataType: "json"
+                                })
+                                    .done(function (data) {
+                                        $("#postList").empty();
+                                        $.each(data.content, function (key, entry) {
+                                            $('#postList').append(
+                                                $('<a>').attr({href: '/guest/singlePrduct/view/' + entry.id}).append(
+                                                    $('<li>').append(
+                                                        $('<img>').attr({src: "/images/post/" + entry.id + "_0"})
+                                                    ).append(
+                                                        $('<section>').addClass('list-left').append(
+                                                            $('<h5>').addClass('title').text(entry.title)
+                                                        ).append(
+                                                            $('<span>').addClass('adprice').text(entry.price + " QR")
+                                                        )/*.append(
+                                                            $('<p>').addClass('catpath').text("Mobile Phones » Brand")
+                                                        )*/
+                                                    ).append(
+                                                        $('<section>').addClass('list-right').append(
+                                                            $('<span>').addClass('date').text(new Date(entry.postCreateTime).toLocaleDateString())
+                                                        ).append(
+                                                            $('<span>').addClass('cityname').text(entry.address)
+                                                        )
+                                                    ).append(
+                                                        $('<div>').addClass('clearfix')
+                                                    )
+                                                )/*.append(
+                                                    $('<div>').addClass('clearfix')
+                                                )*/
+                                            );
+                                        });
+                                    });
+                            }
+                        });
+                    });
+                });
+        });
+</script>
+</body>
+</html>

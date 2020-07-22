@@ -1,0 +1,43 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="row">
+
+    <div class="col-sm-6" id="lm">
+        <label class="sm">Age<span>*</span></label>
+        <input type="number" name="age" class="phone" placeholder="" th:field="*{petAnimal.age}" id="petAge"></div>
+    <div class="col-sm-6" id="lm">
+        <label class="sm">Count<span>*</span></label>
+        <input type="number" name="count" class="phone" placeholder="" th:field="*{petAnimal.quantity}" id="petQuantity"></div>
+    <!--<div class="col-sm-6" id="lm">
+        <label class="sm">Item Name<span>*</span></label>
+        <input type="text" name="Item" class="phone" placeholder="" th:field="*{postModel.gender}"></div>-->
+    <div class="col-sm-6" id="lm">
+        <label class="sm">Sex <span>*</span></label>
+        <select class="" name="sex" th:field="*{petAnimal.gender}" id="petGender">
+            <option selected disabled value=" ">Choose Sex</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Both">Both</option>
+
+
+        </select></div>
+    <div class="col-sm-4" id="sm">
+        <label class="sm">Color <span>*</span></label>
+        <select class="" name="color" th:field="*{petAnimal.color}" id="petColor">
+            <option selected disabled value="-1">Choose Color</option>
+            <option value="Gold">Gold</option>
+            <option value="Silver">Silver</option>
+            <option value="Black">Black</option>
+            <option value="White">White</option>
+            <option value="Chery">Chery</option>
+            <option value="Blue">Blue</option>
+            <option value="Gray">Gray</option>
+            <option value="Red">Red</option>
+            <option value="Green">Green</option>
+            <option value="Orange">Orange</option>
+            <option value="Other">Other</option>
+
+        </select></div>
+
+
+</div>
+

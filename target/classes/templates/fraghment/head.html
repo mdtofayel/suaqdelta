@@ -1,0 +1,414 @@
+<header class="main-header" xmlns:th="http://www.thymeleaf.org">
+    <div class="header" style="margin-bottom: 8px">
+        <div class="container">
+            <div class="logo-nav">
+                <div class="logo-nav-left animated wow zoomIn" data-wow-delay=".5s">
+                    <h1><a th:href="@{/}"><img th:src="@{/images/Suqlogo.png}" class="logoim"></a></h1>
+                </div>
+                <div class="logo-nav-left1">
+                    <nav class="navbar navbar-default">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header nav_2">
+                            <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse"
+                                    data-target="#bs-megadropdown-tabs">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+                            <ul class="nav navbar-nav">
+                                <li class="active"><a th:href="@{/}" class="act"><span
+                                        class="home_icon fas fa-home"></span><span>Home</span></a></li>
+                                <!-- <li>
+                                     <div class="one_two_three_divs two_header_div">
+                                         <ul class="nav navbar-nav navbar-left hidden-xs hidden-sm category_drop_down_ul">
+                                             <li class="dropdown mega-menu mobile_cat_menu" id="show_category_list">
+                                                 <a class="dropdown-toggle header_cat_panel_mobile fix-category-name"
+                                                    data-toggle="dropdown" role="button" aria-expanded="true"
+                                                    style="color: rgb(100, 119, 125);">
+                                                     Category <span class="caret icon_open_sub_menu_header_span"></span>
+                                                 </a>
+                                                 &lt;!&ndash; start mega-menu.html&ndash;&gt;
+                                                 <div class="dropdown-menu mobile_category_style" id="mega-menu">
+                                                     <ul class="list-unstyled first-level-menu" id="type_list"
+                                                         style="height: 408px;"></ul>
+                                                 </div>
+                                                 &lt;!&ndash; end mega-menu.html&ndash;&gt;
+                                             </li>
+                                         </ul>
+                                     </div>
+                                 </li>-->
+
+
+                                <li><a href="/login"><span
+                                        class="home_icon fas fa-user"></i></span><span>Login</span></a></li>
+                                <li><a href="/registration"><span class="home_icon fas fa-user-circle"></span><span>Register</span></a>
+                                </li>
+
+                                <!--  <li><a th:href="@{/user/chatview}"><i class="glyphicon glyphicon-comment"></i> Messages</a></li>-->
+                            </ul>
+                        </div>
+
+
+                    </nav>
+
+                </div>
+
+                <a class="post_adbutton" th:href="@{/userPost/postNewAds}"><span
+                        class="home_icon fas fa-plus"></span><span class="pos_text">Post Ad</span><span
+                        class="freeBg"></span> <span class="free">100% Free!!</span></a>
+
+
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+            <script type="text/javascript">
+                (function () {
+                    var options = {
+                        whatsapp: "+97430681518", // WhatsApp number
+                        call_to_action: "chat With us", // Call to action
+                        position: "left", // Position may be 'right' or 'left'
+                    };
+                    var proto = document.location.protocol, host = "whatshelp.io", url = proto + "//static." + host;
+                    var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = url + '/widget-send-button/js/init.js';
+                    s.onload = function () { WhWidgetSendButton.init(host, proto, options); };
+                    var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+                })();
+            </script>
+            <div class="logo-nav" style="background-color: #ebe8e8;padding: 12px;">
+                <div class="row" style="padding-top: 8px">
+                    <div class="col-xs-5 col-sm-5 col-md-3 class_category">
+                        <div class="logo-nav-left" id="category_style" style="float: none;margin: 0px">
+                            <nav class="navbar navbar-default" style="float: none; margin-bottom: 0px">
+                                <div class="category_style">
+                                    <ul class="nav navbar-nav" style="float: none ; margin: 0px">
+                                        <li style="float: none">
+                                            <div class="one_two_three_divs two_header_div">
+                                                <ul class="nav navbar-nav navbar-left  category_drop_down_ul"
+                                                    id="categories" style="float: none!important; margin: 0px;">
+                                                    <li class="dropdown mega-menu mobile_cat_menu"
+                                                        id="show_category_list " style="float: none">
+                                                        <a class="dropdown-toggle header_cat_panel_mobile fix-category-name"
+                                                           data-toggle="dropdown" role="button" aria-expanded="true"
+                                                           style="color: rgb(100, 119, 125); padding-top: 0px;"><span
+                                                                class="fas fa-th"
+                                                                style="display: inline-block;font-size: 19px"></span>
+                                                            <span style="font-size: 14px">Category</span> <span
+                                                                    id="caret"
+                                                                    class="caret icon_open_sub_menu_header_span"></span>
+                                                        </a>
+                                                        <!-- start mega-menu.html-->
+                                                        <div class="dropdown-menu mobile_category_style hidden-xs hidden-sm" id="mega-menu">
+                                                            <ul class="list-unstyled first-level-menu" id="type_list"
+                                                                style="height: 408px;"></ul>
+                                                        </div>
+                                                        <!-- end mega-menu.html-->
+                                                        <div class="dropdown-menu mobile_category_style hidden-md hidden-lg" id="mega-menu">
+                                                            <ul class="list-unstyled first-level-menu" id="typemoblist"
+                                                                style="height: 408px;">
+                                                                <li>list</li>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="col-xs-7 col-sm-7 col-md-9 class_category1">
+                        <div class="search_box">
+                            <form th:action="@{/allAdsByGlobalSearch}" method="GET">
+                                <div class="row form-group " style="margin-bottom: 0px;">
+                                    <div class="col-md-10 col-xs-8 col-sm-9 form_class">
+                                        <input name="searchString" class="search_input "
+                                               placeholder="Enter your search term..." type="search"
+                                               id="">
+                                    </div>
+                                    <div class="col-xs-4 col-sm-3 col-md-2 form_class1">
+                                        <button class="search_head " style="    background-color: #0971b2"><span
+                                                class="fas fa-search"></span></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</header>
+<div id="addclassn" class="chat_button">
+    <i class="fas fa-comment-alt" aria-hidden="true"></i>
+
+
+    <input hidden="hidden" id="postId">
+</div>
+<div class="modal fade" id="search_myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Search Box</h4>
+            </div>
+            <div class="modal-body">
+                <form action="/allAdsByGlobalSearch" method="GET">
+                    <div class="input-group">
+                        <input type="text" placeholder="Search..." name="searchString" onkeyup="search()"
+                               class="form-control search" id="search-criteria">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text search_btn"><i class="fas fa-search" id="search"></i></span>
+                        </div>
+                    </div>
+                </form>
+                <div class="clearfix">
+                    <!--  <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="popup-box chat-popup" id="qnimate">
+    <div class="popup-head">
+        <div class="popup-head-left pull-left"><img src="images/client_4.jpg" alt="iamgurdeeposahan"> Abcd</div>
+        <div class="popup-head-right pull-right">
+            <!--<div class="btn-group">
+                          <button class="chat-header-button" data-toggle="dropdown" type="button" aria-expanded="false">
+                           <i class="glyphicon glyphicon-cog"></i> </button>
+                          <ul role="menu" class="dropdown-menu pull-right">
+                            <li><a href="#">Media</a></li>
+                            <li><a href="#">Block</a></li>
+                            <li><a href="#">Clear Chat</a></li>
+                            <li><a href="#">Email Chat</a></li>
+                          </ul>
+            </div>-->
+
+            <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button"><i
+                    class="fas fa-window-close"></i></button>
+        </div>
+    </div>
+    <div id="chat" class="chat_box_wrapper chat_box_small chat_box_active"
+         style="opacity: 1; display: block; transform: translateX(0px);">
+        <div class="chat_box touchscroll chat_box_colors_a">
+            <div class="chat_message_wrapper">
+                <div class="chat_user_avatar">
+                    <a href="#" target="_blank">
+                        <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)"
+                             src="images/client_3.jpg" class="md-user-image">
+                    </a>
+                </div>
+                <ul class="chat_message">
+                    <li>
+                        <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, eum? </p>
+                    </li>
+                    <li>
+                        <p> Lorem ipsum dolor sit amet.<span class="chat_message_time">13:38</span></p>
+                    </li>
+                </ul>
+            </div>
+            <div class="chat_message_wrapper chat_message_right">
+                <div class="chat_user_avatar">
+                    <a href="#" target="_blank">
+                        <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)"
+                             src="images/client_4.jpg" class="md-user-image">
+                    </a>
+                </div>
+                <ul class="chat_message">
+                    <li>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem delectus distinctio dolor
+                            earum est hic id impedit ipsum minima mollitia natus nulla perspiciatis quae quasi, quis
+                            recusandae, saepe, sunt totam.
+                            <span class="chat_message_time">13:34</span>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            <div class="chat_message_wrapper">
+                <div class="chat_user_avatar">
+                    <a href="#" target="_blank">
+                        <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)"
+                             src="images/client_3.jpg" class="md-user-image">
+                    </a>
+                </div>
+                <ul class="chat_message">
+                    <li>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque ea mollitia pariatur porro
+                            quae sed sequi sint tenetur ut veritatis.https://www.facebook.com/iamgurdeeposahan
+                            <span class="chat_message_time">23 Jun 1:10am</span>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            <div class="chat_message_wrapper chat_message_right">
+                <div class="chat_user_avatar">
+                    <a href="#" target="_blank">
+                        <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)"
+                             src="images/client_4.jpg" class="md-user-image">
+                    </a>
+                </div>
+                <ul class="chat_message">
+                    <li>
+                        <p> Lorem ipsum dolor sit amet, consectetur. </p>
+                    </li>
+                    <li>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                            <span class="chat_message_time">Friday 13:34</span>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="popup-messages-footer">
+
+        <textarea id="status_message" placeholder="Type a message..." rows="10" cols="40" name="message"></textarea>
+        <button class="bg_none pull-right"><i class="fas fa-location-arrow"></i></button>
+        <!--<div class="btn-footer">
+        <button class="bg_none"><i class="glyphicon glyphicon-film"></i> </button>
+        <button class="bg_none"><i class="glyphicon glyphicon-camera"></i> </button>
+        <button class="bg_none"><i class="glyphicon glyphicon-paperclip"></i> </button>
+        <button class="bg_none pull-right"><i class="glyphicon glyphicon-thumbs-up"></i> </button>
+        </div>
+        </div>-->
+    </div>
+
+</div>
+<script>
+    $(window).load(function () {
+        let type_list = $('#type_list');
+        type_list.empty();
+        const type_list_url = "/typeList";
+        $.getJSON(type_list_url, function (data) {
+            $.each(data, function (key, entry) {
+                type_list.append(
+                    $('<li>').addClass('dropdown cars').append(
+                        '<a href="/listOfPostByPostTypeId?postTypeId=' + entry.id + '" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">' + entry.name + '</a>'
+                    ).append(
+                        $('<div>').addClass('dropdown-menu second second-level-menu-container drop_main_menu').append(
+                            $('<ul>').addClass('list-unstyled second-level-menu').attr({id: entry.id}).css('height', '408px')
+                        )
+                    )
+                );
+                loadCategory(entry.id);
+            });
+        });
+    });
+</script>
+<script>
+    loadCategory = function (typeId) {
+        $('#' + typeId).empty();
+        var COLORS = ['#4286f4', '#41c4f4', '#41f4b2', '#88f441', '#f4e841'];
+        var colorCount = COLORS.length - 1;
+        const categoryListUrl = "/categoryListByPostType/" + typeId;
+        $.getJSON(categoryListUrl, function (categoryData) {
+            $.each(categoryData, function (categoryKey, categoryEntry) {
+                if (colorCount < 0) {
+                    colorCount = COLORS.length - 1;
+                }
+                $('#' + typeId).append(
+                    $('<li>').addClass('dropdown-submenu').append(
+                        '<a href="/allAdsByCategory?categoryId=' + categoryEntry.id + '" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false"><span class="name">' + categoryEntry.name + '</span><span class="ico" style="background-color: ' + COLORS[colorCount] + '"><i class="' + categoryEntry.iconClass + '"></i></span></a>'
+                    ).append(
+                        '<div class="dropdown-menu third third-level-menu-container drop_main_menu" id="' + categoryEntry.id + '"></div>'
+                    )
+                );
+                colorCount--;
+                loadSubcategory(categoryEntry.id);
+            })
+        });
+    }
+</script>
+
+<script>
+    loadSubcategory = function (categoryId) {
+        $('#' + categoryId).empty();
+        const subcategoryListUrl = "/subcategoryListByCategory/" + categoryId;
+        $.getJSON(subcategoryListUrl, function (subcategoryData) {
+            $('<ul>').addClass('list-unstyled third-level-menu').append(
+                $.each(subcategoryData, function (subcategoryKey, subcategoryEntry) {
+                    $('#' + categoryId).append(
+                        $('<li>').addClass('dropdown-submenu ').append(
+                            '<a href="/allAdsBySubcategory?subCategoryId=' + subcategoryEntry.id + '" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">' + subcategoryEntry.name + '</a>'
+                        )
+                    )
+                })
+            );
+        });
+    }
+</script>
+
+<script>
+
+    $(document).scroll(function () {
+        checkOffset();
+    });
+
+    function checkOffset() {
+        var window_width = $(window).width();
+        if (window_width < 768) {
+        } else {
+            if ($('#qnimate').offset().top + $('#qnimate').height()
+                >= $('#footer').offset().top - 10)
+                $('#qnimate').css({
+                    position: 'absolute',
+                    bottom: 'auto'
+                });
+            /* $('#qnimate').css('bottom','none');*/
+            if ($(document).scrollTop() + window.innerHeight < $('#footer').offset().top)
+                $('#qnimate').css({
+                    position: 'fixed',
+                    bottom: '0px'
+                });
+            // restore when you scroll up
+        }
+
+
+    }
+
+
+    /*     css({
+     border-bottom:'2px solid red',
+     padding-bottom: '26px'
+ });*/
+    $(function () {
+        $("#addclassn").click(function () {
+            $('#qnimate').addClass('popup-box-on');
+        });
+
+        $("#removeClass").click(function () {
+            $('#qnimate').removeClass('popup-box-on');
+        });
+    })
+
+</script>
+<script>
+    $(window).load(function () {
+        let typemoblist = $('#typemoblist');
+        typemoblist.empty();
+        const type_list_url = "/categoryListByPostType/";
+        $.getJSON(type_list_url, function (data) {
+            $.each(data, function (key, entry) {
+                typemoblist.append(
+                    $('<li>').addClass('dropdown cars').append(
+                        '<a href="/allAdsByCategory?categoryId=' + entry.id + '" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">' + entry.name + '</a>'
+                    )
+                );
+
+            });
+        });
+    });
+</script>

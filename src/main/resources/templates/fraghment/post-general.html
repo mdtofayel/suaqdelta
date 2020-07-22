@@ -1,0 +1,82 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="row">
+    <!-- <div class="col-sm-6" id="gm">
+         <label class="sm">Sub Category<span>*</span></label>
+         <input type="text" name="subCategory" class="phone" placeholder="" disabled value="Mobile"
+                required>
+     </div>-->
+    <!--<div class="col-sm-6" id="gm">
+        <label class="sm">Price<span>*</span></label>
+        <input type="text" name="price" class="phone" placeholder="" th:field="*{generic.price}" required>
+    </div>-->
+    <div class="col-sm-6" id="gm">
+        <label class="sm">Condition <span>*</span></label>
+        <select id="genericCondition" class="" name="condition" th:field="*{generic.condition}">
+            <option value="Others" selected disabled>Choose Condition</option>
+            <option value="New">None</option>
+        </select>
+    </div>
+    <div class="col-sm-6 " id="gm">
+        <label for="genericManufacturerName" class="sm">Manufacture Name<span>*</span></label>
+        <select id="genericManufacturerName" data-live-search="true" class="selectpicker">
+            <option selected disabled><img src="/images/Suqlogo.png" style="width: 20px"> Choose Manufacturer</option>
+            <option value="All" data-content="<img src='/images/Suqlogo.png' style='width: 20px'> All"> </option>
+            <option value="Audi" data-content="<img src='/images/audi.jpg' style='width: 20px'> Audi"> </option>
+            <option value="Bentley" data-content="<img src='/images/bently.jpg' style='width: 20px'> Audi"> Bentley</option>
+            <option value="BMW" data-content="<img src='/images/bently.jpg' style='width: 20px'> Audi">BMW</option>
+            <option value="Chevrolet"> Chevrolet</option>
+            <option value="Ferrari">Ferrari</option>
+            <option value="Fiat"> Fiat</option>
+            <option value="Force Motors">Force Motors</option>
+            <option value="Ford">Ford</option>
+            <option value="Hindustan Motors"> Hindustan Motors</option>
+            <option value="Honda">Honda</option>
+            <option value="Hyundai"> Hyundai</option>
+            <option value="Samsung">Samsung</option>
+            <option value="Apple"><img src="/images/Suqlogo.png" style="width: 20px"> Apple</option>
+            <option value="HTC"><img src="/images/Suqlogo.png" style="width: 20px"> HTC</option>
+            <option value="MI"><img src="/images/Suqlogo.png" style="width: 20px"> MI</option>
+            <option value="Other Brands"><img src="/images/Suqlogo.png" style="width: 20px"> Other Brands</option>
+        </select>
+    </div>
+    <!--    <div class="brand-select">
+            <h3 class="sear-head">Manufacturer</h3>
+            <select class="selectpicker" data-live-search="true" id="manufacturer">
+                <option selected disabled>Choose Manufacturer</option>
+                <option value="All">All</option>
+                <option value="Audi">Audi</option>
+                <option value="Bentley">Bentley</option>
+                <option value="BMW">BMW</option>
+                <option value="Chevrolet">Chevrolet</option>
+                <option value="Ferrari">Ferrari</option>
+                <option value="Fiat">Fiat</option>
+                <option value="Force Motors">Force Motors</option>
+                <option value="Ford">Ford</option>
+                <option value="Hindustan Motors">Hindustan Motors</option>
+                <option value="Honda">Honda</option>
+                <option value="Hyundai">Hyundai</option>
+                <option value="Samsung">Samsung</option>
+                <option value="Apple">Apple</option>
+                <option value="HTC">HTC</option>
+                <option value="MI">MI</option>
+                <option value="Other Brands">Other Brands</option>
+            </select>
+        </div>-->
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        let condition = $('#genericCondition');
+        condition.empty();
+        condition.append('<option selected="true" disabled>Choose Condition</option>');
+        condition.prop("selectedIndex", 0);
+        const conditionUrl = '/user/getCondition';
+        $.getJSON(conditionUrl, function (data) {
+            $.each(data, function (key, entry) {
+                condition.append($('<option></option>').attr('value', entry).text(entry));
+            })
+        });
+    });
+</script>
+

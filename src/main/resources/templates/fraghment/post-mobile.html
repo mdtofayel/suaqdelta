@@ -1,0 +1,182 @@
+<!--<form enctype="multipart/form-data"  method="POST">-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="row">
+    <div class="col-sm-6 " id="sm">
+        <label for="modelManu" class="sm">Manufacture Name<span>*</span></label>
+        <select id="modelManu" data-live-search="true" class="selectpicker">
+            <option selected disabled>Choose Manufacturer</option>
+            <option data-tokens="All">All</option>
+            <option data-tokens="Audi">Audi</option>
+            <option data-tokens="Bentley">Bentley</option>
+            <option data-tokens="BMW">BMW</option>
+            <option data-tokens="Chevrolet">Chevrolet</option>
+            <option data-tokens="Ferrari">Ferrari</option>
+            <option data-tokens="Fiat">Fiat</option>
+            <option data-tokens="Force Motors">Force Motors</option>
+            <option data-tokens="Ford">Ford</option>
+            <option data-tokens="Hindustan Motors">Hindustan Motors</option>
+            <option data-tokens="Honda">Honda</option>
+            <option data-tokens="Hyundai">Hyundai</option>
+            <option data-tokens="Samsung">Samsung</option>
+            <option data-tokens="Apple">Apple</option>
+            <option data-tokens="HTC">HTC</option>
+            <option data-tokens="MI">MI</option>
+            <option data-tokens="Other Brands">Other Brands</option>
+        </select>
+    </div>
+    <div class="col-sm-6" id="sm">
+        <label class="sm">Condition <span>*</span></label>
+        <select id="modelCondition" class="" name="condition" th:field="*{smartPhones.condition}">
+            <option value="Others" selected disabled>Choose Condition</option>
+            <option value="New">None</option>
+        </select>
+    </div>
+
+    <div class="col-sm-4" id="is">
+        <label class="sm">Model<span>*</span></label>
+        <select id="modelModel" data-live-search="true" class="selectpicker">
+        </select>
+    </div>
+    <div class="col-sm-4" id="sm">
+        <label class="sm">Color <span>*</span></label>
+        <select class="" name="color" th:field="*{smartPhones.color}" id="modelColor">
+            <option selected disabled value="-1">Choose Color</option>
+            <option value="Gold">Gold</option>
+            <option value="Silver">Silver</option>
+            <option value="Black">Black</option>
+            <option value="White">White</option>
+            <option value="Chery">Chery</option>
+            <option value="Blue">Blue</option>
+            <option value="Gray">Gray</option>
+            <option value="Red">Red</option>
+            <option value="Green">Green</option>
+            <option value="Orange">Orange</option>
+            <option value="Other">Other</option>
+
+        </select></div>
+    <div class="col-sm-4" id="sm">
+        <label class="sm">Storage <span>*</span></label>
+        <select class="" name="Storage" th:field="*{smartPhones.storage}" id="modelStorage">
+            <option selected disabled value="">Choose Storage</option>
+            <option value="More than 256GB">More than 256GB</option>
+            <option value="256GB">256GB</option>
+            <option value="128GB">128GB</option>
+            <option value="64GB">64GB</option>
+            <option value="32GB">32GB</option>
+            <option value="16GB">16GB</option>
+            <option value="8GB">8GB</option>
+            <option value="4GB">4GB</option>
+            <option value="2GB">2GB</option>
+            <option value="1GB">1GB</option>
+            <option value="512MB">512MB</option>
+            <option value="Less than 512MB">Less than 512MB</option>
+
+        </select></div>
+    <div class="clearfix"></div>
+    <div class="col-sm-4" id="sm">
+        <label class="sm" th:field="*{smartPhones.simType}">Sim Type <span>*</span></label>
+        <select class="" name="sim" id="modelSimType">
+            <option selected disabled value="No Sim">Choose Sim</option>
+            <option value="Dual Sim">Dual Sim</option>
+            <option value="Single Sim">Single Sim</option>
+            <option value="Triple Sim">Triple Sim</option>
+            <option value="Hybrid Sim Slot">Hybrid Sim Slot</option>
+            <option value="No Sim">No Sim</option>
+
+
+        </select></div>
+    <div class="col-sm-4" id="is">
+        <label class="is" th:field="*{smartPhones.frontCamera}">Front Camera <span>*</span></label>
+        <select name="fcamera" class="phone" id="modelFrontCamera">
+            <option selected disabled>Choose Front Camera</option>
+            <option data-tokens="All">All</option>
+            <option data-tokens="Less than 1MP">Less than 1MP</option>
+            <option data-tokens="1-5MP">1-5MP</option>
+            <option data-tokens="5-10 MP">5-10 MP</option>
+            <option data-tokens="10-15MP">10-15MP</option>
+            <option data-tokens="More than 15 MP">More than 15Mp</option>
+        </select>
+    </div>
+    <div class="col-sm-4" id="is">
+        <label class="is" th:field="*{smartPhones.backCamera}">Back Camera <span>*</span></label>
+        <select name="bcamera" class="phone" id="modelBackCamera">
+            <option selected disabled>Choose Front Camera</option>
+            <option data-tokens="All">All</option>
+            <option data-tokens="Less than 1MP">Less than 1MP</option>
+            <option data-tokens="1-5MP">1-5MP</option>
+            <option data-tokens="5-10 MP">5-10 MP</option>
+            <option data-tokens="10-15MP">10-15MP</option>
+            <option data-tokens="More than 15 MP">More than 15Mp</option>
+        </select>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-sm-4" id="sm">
+        <label class="sm">Network Type <span>*</span></label>
+        <select class="" name="network" th:field="*{smartPhones.networkType}" id="modelNetType">
+            <option selected disabled value="">Choose Network</option>
+            <option value="2G">2G</option>
+            <option value="3G">3G</option>
+            <option value="4G">4G</option>
+            <option value="5G">5G</option>
+            <option value="None">None</option>
+
+
+        </select>
+    </div>
+    <div class="col-sm-4" id="is">
+        <label class="sm">RAM <span>*</span></label>
+        <input type="number" name="ram" class="phone" placeholder="enter storage capaciy" th:field="*{smartPhones.ram}"
+               id="modelRam"></div>
+    <div class="col-sm-4" id="is">
+        <label class="is">Display<span>*</span></label>
+        <select name="display" class="phone" id="smartPhoneDisplay" th:field="*{smartPhones.display}">
+            <option value="-1" selected disabled>Choose Display Size</option>
+            <option value="1 Inch">1 Inch</option>
+            <option value="2 Inch">2 Inch</option>
+            <option value="3 Inch">3 Inch</option>
+            <option value="4 Inch">4 Inch</option>
+            <option value="5 Inch">5 Inch</option>
+            <option value="6 Inch">6 Inch</option>
+            <option value="7 Inch">7 Inch</option>
+            <option value="8 Inch">8 Inch</option>
+            <option value="9 Inch">9 Inch</option>
+            <option value="10 Inch">10 Inch</option>
+            <option value="11 Inch">11 Inch</option>
+            <option value="12 Inch">12 Inch</option>
+            <option value="13 Inch">13 Inch</option>
+            <option value="14 Inch">14 Inch</option>
+
+        </select>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-sm-6" id="is">
+        <label  class="sm">Processor <span>*</span></label>
+        <select class="selectpicker" data-live-search="true" id="modelPros" th:field="*{smartPhones.processor}">
+            <option value="-1" selected disabled>Choose Processor</option>
+            <option value="All">All</option>
+            <option value="Snapdragon">Snapdragon</option>
+            <option value="Mediatek">Mediatek</option>
+            <option value="HiSilicon Kirin">HiSilicon Kirin</option>
+            <option value="Exynos">Exynos</option>
+            <option value="Others">Others</option>
+        </select>
+    </div>
+    <div class="clearfix"></div>
+
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        let condition = $('#modelCondition');
+        condition.empty();
+        condition.append('<option selected="true" disabled>Choose Condition</option>');
+        condition.prop("selectedIndex", 0);
+        const conditionUrl = '/user/getCondition';
+        $.getJSON(conditionUrl, function (data) {
+            $.each(data, function (key, entry) {
+                condition.append($('<option></option>').attr('value', entry).text(entry));
+            })
+        });
+    });
+</script>

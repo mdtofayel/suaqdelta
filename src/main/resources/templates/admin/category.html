@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <th:block th:include="admin/fraghment/header_link:: head"></th:block>
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <div sec:authorize="isAuthenticated()">
+        <div sec:authorize="hasRole('ADMIN')">
+            <header th:include="admin/fraghment/admin_sidebar"></header>
+        </div>
+        <div sec:authorize="hasRole('MANAGER') && !hasRole('ADMIN')">
+            <header th:include="admin/fraghment/manager_sidebar"></header>
+        </div>
+    </div>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <header th:include="admin/fraghment/manager_topbar"></header>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Category</h1>
+                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                </div>
+
+
+                <div class="row">
+
+
+                    <div class="col-lg-12 mb-4">
+
+                        <!-- Illustrations -->
+                        <div class="card  shadow mb-4">
+                            <div class="card-header border-bottom-warning py-3">
+                                <h6 class="m-0 font-weight-bold text-primary text-center"
+                                    style=" display: inline-block">Category</h6>
+                                <a href="#" class="btn btn-primary btn-icon-split text-right" style="float: right;"
+                                   id="addCategoryButton">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-plus-circle"></i>
+                    </span>
+                                    <span class="text">Add Category</span>
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <!-- Begin Page Content -->
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped table-bordered" id="category"
+                                           width="100%" cellspacing="0">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Type</th>
+                                            <th>Category</th>
+                                            <th>Created At</th>
+                                            <th>Updated At</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tfoot>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Type</th>
+                                            <th>Category</th>
+                                            <th>Created At</th>
+                                            <th>Updated At</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </tfoot>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <th:block th:include="admin/fraghment/footer"></th:block>
+
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+
+<div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="categoryModalLabel">Add Category</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="selectPostType">Select Post Type</label>
+                        <select name="category" class="form-control" id="selectPostType"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="newCategory">Enter New Category</label>
+                        <input type="text" class="form-control" id="newCategory" aria-describedby="emailHelp"
+                               placeholder="Enter Category" name="category" required>
+                        <small id="newCategoryHelp" class="form-text text-muted">Enter the New Category Here.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newCategory">Enter Icon Class</label>
+                        <input type="text" class="form-control" id="newCategoryIcon" aria-describedby="emailHelp"
+                               placeholder="Enter Icon Class" name="category"/>
+                        <div style="text-align: center" id="categoryImageIcon"><i class="fas fa-ad fa-5x"></i></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newCategoryImage">Select an Image</label>
+                        <input type="file" class="" id="newCategoryImage" aria-describedby="emailHelp"
+                               name="newCategoryImage"/>
+                        <div style="text-align: center" id="categoryImageView"><img src=""/></div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button id="add_category" type="button" class="btn btn-primary" data-dismiss="modal">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="#" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="e_selectPostType">Select Post Type</label>
+                        <select name="category" class="form-control" id="e_selectPostType" disabled></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCategory">Edit Category</label>
+                        <input type="hidden" id="categoryId" name="categoryId"/>
+                        <input type="text" class="form-control" aria-describedby="emailHelp"
+                               placeholder="Enter Category" name="category" id="editCategory" required>
+                        <small id="emailHelp" class="form-text text-muted">Edit Category Here.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newCategory">Enter Icon Class</label>
+                        <input type="text" class="form-control" id="editCategoryIcon" aria-describedby="emailHelp"
+                               placeholder="Enter Icon Class" name="category"/>
+                        <div style="text-align: center" id="editCategoryImageIcon"><i class="fas fa-ad fa-5x"></i></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editCategoryImage">Select an Image</label>
+                        <input type="file" class="" id="editCategoryImage" aria-describedby="emailHelp"
+                               name="editCategoryImage"/>
+                        <div style="text-align: center" id="edit_categoryImage"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button id="edit_category" type="button" class="btn btn-primary" data-dismiss="modal">Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Message</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <h6 id="modalMessage"></h6>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:include="admin/fraghment/header_link :: footer"></th:block>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#addCategoryButton').on('click', function () {
+
+            let postType = $('#categoryModal #selectPostType');
+            postType.empty();
+            postType.append('<option selected="true" disabled>Choose Post Type</option>');
+            postType.prop("selectedIndex", 0);
+            const postTypeUrl = '/manager/getPostTypeList';
+            $.getJSON(postTypeUrl, function (data) {
+                $.each(data, function (key, entry) {
+                    postType.append($('<option></option>').attr('value', entry.id).text(entry.name));
+                })
+            });
+
+            $('#categoryModal').modal('show');
+        });
+
+        $('#add_category').on('click', function (e) {
+
+            var formData = new FormData();
+
+            formData.append("postType.id", $("#selectPostType").val());
+            formData.append("name", $("#newCategory").val());
+            formData.append("iconClass", $("#newCategoryIcon").val());
+            formData.append("categoryImage", $("#newCategoryImage")[0].files[0]);
+
+            if (formData.get("name").length > 1) {
+                $.ajax({
+                    url: '/manager/saveCategory',
+                    type: 'POST',
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    success: function (data) {
+                        categoryTable.ajax.reload();
+                        $("#successModal #modalMessage").html(data.response);
+                        $('#successModal').modal('show');
+                    },
+                    error: function (response, textStatus, errorThrown) {
+                        $("#successModal #modalMessage").html(response.responseText);
+                        $('#successModal').modal('show');
+                    }
+                })
+            } else {
+                $("#successModal #modalMessage").html("Category length must be at least 2");
+                $('#successModal').modal('show');
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#edit_category').on('click', function (e) {
+
+            var formData = new FormData();
+            formData.append("postType.id", $("#editModal #e_selectPostType").val());
+            formData.append("id", $("#editModal #categoryId").val());
+            formData.append("name", $("#editModal #editCategory").val());
+            formData.append("iconClass", $("#editCategoryIcon").val());
+            formData.append("categoryImage", $("#editCategoryImage")[0].files[0]);
+            if (formData.get("name").length > 1) {
+                $.ajax({
+                    url: "/manager/editCategory",
+                    type: 'POST',
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    success: function (data) {
+                        categoryTable.ajax.reload();
+                        $("#successModal #modalMessage").html(data.response);
+                        $('#successModal').modal('show');
+                    },
+                    error: function (response, textStatus, errorThrown) {
+                        $("#successModal #modalMessage").html(response.responseText);
+                        $('#successModal').modal('show');
+                    }
+                })
+            } else {
+                $("#successModal #modalMessage").html("Category length must be at least 2");
+                $('#successModal').modal('show');
+            }
+        });
+
+        window.editCategoryFunction = function (catId) {
+            if (catId > -1) {
+                $.ajax({
+                    method: "GET",
+                    url: "/manager/getCategory/" + catId,
+                    dataType: "json"
+                })
+                    .done(function (data) {
+                        let postType = $('#e_selectPostType');
+                        postType.empty();
+                        postType.append($('<option selected="true"></option>').attr('value', data.postType.id).text(data.postType.name));
+                        $("#editModal #categoryId").val(data.id);
+                        $("#editModal #editCategory").val(data.name);
+                        $('#editModal #editCategoryIcon').val(data.iconClass);
+                        $('#editModal #editCategoryImageIcon').empty();
+                        $('#editModal #editCategoryImageIcon').append(
+                            $('<i>').addClass(data.iconClass + " fa-5x")
+                        );
+                        $('#editModal #editCategoryImage').empty();
+                        $('#editModal #edit_categoryImage').empty();
+                        $('#editModal #edit_categoryImage').append(
+                            $('<img>').attr({
+                                src: "/images/category/" + data.id,
+                                style: "width: 150px; height: 150px; padding-top: 2%"
+                            })
+                        );
+
+                        $('#editModal').modal('show');
+                    })
+            } else {
+                $("#successModal #modalMessage").html("Category not exist");
+                $('#successModal').modal('show');
+            }
+        }
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#newCategoryIcon').on('change', function (e) {
+            var iconClass = $('#newCategoryIcon').val();
+            $('#categoryImageIcon').empty();
+            $('#categoryImageIcon').append(
+                $('<i>').addClass(iconClass + " fa-5x")
+            );
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#editCategoryIcon').on('change', function (e) {
+            var iconClass = $('#editModal #editCategoryIcon').val();
+            $('#editModal #editCategoryImageIcon').empty();
+            $('#editModal #editCategoryImageIcon').append(
+                $('<i>').addClass(iconClass + " fa-5x")
+            );
+        });
+    });
+</script>
+
+<script>
+    function readURL1(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#categoryModal #categoryImageView').empty();
+                $('#categoryModal #categoryImageView').append(
+                    $('<img>').attr({
+                        src: e.target.result,
+                        style: "width: 150px; height: 150px; padding-top: 2%"
+                    })
+                );
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#newCategoryImage").change(function () {
+        readURL1(this);
+    });
+</script>
+
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#edit_categoryImage').empty();
+                $('#edit_categoryImage').append(
+                    $('<img>').attr({
+                        src: e.target.result,
+                        style: "width: 150px; height: 150px; padding-top: 2%"
+                    })
+                );
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#editCategoryImage").change(function () {
+        readURL(this);
+    });
+</script>
+</body>
+
+</html>

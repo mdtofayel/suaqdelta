@@ -1,0 +1,250 @@
+<header class="main-header" xmlns:th="http://www.thymeleaf.org">
+    <div class="header">
+        <div class="container">
+            <div class="logo-nav">
+                <div class="logo-nav-left animated wow zoomIn" data-wow-delay=".5s">
+                    <h1><a th:href="@{/}"><img th:src="@{/images/Suqlogo.png}" class="logoim"></a></h1>
+                </div>
+                <div class="logo-nav-left1">
+                    <nav class="navbar navbar-default">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header nav_2">
+                            <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse"
+                                    data-target="#bs-megadropdown-tabs">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+                            <ul class="nav navbar-nav">
+                                <li class="active"><a th:href="@{/}" class="act"><span class="home_icon fas fa-home" ></span><span>Home</span></a></li>
+                                <!-- Mega Menu -->
+
+
+
+                                <li><a th:href="@{/usercheck}"><span class="home_icon glyphicon glyphicon-user" ></span><span>My Account</span></a>
+                                </li>
+                                <li><a th:href="@{/user/chatview}"><span class="home_icon glyphicon glyphicon-comment" ></span><span> Messages</span></a></li>
+
+                                <li>
+                                    <div class="one_two_three_divs two_header_div">
+                                        <ul class="nav navbar-nav navbar-left hidden-xs hidden-sm category_drop_down_ul">
+                                            <li class="dropdown mega-menu mobile_cat_menu" id="">
+                                                <a class="dropdown-toggle header_cat_panel_mobile fix-category-name"
+                                                   data-toggle="dropdown" role="button" aria-expanded="true"
+                                                   style="color: rgb(100, 119, 125);" id="notificationDataNavbar">
+                                                    <span class="home_icon glyphicon glyphicon-bell" ></span><span> Notification </span><span class="caret icon_open_sub_menu_header_span"></span>
+                                                </a>
+                                                <!-- start mega-menu.html-->
+                                                <div class="dropdown-menu mobile_category_style notiifcation_width" id="mega-menu ">
+                                                    <div id="notification_nav"></div>
+                                               <!--     <div class="alert alert-dismissible alert-success" id="notificationContentnab">
+                                                    </div>-->
+                                                </div>
+                                                <!-- end mega-menu.html-->
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><a th:href="@{/logout}"><span class="home_icon glyphicon glyphicon-log-out" ></span><span>Logout</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+
+                <a class="post_adbutton" th:href="@{/userPost/postNewAds}"><span class="home_icon fas fa-plus"></span><span class="pos_text">Post Ad</span><span class="freeBg" ></span><span class="free">100% Free</span></a>
+
+
+                <div class="clearfix"></div>
+            </div>
+<div class="clearfix"></div>
+            <div class="logo-nav" style="background-color: #ebe8e8;padding: 12px;">
+                <div class="row" style="padding-top: 8px">
+                    <div class="col-xs-5 col-sm-5 col-md-3 class_category">
+                        <div class="logo-nav-left" id="category_style" style="float: none;margin: 0px">
+                            <nav class="navbar navbar-default" style="float: none; margin-bottom: 0px">
+                                <div class="category_style"  >
+                                    <ul class="nav navbar-nav" style="float: none ; margin: 0px">
+                                        <li style="float: none">
+                                            <div class="one_two_three_divs two_header_div">
+                                                <ul class="nav navbar-nav navbar-left  category_drop_down_ul" id="categories" style="float: none!important; margin: 0px;">
+                                                    <li class="dropdown mega-menu mobile_cat_menu" id="show_category_list " style="float: none">
+                                                        <a class="dropdown-toggle header_cat_panel_mobile fix-category-name"
+                                                           data-toggle="dropdown" role="button" aria-expanded="true"
+                                                           style="color: rgb(100, 119, 125); padding-top: 0px;"><span class="fas fa-th" style="display: inline-block;font-size: 19px"></span>
+                                                            <span style="font-size: 14px">Category</span> <span id="caret" class="caret icon_open_sub_menu_header_span"></span>
+                                                        </a>
+                                                        <!-- start mega-menu.html-->
+                                                        <div class="dropdown-menu mobile_category_style" id="mega-menu">
+                                                            <ul class="list-unstyled first-level-menu" id="type_list"
+                                                                style="height: 408px;"></ul>
+                                                        </div>
+                                                        <!-- end mega-menu.html-->
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="col-xs-7 col-sm-7 col-md-9 class_category1">
+                        <div class="search_box">
+                            <form th:action="@{/allAdsByGlobalSearch}" method="GET">
+                                <div class="row form-group " style="margin-bottom: 0px;">
+                                    <div class="col-md-10 col-xs-8 col-sm-9 form_class">
+                                        <input name="searchString" class="search_input "
+                                               placeholder="Enter your search term..." type="search"
+                                               id="">
+                                    </div>
+                                    <div class="col-xs-4 col-sm-3 col-md-2 form_class1">
+                                        <button class="search_head " style="    background-color: #0971b2"><span class="fas fa-search"></span></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="modal fade" id="search_myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Search Box</h4>
+            </div>
+            <div class="modal-body">
+                <form href="/login" method="post">
+                    <div class="input-group">
+                        <input type="text" placeholder="Search..."   class="form-control search" id="search-criteria">
+                        <div class="input-group-prepend" >
+                            <span class="input-group-text search_btn" ><i class="fas fa-search" id="search"></i></span>
+                        </div>
+                    </div>
+                </form>
+                <div class="clearfix">
+                    <!--  <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        let type_list = $('#type_list');
+        type_list.empty();
+        const type_list_url = "/typeList";
+        $.getJSON(type_list_url, function (data) {
+            $.each(data, function (key, entry) {
+                type_list.append(
+                    $('<li>').addClass('dropdown cars').append(
+                        '<a href="/listOfPostByPostTypeId?postTypeId=' + entry.id + '" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">' + entry.name + '</a>'
+                    ).append(
+                        $('<div>').addClass('dropdown-menu second second-level-menu-container drop_main_menu').append(
+                            $('<ul>').addClass('list-unstyled second-level-menu').attr({id: entry.id}).css('height', '408px')
+                        )
+                    )
+                );
+                loadCategory(entry.id);
+            });
+        });
+    });
+</script>
+<script>
+    loadCategory = function (typeId) {
+        $('#' + typeId).empty();
+        var COLORS = ['#4286f4', '#41c4f4', '#41f4b2', '#88f441', '#f4e841'];
+        var colorCount = COLORS.length - 1;
+        const categoryListUrl = "/categoryListByPostType/" + typeId;
+        $.getJSON(categoryListUrl, function (categoryData) {
+            $.each(categoryData, function (categoryKey, categoryEntry) {
+                if (colorCount < 0) {
+                    colorCount = COLORS.length - 1;
+                }
+                $('#' + typeId).append(
+                    $('<li>').addClass('dropdown-submenu').append(
+                        '<a href="/allAdsByCategory?categoryId=' + categoryEntry.id + '" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false"><span class="name">' + categoryEntry.name + '</span><span class="ico" style="background-color: ' + COLORS[colorCount] + '"><i class="' + categoryEntry.iconClass + '"></i></span></a>'
+                    ).append(
+                        '<div class="dropdown-menu third third-level-menu-container drop_main_menu" id="' + categoryEntry.id + '"></div>'
+                    )
+                );
+                colorCount--;
+                loadSubcategory(categoryEntry.id);
+            })
+        });
+    }
+</script>
+
+<script>
+    loadSubcategory = function (categoryId) {
+        $('#' + categoryId).empty();
+        const subcategoryListUrl = "/subcategoryListByCategory/" + categoryId;
+        $.getJSON(subcategoryListUrl, function (subcategoryData) {
+            $('<ul>').addClass('list-unstyled third-level-menu').append(
+                $.each(subcategoryData, function (subcategoryKey, subcategoryEntry) {
+                    $('#' + categoryId).append(
+                        $('<li>').addClass('dropdown-submenu').append(
+                            '<a href="/allAdsBySubcategory?subCategoryId=' + subcategoryEntry.id + '" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">' + subcategoryEntry.name + '</a>'
+                        )
+                    )
+                })
+            );
+        });
+    }
+</script>
+<script>
+    $('#notificationDataNavbar').on('click',
+        function () {
+            $.ajax({
+                method: "GET",
+                url: '/notifications/findAllNotificationByUserId',
+                success:function (data) {
+                    if(data.length>0){
+                        $('#notification_nav').empty();
+                        $.each(data, function (key, entry) {
+                            $('#notification_nav').append(
+
+                                $('<div>').addClass('alert alert-dismissible alert-success').append(
+                                    $('<a>').attr({href:entry.notificationUrl}).addClass('alert-link').append(
+                                    $('<strong>').text(entry.description)
+                                ).append(
+                                        $('<span>').text(' from '+entry.notificationSender.profile.firstName)
+                                    )
+                                )
+                                )
+                         /*   $('#notification').append(
+                                $('<div>').addClass('alert alert-dismissible alert-success').append(
+                                    $('<strong>').text(entry.description).append(
+                                        $('<a>').attr({href:entry.notificationUrl}).addClass('alert-link').text(' from '+entry.notificationSender.profile.firstName)
+
+
+
+
+                                    )
+
+                                ))*/
+                            /*<div class="alert alert-dismissible alert-warning">
+                                    <!-- <button type="button" class="close" data-dismiss="alert">&times;</button>-->
+                                <strong>verify!</strong> Verify <a href="#" class="alert-link">Your Number</a>.
+                            </div>*/
+
+                        })
+                    }
+                }
+
+            })
+        });
+</script>

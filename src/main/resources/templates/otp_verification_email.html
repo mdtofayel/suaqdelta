@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fraghment/header:: head"></th:block>
+    <!-- DataTables -->
+
+
+</head>
+<body>
+
+
+<header th:if="${#request.isUserInRole('USER')}" th:include="fraghment/user_header"></header>
+<header th:unless="${#request.isUserInRole('USER')}" th:include="fraghment/head"></header>
+
+<section>
+    <div id="page-wrapper" class="sign-in-wrapper">
+        <div class="graphs">
+            <div class="sign-in-form">
+                <div class="sign-in-form-top">
+                    <h1>Email Verification</h1>
+                </div>
+                <div class="signin">
+                    <!--<div class="signin-rit">
+                        <span class="checkbox1">
+                             <label class="checkbox"><input type="checkbox" name="checkbox" checked="">Forgot Password ?</label>
+                        </span>
+                        <p><a href="forgotpassword.html">Click Here</a> </p>
+                        <div class="clearfix"> </div>
+                    </div>-->
+                    <h4 style="color: #cc0029; text-align: center" id="infoMessage"></h4>
+                    <div class="log-input">
+                        <div class="new_people">
+                            <h2>For Email Verification</h2>
+                            <p>Please check your email for security code.</p>
+                        </div>
+                        <div class="log-input-left">
+                            <input id="otp" type="text" class="user" value="Enter Your 6 digit Security code" name="otp"
+                                   onfocus="this.value = '';"
+                                   onblur="if (this.value == '') {this.value = 'Enter Your OTP';}"/>
+                        </div>
+                        <!--<span class="checkbox2">
+                             <label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i> </i></label>
+                        </span>-->
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <a id="sendAgainToEmail">Send Again</a>
+                    <!--<div class="log-input">
+                        <div class="log-input-left">
+                           <input type="password" class="lock" value="password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email address:';}"/>
+                        </div>
+                        <span class="checkbox2">
+                             <label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i> </i></label>
+                        </span>
+                        <div class="clearfix"> </div>
+                    </div>-->
+                    <input type="button" value="Submit" id="submitEmailOtp">
+                </div>
+                <!--	<div class="new_people">
+                        <h2>For New People</h2>
+                        <p>Having hands on experience in creating innovative designs,I do offer design
+                            solutions which harness.</p>
+                        <a href="register.html">Register Now!</a>
+                    </div>-->
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+<th:block th:include="fraghment/footer"></th:block>
+
+<th:block th:include="fraghment/header :: footer"></th:block>
+
+
+<script>
+    $('#submitEmailOtp').on('click', function () {
+        $.ajax({
+            type: 'POST',
+            url: '/user/verifyEmailOTP',
+            data: {
+                otpCode: $('#otp').val()
+            },
+            success: function (data) {
+                if (data == true) {
+                    window.location.replace('/user');
+                } else {
+                    $('#infoMessage').html('Invalid Security Code');
+                }
+            }
+        });
+    })
+</script>
+
+<script>
+    $('#sendAgainToEmail').on('click', function () {
+        $.get("/user/sendEmailOTPAgain", function (data, status) {
+        });
+    })
+</script>
+
+</body>
+</html>

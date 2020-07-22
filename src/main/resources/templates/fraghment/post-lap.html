@@ -1,0 +1,133 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="row">
+    <div class="col-sm-6" id="lm">
+        <label for="laptopManfacturer" class="sm">Manufacture Name <span>*</span></label>
+        <select id="laptopManfacturer" data-live-search="true" class="selectpicker">
+            <option selected disabled value="-1">Select Manufacture Name</option>
+            <option value="Asus">Asus</option>
+            <option value="Dell">Dell</option>
+            <option value="Hp">Hp</option>
+            <option value="Apple">Apple</option>
+            <option value="Samsung">Samsung</option>
+            <option value="Samsung">c</option>
+            <option value="iBAll">iBAll</option>
+            <option value="LG">LG</option>
+            <option value="GigaByte">GigaByte</option>
+            <option value="Sony">Sony</option>
+            <option value="Panasonic">Panasonic</option>
+            <option value="Lenova">Lenova</option>
+            <option value="IBM">IBM</option>
+            <option value="Other">Other</option>
+        </select></div>
+    <!--<div class="col-sm-6" id="ms">
+           <label class="sm">Model<span>*</span></label>
+   <input type="text" name="model" class="phone" placeholder=""></div>-->
+    <!-- <div class="col-sm-6" id="lm">
+         <label class="sm">Ad Type<span>*</span></label>
+         <select class="" name="manufacture"  th:field="*{laptop.}">
+             <option selected disabled>Choos Type</option>
+             <option>Sale</option>
+             <option>Wanted</option>
+             <option>Exchange</option>
+
+         </select></div>-->
+    <div class="col-sm-6" id="gm">
+        <label class="sm">Condition <span>*</span></label>
+        <select class="" name="laptopCondition" th:field="*{laptop.condition}" id="laptopCondition">
+            <option value="Others" selected disabled>Choose Condition</option>
+            <option value="New">None</option>
+        </select>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="row">
+
+    <div class="col-sm-6" id="lm">
+        <label class="sm">Processor<span>*</span></label>
+        <select type="text" name="processor" class="phone" id="laptopProcessor"
+                th:field="*{laptop.processor}">
+            <option value="-1" selected disabled>Choose Processor</option>
+            <option value="All">All</option>
+            <option value="Intel Atom">Intel Atom</option>
+            <option value="Intel Celeron">Intel Celeron</option>
+            <option value="Intel Pentium">Intel Pentium</option>
+            <option value="Intel Dual Core">Intel Dual Core</option>
+            <option value="Intel Core i3">Intel Core i3</option>
+            <option value="Intel Core i5">Intel Core i5</option>
+            <option value="Intel Core i7">Intel Core i7</option>
+            <option value="Intel Core i9">Intel Core i9</option>
+            <option value="AMD">AMD</option>
+        </select></div>
+    <div class="col-sm-6" id="lm">
+        <label class="sm">Display<span>*</span></label>
+        <select type="text" name="processor" class="phone" th:field="*{laptop.Display}" id="laptopDisplay">
+            <option value="-1" selected disabled>Choose Display</option>
+            <option value="11 Inch">11 Inch</option>
+            <option value="12 Inch">12 Inch</option>
+            <option value="13 Inch">13 Inch</option>
+            <option value="14 Inch">14 Inch</option>
+            <option value="15 Inch">15 Inch</option>
+            <option value="16 Inch">16 Inch</option>
+        </select>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-sm-6" id="lm">
+        <label class="sm">RAM <span>*</span></label>
+        <select class="" name="ram" th:field="*{laptop.ram}" id="laptopRam">
+            <option selected disabled value="-1">Choose RAM</option>
+            <option value="Less than 1GB">Less than 1GB</option>
+            <option value="2gb">2GB</option>
+            <option value="4GB">4GB</option>
+            <option value="6GB">6GB</option>
+            <option value="8GB">8GB</option>
+            <option value="10GB">10GB</option>
+            <option value="12GB">12GB</option>
+            <option value="14GB">14GB</option>
+            <option value="16GB">16GB</option>
+            <option value="32GB">32GB</option>
+            <option value="64GB">64GB</option>
+            <option value="More than 64GB">More than 64GB</option>
+
+        </select></div>
+    <div class="col-sm-6" id="lm">
+        <label class="sm">Storage <span>*</span></label>
+        <select class="" name="Storage" th:field="*{laptop.storage}" id="laptopTstorage">
+            <option selected disabled value="-1">Choose Storage</option>
+            <option value="Less than 120GB">Less than 120GB</option>
+            <option value="120GB">120GB</option>
+            <option value="150GB">150GB</option>
+            <option value="180GB">180GB</option>
+            <option value="200GB">200GB</option>
+            <option value="250GB">250GB</option>
+            <option value="300GB">300GB</option>
+            <option value="320GB">320GB</option>
+            <option value="500GB">500GB</option>
+            <option value="1TB">1TB</option>
+            <option value="2TB">2TB</option>
+            <option value="3TB">3TB</option>
+            <option value="4TB">4TB</option>
+            <option value="5TB">5TB</option>
+            <option value="More than 5TB">More than 5TB</option>
+
+        </select></div>
+
+</div>
+
+<div class="clearfix"></div>
+
+<script>
+    $(document).ready(function () {
+        let condition = $('#laptopCondition');
+        condition.empty();
+        condition.append('<option selected="true" disabled>Choose Condition</option>');
+        condition.prop("selectedIndex", 0);
+        const conditionUrl = '/user/getCondition';
+        $.getJSON(conditionUrl, function (data) {
+            $.each(data, function (key, entry) {
+                condition.append($('<option></option>').attr('value', entry).text(entry));
+            })
+        });
+    });
+</script>

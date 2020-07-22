@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fraghment/header:: head"></th:block>
+    <!-- DataTables -->
+
+    <th:block th:include="fraghment/header :: footer"></th:block>
+</head>
+<body>
+
+
+<header th:include="fraghment/head"></header>
+
+<div class="container category">
+    <div class="row " id="categoryList">
+        <!--<input id="listOfCategoryLength" type="hidden" th:value="${listOfCategories.size()}">-->
+        <div class="col-md-3" th:each="category : ${listOfCategories}">
+            <div class="panel panel-primary" th:id="${category.id}">
+                <div class="panel-heading">
+                    <span class=""><i th:class="${category.iconClass}"></i></span>
+                    <h3 class="panel-title" th:text="${category.name}"></h3>
+                    <input th:value="${category.id}" type="hidden" id="categoryId">
+                    <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"
+                                                                          th:onclick="'getSubCategory(\'' + ${category.id} + '\');'"></i></span>
+                </div>
+                <div class="panel-body" style="display: none;" id="subcategory">
+
+                    <li class="list"><a th:href="@{/user/createPost/74}">Mobile</a></li>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<th:block th:include="fraghment/footer"></th:block>
+<script>
+    $(document).on('click', '.panel-heading span.clickable', function (e) {
+        var $this = $(this);
+        if (!$this.hasClass('panel-collapsed')) {
+            $this.parents('.panel').find('.panel-body').slideUp();
+            $this.addClass('panel-collapsed');
+            $this.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+
+        } else {
+            $this.parents('.panel').find('.panel-body').slideDown();
+            $this.removeClass('panel-collapsed');
+            $this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+
+        }
+    })
+
+
+</script>
+<script>
+    var getSubCategory = function (categoryId) {
+        var subcategoryVAl = '#' + categoryId + ' #subcategory';
+        $.ajax({
+            type: "POST",
+            url: "/userPost/getSubcategories",
+            dataType: 'json',
+            data: {categoryId: categoryId},
+            success: function (result) {
+                $(subcategoryVAl).empty();
+                $.each(result, function (key, entry) {
+                    $(subcategoryVAl).append(
+                        $('<li>').addClass('list').append(
+                            $('<a>').attr({href: '/userPost/createPost/' + entry.id}).text(entry.name)
+                        )
+                    );
+                });
+            },
+            error: function (e) {
+            }
+
+
+        });
+    }
+</script>
+
+
+</body>
+</html>

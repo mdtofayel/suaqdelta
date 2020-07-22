@@ -1,0 +1,77 @@
+<!-- Control Sidebar -->
+<aside xmlns:th="http://www.thymeleaf.org">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/}">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <img src="../images/Suqlogo.png" class="logoim">
+            </div>
+            <div class="sidebar-brand-text mx-3">SUQ Qatar</div>
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item active">
+            <a class="nav-link" th:href="@{/manager}">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Interface
+        </div>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/manager/viewPostType}">
+                <i class="fas fa-ad"></i>
+                <span>Post Type</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/manager/viewCategory}">
+                <i class="fas fa-sitemap"></i>
+                <span>Category</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/manager/viewSubCategory}">
+                <i class="fas fa-sitemap"></i>
+                <span>Subcategory</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/manager/viewManufacturer}">
+                <i class="fas fa-sitemap"></i>
+                <span>Manufacturer</span></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/manager/viewProductModelList}">
+                <i class="fas fa-sitemap"></i>
+                <span>Product Model</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/manager/sliderImage}">
+                <i class="fas fa-sitemap"></i>
+                <span>Slider Images</span></a>
+        </li>
+
+
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+
+    </ul>
+    <!-- End of Sidebar -->
+
+</aside>
+<!-- /.control-sidebar -->

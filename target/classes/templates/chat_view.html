@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fraghment/header:: head"></th:block>
+    <!-- DataTables -->
+    <style>
+
+
+        #receiverId {
+            display: none;
+        }
+    </style>
+
+</head>
+<body>
+
+
+<header th:if="${#request.isUserInRole('USER')}" th:include="fraghment/user_header"></header>
+<header th:unless="${#request.isUserInRole('USER')}" th:include="fraghment/head"></header>
+
+<div class="container h-100" style="margin-top: 15px;margin-bottom: 15px; ">
+    <div class="row justify-content-center h-100">
+        <div class="col-md-4 col-xl-3 chat">
+            <div class="card mb-sm-3 mb-md-0 contacts_card">
+                <div class="card-header">
+                    <div class="input-group">
+                        <input type="text" placeholder="Search..." name="" onkeyup="search()" class="form-control search" id="search-criteria">
+                        <div class="input-group-prepend" >
+                            <span class="input-group-text search_btn" ><i class="fas fa-search" id="search"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body contacts_body">
+                    <ui class="contacts">
+                        <li class="active user_name "  th:each="listOfChatedUser : ${listOfChatedUser}">
+                            <a th:onclick="'javascript:chatviewIndividualMessages('+${listOfChatedUser.value.id}+')'">
+                            <div class="d-flex bd-highlight">
+
+                                    <div class="img_cont">
+                                        <img th:src="@{'/images/profileImage/'+${listOfChatedUser.value.id}}"
+                                             class="rounded-circle user_img">
+                                        <span class="online_icon"></span>
+                                    </div>
+                                    <div class="user_info">
+                                        <span th:text="${listOfChatedUser.key}">abcas</span>
+                                    </div>
+
+                            </div>
+                            </a>
+                        </li>
+                    </ui>
+                </div>
+                <div class="card-footer"></div>
+            </div>
+        </div>
+        <div class="col-md-8 col-xl-6 chat">
+            <div class="card">
+                <div class="card-header msg_head">
+                    <div class="d-flex bd-highlight" id="chatImageUpperPart"></div>
+                </div>
+                <div class="card-body msg_card_body" id="userListPanel">
+
+                        <!--<div>
+                            <div class="d-flex justify-content-start mb-4"
+                                 th:if="${listOfChat.sendFrom.id != users.id}">
+                                <div class="img_cont_msg">
+                                    <img th:src="@{/images/cat10.png}" class="rounded-circle user_img_msg">
+                                </div>
+                                <div class="msg_cotainer" th:text="${listOfChat.message}">
+                                    Hi, how are you samim?
+                                    <span class="msg_time" th:text="${listOfChat.time}">8:40 AM, Today</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end mb-4" th:unless="${listOfChat.sendTo.id==users.id}">
+                            <div class="msg_cotainer_send"> su
+                                <p th:text="${listOfChat.message}">Hi Maryam i am good tnx how about you?</p>
+                                <span class="msg_time_send" th:text="${listOfChat.time}">8:55 AM, Today</span>
+                                <p class="seen"><i class="fas fa-check-double"></i></p>
+                            </div>
+                            <div class="img_cont_msg">
+                                <img th:src="@{/images/client_4.jpg}" class="rounded-circle user_img_msg">
+                            </div>
+                        </div>-->
+                        <!--   <div id="message"></div>-->
+
+                </div>
+                <div class="card-footer">
+                    <form action="#">
+                        <div class="input-group">
+
+                            <div class="input-group-append">
+                                <!--<span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>-->
+                            </div>
+                            <input name="message" class="form-control type_msg" id="receiverId"
+                                   placeholder="Type your message..." hidden="hidden">
+                            <input name="message" class="form-control type_msg" id="messageBody"
+                                   placeholder="Type your message..." required>
+                            <div class="input-group-append">
+                                <button type="button" id="sendMesseages"><span class="input-group-text send_btn"><i
+                                        class="fas fa-location-arrow"></i></span></button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<th:block th:include="fraghment/footer"></th:block>
+
+<th:block th:include="fraghment/header :: footer"></th:block>
+
+<script th:src="@{/js/chatview.js}"></script>
+
+</body>
+</html>

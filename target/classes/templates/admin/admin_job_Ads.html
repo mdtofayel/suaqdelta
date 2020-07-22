@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <th:block th:include="admin/fraghment/header_link:: head"></th:block>
+</head>
+
+<body id="page-top">
+
+<!-- Left side column. contains the logo and sidebar -->
+
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+    <div sec:authorize="isAuthenticated()">
+        <div sec:authorize="hasRole('ADMIN')">
+            <header th:include="admin/fraghment/admin_sidebar"></header>
+        </div>
+        <div sec:authorize="hasRole('MANAGER') && !hasRole('ADMIN')">
+            <header th:include="admin/fraghment/manager_sidebar"></header>
+        </div>
+    </div>
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <header th:include="admin/fraghment/manager_topbar"></header>
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Job Ads</h1>
+                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                </div>
+
+
+                <!-- Content Row -->
+                <div class="row">
+
+                    <!-- Content Column -->
+
+
+                    <div class="col-lg-12 mb-4">
+
+                        <!-- Illustrations -->
+                        <div class="card  shadow mb-4">
+                            <div class="card-header border-bottom-warning py-3">
+                                <!-- <h6 class="m-0 font-weight-bold text-primary text-center">Pending Requests</h6>-->
+                                <ul class="nav nav-pills">
+                                    <li class="nav-item active">
+                                        <a href="#my_ad" class="nav-link" aria-controls="home" role="tab"
+                                           data-toggle="tab">
+                                            <i class=" glyphicon glyphicon-bullhorn"></i>
+                                            All Ads</a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link" href="#notification" aria-controls="home" role="tab"
+                                           data-toggle="tab">
+                                            <i class="glyphicon glyphicon-bell"></i>
+                                            Pending Request </a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link" href="#favourite" aria-controls="home" role="tab"
+                                           data-toggle="tab">
+                                            <i class="glyphicon  glyphicon-star"></i>
+                                            Approved Ads </a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link" href="#like" aria-controls="home" role="tab"
+                                           data-toggle="tab">
+                                            <i class="glyphicon glyphicon-thumbs-up"></i>
+                                            Rejected Ads </a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link" href="#profile" aria-controls="home" role="tab"
+                                           data-toggle="tab">
+                                            <i class="glyphicon glyphicon-user"></i>
+                                            Completed Ads </a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link" href="#password" aria-controls="home" role="tab"
+                                           data-toggle="tab">
+                                            <i class="glyphicon glyphicon-lock"></i>
+                                            Blocked Ads </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-body">
+                                <!-- Begin Page Content -->
+                                <div class="tab-content">
+                                    <div role="tabpanel" class=" tab-pane profile-content  active" id="my_ad">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-striped table-bordered" id="dataTable"
+                                                   width="100%" cellspacing="0">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Title</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tfoot>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Title</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                <tr th:each="listOfAllAdds : ${listOfAllAdds}">
+                                                    <td><span
+                                                            th:text="${listOfAllAdds.id !=null ? listOfAllAdds.id: 'Not Found'}"></span>
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listOfAllAdds.subCategory.category.postType.name !=null ? listOfAllAdds.subCategory.category.postType.name: 'Not Found'}"></span>
+
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listOfAllAdds.subCategory.category.name!=null ? listOfAllAdds.subCategory.category.name: 'Not Found'}"></span>
+
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listOfAllAdds.subCategory.name!=null ? listOfAllAdds.subCategory.name: 'Not Found'}"></span>
+
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listOfAllAdds.title !=null ? listOfAllAdds.title: 'Not Found'}"></span>Mobile
+                                                        For Sale
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listOfAllAdds.price !=null ? listOfAllAdds.price: 'Not Found'}"></span>250
+                                                        QR
+                                                    </td>
+                                                    <td>
+                                                        <a th:href="@{'/userPost/singlePrduct/view/'+${listOfAllAdds.id}}"
+                                                           class="btn btn-info btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i
+                                                                class="fas fa-file"></i></span>
+                                                            <span class="text">view</span>
+                                                        </a>
+                                                        <a th:if="*{listOfAllAdds.approved !='APPROVED'}"
+                                                           th:onclick="'javascript:acceptFunctionForApprove('+${listOfAllAdds.id}+')'"
+                                                           class="btn btn-success btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i class="fas fa-check"></i></span>
+                                                            <span class="text">Approve</span>
+                                                        </a>
+                                                        <a th:if="*{listOfAllAdds.approved !='PENDING'}"
+                                                           th:onclick="'javascript:acceptFunctionForPending('+${listOfAllAdds.id}+')'"
+                                                           class="btn btn-danger btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i class="fas fa-trash"></i></span>
+                                                            <span class="text">Pending</span>
+                                                        </a>
+                                                        <a href="#" th:if="*{listOfAllAdds.approved !='REJECTED'}"
+                                                           th:onclick="'javascript:acceptFunctionForRegect('+${listOfAllAdds.id}+')'"
+                                                           class="btn btn-danger btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i class="fas fa-trash"></i></span>
+                                                            <span class="text">Reject</span>
+                                                        </a>
+                                                        <a href="#" th:if="*{listOfAllAdds.approved !='BLOCKED'}"
+                                                           th:onclick="'javascript:acceptFunctionForBlock('+${listOfAllAdds.id}+')'"
+                                                           class="btn btn-primary btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i
+                                                                class="fas fa-ban"></i></span>
+                                                            <span class="text">Block</span>
+                                                        </a>
+                                                        <span class="badge badge-success"
+                                                              th:if="*{listOfAllAdds.approved =='SOLD'}">Completed</span>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class=" tab-pane profile-content  " id="notification">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-striped table-bordered"
+                                                   id="dataTable1" width="100%" cellspacing="0">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Title</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tfoot>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Title</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                <tr th:each="listListOfPendingAds : ${listListOfPendingAds}">
+                                                    <td><span
+                                                            th:text="${listListOfPendingAds.id !=null ? listListOfPendingAds.id: 'Not Found'}"></span>
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listListOfPendingAds.subCategory.category.postType.name !=null ? listListOfPendingAds.subCategory.category.postType.name: 'Not Found'}"></span>
+
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listListOfPendingAds.subCategory.category.name!=null ? listListOfPendingAds.subCategory.category.name: 'Not Found'}"></span>
+
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listListOfPendingAds.subCategory.name!=null ? listListOfPendingAds.subCategory.name: 'Not Found'}"></span>
+
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listListOfPendingAds.title !=null ? listListOfPendingAds.title: 'Not Found'}"></span>Mobile
+                                                        For Sale
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listListOfPendingAds.price !=null ? listListOfPendingAds.price: 'Not Found'}"></span>250
+                                                        QR
+                                                    </td>
+                                                    <td>
+                                                        <a th:href="@{'/userPost/singlePrduct/view/'+${listListOfPendingAds.id}}"
+                                                           class="btn btn-info btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i
+                                                                class="fas fa-file"></i></span>
+                                                            <span class="text">view</span>
+                                                        </a>
+                                                        <a th:if="*{listListOfPendingAds.approved !='APPROVED'}"
+                                                           th:onclick="'javascript:acceptFunctionForApprove('+${listListOfPendingAds.id}+')'"
+                                                           class="btn btn-success btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i class="fas fa-check"></i></span>
+                                                            <span class="text">Approve</span>
+                                                        </a>
+                                                        <a th:if="*{listListOfPendingAds.approved !='PENDING'}"
+                                                           th:onclick="'javascript:acceptFunctionForPending('+${listListOfPendingAds.id}+')'"
+                                                           class="btn btn-danger btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i class="fas fa-trash"></i></span>
+                                                            <span class="text">Pending</span>
+                                                        </a>
+                                                        <a href="#"
+                                                           th:if="*{listListOfPendingAds.approved !='REJECTED'}"
+                                                           th:onclick="'javascript:acceptFunctionForRegect('+${listListOfPendingAds.id}+')'"
+                                                           class="btn btn-danger btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i class="fas fa-trash"></i></span>
+                                                            <span class="text">Reject</span>
+                                                        </a>
+                                                        <a href="#" th:if="*{listListOfPendingAds.approved !='BLOCKED'}"
+                                                           th:onclick="'javascript:acceptFunctionForBlock('+${listListOfPendingAds.id}+')'"
+                                                           class="btn btn-primary btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i
+                                                                class="fas fa-ban"></i></span>
+                                                            <span class="text">Block</span>
+                                                        </a>
+                                                        <span class="badge badge-success"
+                                                              th:if="*{listListOfPendingAds.approved =='SOLD'}">Completed</span>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class=" tab-pane profile-content  " id="favourite">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-striped table-bordered"
+                                                   id="dataTable2" width="100%" cellspacing="0">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Title</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tfoot>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Title</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                <tr th:each="listListOfApprovedAds : ${listListOfApprovedAds}">
+                                                    <td><span
+                                                            th:text="${listListOfApprovedAds.id !=null ? listListOfApprovedAds.id: 'Not Found'}"></span>
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listListOfApprovedAds.subCategory.category.postType.name !=null ? listListOfApprovedAds.subCategory.category.postType.name: 'Not Found'}"></span>
+
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listListOfApprovedAds.subCategory.category.name!=null ? listListOfApprovedAds.subCategory.category.name: 'Not Found'}"></span>
+
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listListOfApprovedAds.subCategory.name!=null ? listListOfApprovedAds.subCategory.name: 'Not Found'}"></span>
+
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listListOfApprovedAds.title !=null ? listListOfApprovedAds.title: 'Not Found'}"></span>Mobile
+                                                        For Sale
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listListOfApprovedAds.price !=null ? listListOfApprovedAds.price: 'Not Found'}"></span>250
+                                                        QR
+                                                    </td>
+                                                    <td>
+                                                        <a th:href="@{'/userPost/singlePrduct/view/'+${listListOfApprovedAds.id}}"
+                                                           class="btn btn-info btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i
+                                                                class="fas fa-file"></i></span>
+                                                            <span class="text">view</span>
+                                                        </a>
+                                                        <a th:if="*{listListOfApprovedAds.approved !='APPROVED'}"
+                                                           th:onclick="'javascript:acceptFunctionForApprove('+${listListOfApprovedAds.id}+')'"
+                                                           class="btn btn-success btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i class="fas fa-check"></i></span>
+                                                            <span class="text">Approve</span>
+                                                        </a>
+                                                        <a th:if="*{listListOfApprovedAds.approved !='PENDING'}"
+                                                           th:onclick="'javascript:acceptFunctionForPending('+${listListOfApprovedAds.id}+')'"
+                                                           class="btn btn-danger btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i class="fas fa-trash"></i></span>
+                                                            <span class="text">Pending</span>
+                                                        </a>
+                                                        <a href="#"
+                                                           th:if="*{listListOfApprovedAds.approved !='REJECTED'}"
+                                                           th:onclick="'javascript:acceptFunctionForRegect('+${listListOfApprovedAds.id}+')'"
+                                                           class="btn btn-danger btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i class="fas fa-trash"></i></span>
+                                                            <span class="text">Reject</span>
+                                                        </a>
+                                                        <a href="#"
+                                                           th:if="*{listListOfApprovedAds.approved !='BLOCKED'}"
+                                                           th:onclick="'javascript:acceptFunctionForBlock('+${listListOfApprovedAds.id}+')'"
+                                                           class="btn btn-primary btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i
+                                                                class="fas fa-ban"></i></span>
+                                                            <span class="text">Block</span>
+                                                        </a>
+                                                        <span class="badge badge-success"
+                                                              th:if="*{listListOfApprovedAds.approved =='SOLD'}">Completed</span>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class=" tab-pane profile-content  " id="like">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-striped table-bordered"
+                                                   id="dataTable3" width="100%" cellspacing="0">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Title</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tfoot>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Title</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                <tr th:each="listListOfRejectedAds : ${listListOfRejectedAds}">
+                                                    <td><span
+                                                            th:text="${listListOfRejectedAds.id !=null ? listListOfRejectedAds.id: 'Not Found'}"></span>
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listListOfRejectedAds.subCategory.category.postType.name !=null ? listListOfRejectedAds.subCategory.category.postType.name: 'Not Found'}"></span>
+
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listListOfRejectedAds.subCategory.category.name!=null ? listListOfRejectedAds.subCategory.category.name: 'Not Found'}"></span>
+
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listListOfRejectedAds.subCategory.name!=null ? listListOfRejectedAds.subCategory.name: 'Not Found'}"></span>
+
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listListOfRejectedAds.title !=null ? listListOfRejectedAds.title: 'Not Found'}"></span>Mobile
+                                                        For Sale
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listListOfRejectedAds.price !=null ? listListOfRejectedAds.price: 'Not Found'}"></span>250
+                                                        QR
+                                                    </td>
+                                                    <td>
+                                                        <a th:href="@{'/userPost/singlePrduct/view/'+${listListOfRejectedAds.id}}"
+                                                           class="btn btn-info btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i
+                                                                class="fas fa-file"></i></span>
+                                                            <span class="text">view</span>
+                                                        </a>
+                                                        <a th:if="*{listListOfRejectedAds.approved !='APPROVED'}"
+                                                           th:onclick="'javascript:acceptFunctionForApprove('+${listListOfRejectedAds.id}+')'"
+                                                           class="btn btn-success btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i class="fas fa-check"></i></span>
+                                                            <span class="text">Approve</span>
+                                                        </a>
+                                                        <a th:if="*{listListOfRejectedAds.approved !='PENDING'}"
+                                                           th:onclick="'javascript:acceptFunctionForPending('+${listListOfRejectedAds.id}+')'"
+                                                           class="btn btn-danger btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i class="fas fa-trash"></i></span>
+                                                            <span class="text">Pending</span>
+                                                        </a>
+                                                        <a href="#"
+                                                           th:if="*{listListOfRejectedAds.approved !='REJECTED'}"
+                                                           th:onclick="'javascript:acceptFunctionForRegect('+${listListOfRejectedAds.id}+')'"
+                                                           class="btn btn-danger btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i class="fas fa-trash"></i></span>
+                                                            <span class="text">Reject</span>
+                                                        </a>
+                                                        <a href="#"
+                                                           th:if="*{listListOfRejectedAds.approved !='BLOCKED'}"
+                                                           th:onclick="'javascript:acceptFunctionForBlock('+${listListOfRejectedAds.id}+')'"
+                                                           class="btn btn-primary btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i
+                                                                class="fas fa-ban"></i></span>
+                                                            <span class="text">Block</span>
+                                                        </a>
+                                                        <span class="badge badge-success"
+                                                              th:if="*{listListOfRejectedAds.approved =='SOLD'}">Completed</span>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class=" tab-pane profile-content  " id="profile">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-striped table-bordered"
+                                                   id="dataTable4" width="100%" cellspacing="0">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Title</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tfoot>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Title</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                <tr th:each="listListOfSoldAds : ${listListOfSoldAds}">
+                                                    <td><span
+                                                            th:text="${listListOfSoldAds.id !=null ? listListOfSoldAds.id: 'Not Found'}"></span>
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listListOfSoldAds.subCategory.category.postType.name !=null ? listListOfSoldAds.subCategory.category.postType.name: 'Not Found'}"></span>
+
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listListOfSoldAds.subCategory.category.name!=null ? listListOfSoldAds.subCategory.category.name: 'Not Found'}"></span>
+
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listListOfSoldAds.subCategory.name!=null ? listListOfSoldAds.subCategory.name: 'Not Found'}"></span>
+
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listListOfSoldAds.title !=null ? listListOfSoldAds.title: 'Not Found'}"></span>Mobile
+                                                        For Sale
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listListOfSoldAds.price !=null ? listListOfSoldAds.price: 'Not Found'}"></span>250
+                                                        QR
+                                                    </td>
+                                                    <td>
+                                                        <a th:href="@{'/userPost/singlePrduct/view/'+${listListOfSoldAds.id}}"
+                                                           class="btn btn-info btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i
+                                                                class="fas fa-file"></i></span>
+                                                            <span class="text">view</span>
+                                                        </a>
+                                                        <!--
+                                                      <a  th:if="*{listListOfSoldAds.approved !='APPROVED'}" th:onclick="'javascript:acceptFunctionForApprove('+${listListOfSoldAds.id}+')'" class="btn btn-success btn-icon-split btn-sm"><span class="icon text-white-50"><i class="fas fa-check"></i></span>
+                                                          <span class="text">Approve</span>
+                                                      </a>
+                                                      <a  th:if="*{listListOfSoldAds.approved !='PENDING'}" th:onclick="'javascript:acceptFunctionForPending('+${listListOfSoldAds.id}+')'" class="btn btn-danger btn-icon-split btn-sm"><span class="icon text-white-50"><i class="fas fa-trash"></i></span>
+                                                          <span class="text">Pending</span>
+                                                      </a>
+                                                      <a href="#" th:if="*{listListOfSoldAds.approved !='REJECTED'}" th:onclick="'javascript:acceptFunctionForRegect('+${listListOfSoldAds.id}+')'" class="btn btn-danger btn-icon-split btn-sm"><span class="icon text-white-50"><i class="fas fa-trash"></i></span>
+                                                          <span class="text">Reject</span>
+                                                      </a>
+                                                      <a href="#" th:if="*{listListOfSoldAds.approved !='BLOCKED'}" th:onclick="'javascript:acceptFunctionForBlock('+${listListOfSoldAds.id}+')'" class="btn btn-primary btn-icon-split btn-sm"><span class="icon text-white-50"><i class="fas fa-ban"></i></span>
+                                                          <span class="text">Block</span>
+                                                      </a>-->
+                                                        <span class="badge badge-success"
+                                                              th:if="*{listListOfSoldAds.approved =='SOLD'}">Completed</span>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class=" tab-pane profile-content  " id="password">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-striped table-bordered"
+                                                   id="dataTable5" width="100%" cellspacing="0">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Title</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tfoot>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Title</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                <tr th:each="listListOfBlockedAdds : ${listListOfBlockedAdds}">
+                                                    <td><span
+                                                            th:text="${listListOfBlockedAdds.id !=null ? listListOfBlockedAdds.id: 'Not Found'}"></span>
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listListOfBlockedAdds.subCategory.category.postType.name !=null ? listListOfBlockedAdds.subCategory.category.postType.name: 'Not Found'}"></span>
+
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listListOfBlockedAdds.subCategory.category.name!=null ? listListOfBlockedAdds.subCategory.category.name: 'Not Found'}"></span>
+
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listListOfBlockedAdds.subCategory.name!=null ? listListOfBlockedAdds.subCategory.name: 'Not Found'}"></span>
+
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listListOfBlockedAdds.title !=null ? listListOfBlockedAdds.title: 'Not Found'}"></span>Mobile
+                                                        For Sale
+                                                    </td>
+                                                    <td><span
+                                                            th:text="${listListOfBlockedAdds.price !=null ? listListOfBlockedAdds.price: 'Not Found'}"></span>250
+                                                        QR
+                                                    </td>
+                                                    <td>
+                                                        <a th:href="@{'/userPost/singlePrduct/view/'+${listListOfBlockedAdds.id}}"
+                                                           class="btn btn-info btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i
+                                                                class="fas fa-file"></i></span>
+                                                            <span class="text">view</span>
+                                                        </a>
+                                                        <a th:if="*{listListOfBlockedAdds.approved !='APPROVED'}"
+                                                           th:onclick="'javascript:acceptFunctionForApprove('+${listListOfBlockedAdds.id}+')'"
+                                                           class="btn btn-success btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i class="fas fa-check"></i></span>
+                                                            <span class="text">Approve</span>
+                                                        </a>
+                                                        <a th:if="*{listListOfBlockedAdds.approved !='PENDING'}"
+                                                           th:onclick="'javascript:acceptFunctionForPending('+${listListOfBlockedAdds.id}+')'"
+                                                           class="btn btn-danger btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i class="fas fa-trash"></i></span>
+                                                            <span class="text">Pending</span>
+                                                        </a>
+                                                        <a href="#"
+                                                           th:if="*{listListOfBlockedAdds.approved !='REJECTED'}"
+                                                           th:onclick="'javascript:acceptFunctionForRegect('+${listListOfBlockedAdds.id}+')'"
+                                                           class="btn btn-danger btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i class="fas fa-trash"></i></span>
+                                                            <span class="text">Reject</span>
+                                                        </a>
+                                                        <a href="#"
+                                                           th:if="*{listListOfBlockedAdds.approved !='BLOCKED'}"
+                                                           th:onclick="'javascript:acceptFunctionForBlock('+${listListOfBlockedAdds.id}+')'"
+                                                           class="btn btn-primary btn-icon-split btn-sm"><span
+                                                                class="icon text-white-50"><i
+                                                                class="fas fa-ban"></i></span>
+                                                            <span class="text">Block</span>
+                                                        </a>
+                                                        <span class="badge badge-success"
+                                                              th:if="*{listListOfBlockedAdds.approved =='SOLD'}">Completed</span>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.container-fluid -->
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+
+        <th:block th:include="admin/fraghment/footer"></th:block>
+
+
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<th:block th:include="admin/fraghment/header_link :: footer"></th:block>
+</body>
+
+</html>

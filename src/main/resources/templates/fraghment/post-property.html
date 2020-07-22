@@ -1,0 +1,16 @@
+<!--<form enctype="multipart/form-data"  method="POST">-->
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="row">
+
+    <div class="col-sm-6" id="vm">
+        <label class="vm">Price per Feet<span>*</span></label>
+
+        <input type="number" name="price" class="phone" placeholder="" th:field="*{properties.pricePerFeet}"
+               id="landPricePerFeet"></div>
+    <div class="col-sm-6" id="vm">
+        <label class="vm">Area<span>*</span></label>
+        <input type="number" name="area" class="phone" placeholder="area" id="landArea" th:field="*{properties.area}">
+    </div>
+
+</div>
